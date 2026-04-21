@@ -235,6 +235,34 @@
       "id": "978fe82b-e9fa-4032-991e-7bcbc7266e9d"
     },
     {
+      "name": "Admin Dashboard",
+      "description": "A password-protected backend admin panel where the Travel Wings USA team can view, manage, and track all incoming leads from every inquiry form on the site. Accessible only after entering the admin password.",
+      "uri": "/admin",
+      "blocks": [
+        {
+          "name": "Admin Login Gate",
+          "description": "A centered login card shown before the dashboard. Contains the Travel Wings USA logo, a 'Admin Access' heading, a password input field, and a 'Login' button. On correct password entry, stores session in localStorage and shows the dashboard. On wrong password, shows an error message.",
+          "id": "bbe1cb6b-fa4c-48b4-91c0-eb39b94f05fe"
+        },
+        {
+          "name": "Admin Stats Bar",
+          "description": "Top summary row showing 4 stat cards: Total Leads (count), New Leads (uncontacted), Contacted Leads, and Closed/Converted Leads. Each card has a colored icon and count number. Updates dynamically from the database.",
+          "id": "80b50b27-3734-4743-99d0-92287e8933fc"
+        },
+        {
+          "name": "Leads Management Table",
+          "description": "Full-width data table listing all leads with columns: Date/Time, Name, Email, Phone, Inquiry Type (Tour Quote / Flight Enquiry / Contact Form / Newsletter), Message (truncated with expand), Status (color-coded badge: New=blue, Contacted=orange, Closed=green). Each row has action buttons: 'Mark Contacted', 'Mark Closed', and 'Delete'. Table supports search by name/email and filter by status and inquiry type. Rows sorted by newest first.",
+          "id": "84f3880f-99ec-4c0c-8572-f38329fd6ff4"
+        },
+        {
+          "name": "Lead Detail Modal",
+          "description": "Clicking any lead row opens a modal/drawer showing the full lead details: all submitted form fields, timestamps, current status, and a notes text area where admin can add internal notes about that lead. Modal has 'Update Status' dropdown and 'Save Notes' button.",
+          "id": "312bb14b-4c2f-4699-b00d-4840f928cddd"
+        }
+      ],
+      "id": "8f3a7cf7-4919-4783-810f-25d252dc1d2b"
+    },
+    {
       "name": "Contact Us",
       "description": "Contact page with multiple communication options including a detailed inquiry form, real contact details, an embedded map, and prominent phone/WhatsApp CTAs.",
       "uri": "/contact",
@@ -265,9 +293,14 @@
   ],
   "features": [
     {
-      "name": "Lead Capture Forms",
-      "description": "Multiple inquiry form types across the platform: (1) Flight Enquiry Form on homepage with One Way/Round Trip tabs capturing name, email, phone, from/to cities, departure/return date, passenger count; (2) Tour Quote Request Form on every tour detail page capturing name, email, phone, travel date, number of travelers, special requirements. All submissions trigger an automated admin notification email and a 'Thank You' confirmation email to the user.",
+      "name": "Lead Capture Forms with Resend Emails",
+      "description": "Multiple inquiry form types across the platform: (1) Flight Enquiry Form on homepage with One Way/Round Trip tabs capturing name, email, phone, from/to cities, departure/return date, passenger count; (2) Tour Quote Request Form on every tour detail page capturing name, email, phone, travel date, number of travelers, special requirements; (3) General Contact Form on /contact page. All form submissions POST to /api/inquiry backend route which saves the lead to database and uses Resend API to send: (a) a detailed lead notification email to admin at info@travelwingsusa.com and (b) a branded Thank You confirmation email to the user's email address.",
       "id": "9e4e2199-c041-4d72-b852-ac80325c56f4"
+    },
+    {
+      "name": "Admin Lead Management Backend",
+      "description": "A backend-powered admin dashboard at /admin for the Travel Wings USA team to manage all incoming leads. Features: password-protected login (hardcoded password stored in env variable ADMIN_PASSWORD), full leads table with search/filter, status management (New, Contacted, Closed), lead detail view with internal notes, and summary stats. Backend API routes: POST /api/inquiry (public - submit lead), GET /api/leads (admin - fetch all leads), PATCH /api/leads/:id (admin - update status/notes), DELETE /api/leads/:id (admin - delete lead). All data persisted in database.",
+      "id": "49438295-0cc7-4b05-bc04-3e0b471e6b5c"
     },
     {
       "name": "Direct Communication Channels",
@@ -306,5 +339,5 @@
     }
   ],
   "stylingGuidelines": "Brand colors: primary blue #015FC9, accent orange #FF9D3D, dark navy #16243D, white background. Font: Plus Jakarta Sans for all text (headings and body). Rounded pill-shaped CTA buttons (30px border-radius). Modern clean design inspired by Tourm and Journea: large full-screen hero images, bold headings, subtle card shadows, smooth hover transitions, and generous white space. High-quality travel photography throughout.",
-  "technicalDetails": "No direct payment gateway or pricing display. All conversion is through inquiry/quote forms and phone/WhatsApp CTAs. Form submissions must send admin email notifications and auto-reply thank-you emails to users. Use Swiper.js for all carousels and sliders. Google Maps embed on contact page centered on Gwynn Oak MD. All images should be lazy-loaded. WhatsApp floating button should link to wa.me with pre-filled message."
+  "technicalDetails": "No direct payment gateway or pricing display. All conversion is through inquiry/quote forms and phone/WhatsApp CTAs. Email system: use Resend API for all transactional emails - on every form submission send (1) admin notification email to info@travelwingsusa.com with full lead details (name, phone, email, inquiry type, message) and (2) automated Thank You confirmation email to the user. Use Swiper.js for all carousels and sliders. Google Maps embed on contact page centered on Gwynn Oak MD. All images should be lazy-loaded. WhatsApp floating button should link to wa.me with pre-filled message. Backend API routes required: POST /api/inquiry (handles all form submissions, saves lead to DB, triggers Resend emails), GET /api/leads (admin only, returns all leads), PATCH /api/leads/:id (admin only, update lead status), DELETE /api/leads/:id (admin only). Admin dashboard at /admin protected by a simple hardcoded password login (no full auth system needed). All leads stored in database with fields: id, name, email, phone, inquiryType, message, status (new/contacted/closed), createdAt."
 }
