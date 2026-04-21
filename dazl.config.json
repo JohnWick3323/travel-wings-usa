@@ -1,0 +1,22 @@
+{
+  "cssTokens": {
+    "semantic": {
+      "app/styles/theme.css": {
+        "color": "--color-{word}-{alphanum-list?}",
+        "fontFamily": { "pattern": "--family-{alphanum-list}", "groupName": "Font Family", "tokenName": "{token}" },
+        "fontSize": "--text-{alphanum-list}",
+        "font": { "pattern": "--font-{alphanum-list}", "tokenName": "{token}" },
+        "space": "--space-{alphanum-list}",
+        "radius": "--radius-{alphanum-list}",
+        "shadow": ["--shadow-{alphanum-list}", "--inner-shadow-{alphanum-list}"]
+      }
+    }
+  },
+  "projectPrompts": {
+    "promptsFolderName": "dazl-prompts"
+  },
+  "skillPaths": [
+    "{.agents,.github,.claude,.cursor}/skills/*.{md,MD}",
+    "{.agents,.github,.claude,.cursor}/skills/*/{SKILL,skill}.{md,MD}"
+  ]
+}

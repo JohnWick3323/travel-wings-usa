@@ -1,0 +1,3 @@
+- When creating different site sections, create routes for them in the \`app/routes\` directory.
+- Change \`app/routes.ts\` AFTER all other changes.
+- Use kebab-case for file and folder names.
