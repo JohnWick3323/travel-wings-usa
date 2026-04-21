@@ -1,0 +1,279 @@
+{
+  "title": "Travel Wings USA - Travel Booking Platform",
+  "description": "Travel Wings USA is a modern, lead-generation travel booking platform designed to showcase premium travel packages and convert visitors into qualified leads. The platform enables users to browse destinations, view detailed tour itineraries, and submit inquiries through integrated quote request forms. With direct communication channels via phone and WhatsApp, the platform focuses on seamless customer engagement and high-converting user experiences.",
+  "globalHeaderBlocks": [
+    {
+      "name": "Navigation Bar",
+      "description": "Top navigation bar with logo, main menu links (Home, Destinations, Blog, About, Contact), and prominent Call/WhatsApp action buttons for direct customer contact.",
+      "id": "c33b0b12-8fd4-47ee-9196-5d406aa71f90"
+    },
+    {
+      "name": "Floating Contact Widget",
+      "description": "Sticky floating widget with quick-access phone and WhatsApp buttons visible across all pages for instant customer support and lead capture.",
+      "id": "442fe060-e656-449b-b41f-c5571b65c625"
+    }
+  ],
+  "globalFooterBlocks": [
+    {
+      "name": "Footer Links Section",
+      "description": "Multi-column footer with links to main pages, destinations, blog categories, and company information organized for easy navigation and SEO.",
+      "id": "e2e078f1-9c01-4872-b682-316aad2ea507"
+    },
+    {
+      "name": "Footer Contact Information",
+      "description": "Footer section displaying office address, phone numbers, email, and social media links for customer support and brand engagement.",
+      "id": "07b808d7-6b34-4a3d-85d5-a9c6fbad948b"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Home",
+      "description": "The landing page featuring a stunning hero section with call-to-action, featured destinations carousel, customer testimonials, and prominent inquiry buttons to capture initial leads.",
+      "uri": "/",
+      "blocks": [
+        {
+          "name": "Hero Section",
+          "description": "Large banner with inspiring travel imagery, headline, subheading, and primary 'Get a Quote' call-to-action button.",
+          "id": "83765550-0cf5-41d9-9e25-a64779d3b7e5"
+        },
+        {
+          "name": "Featured Destinations",
+          "description": "Carousel or grid showcasing 4-6 popular travel destinations with images, brief descriptions, and 'Explore' links.",
+          "id": "d731ef05-d882-434b-9226-cada22dc6b70"
+        },
+        {
+          "name": "How It Works",
+          "description": "Simple 3-step process section explaining the inquiry flow: Browse Packages, Request Quote, Get Contacted.",
+          "id": "784304b4-4e73-4818-912e-2c5df696ab34"
+        },
+        {
+          "name": "Customer Testimonials",
+          "description": "Carousel displaying customer reviews and ratings to build trust and credibility with potential leads.",
+          "id": "a9a97143-8d23-443f-8506-8fd1041af5c1"
+        },
+        {
+          "name": "Call-to-Action Banner",
+          "description": "Full-width banner with compelling message and prominent 'Request Your Quote' button to drive conversions.",
+          "id": "82aa851a-5c73-4c8c-bec6-e3e0d694827f"
+        }
+      ],
+      "id": "b587aace-3300-466c-b32c-a629eb7b3753"
+    },
+    {
+      "name": "Destinations",
+      "description": "Comprehensive listing page displaying all available travel destinations and packages in an organized, filterable grid format with quick access to detailed tour information.",
+      "uri": "/destinations",
+      "blocks": [
+        {
+          "name": "Page Header",
+          "description": "Section with page title, brief introduction, and optional filter/search controls for destinations.",
+          "id": "8be9ce8d-e098-4c0e-adcd-aee11c0572de"
+        },
+        {
+          "name": "Destinations Grid",
+          "description": "Grid layout displaying destination cards with images, location names, brief descriptions, and 'View Details' buttons.",
+          "id": "3d7986b0-9065-46a2-bc76-88a7df8e8457"
+        },
+        {
+          "name": "Quick Inquiry Section",
+          "description": "Sidebar or bottom section with quick quote form allowing users to request information without leaving the destinations page.",
+          "id": "26667c28-3f70-4005-abc3-6779b72449cc"
+        }
+      ],
+      "id": "4965191d-ac96-4a17-9851-33fdbbe9d25a"
+    },
+    {
+      "name": "Tour Details",
+      "description": "Detailed page for individual tour packages featuring complete itinerary, high-quality image gallery, pricing information, and dedicated quote request form.",
+      "uri": "/tour/:tourId",
+      "blocks": [
+        {
+          "name": "Tour Image Gallery",
+          "description": "Large image carousel showcasing multiple high-resolution photos of the destination with thumbnail navigation.",
+          "id": "bfb05c6e-df3a-4555-acf6-c17454943b0f"
+        },
+        {
+          "name": "Tour Overview",
+          "description": "Section displaying tour title, duration, destination, highlights, and key information at a glance.",
+          "id": "f6f92a3d-db1a-4f35-8167-1c9b96aa0902"
+        },
+        {
+          "name": "Detailed Itinerary",
+          "description": "Day-by-day breakdown of the tour schedule with activities, accommodations, and meal information.",
+          "id": "8bcd1d4f-8f73-4759-b6e8-a80b2f6f23b3"
+        },
+        {
+          "name": "Inclusions and Exclusions",
+          "description": "Clear lists of what is included in the package (flights, hotels, meals, etc.) and what is not included.",
+          "id": "95eb6f56-3eee-414d-97de-b502a8a55719"
+        },
+        {
+          "name": "Quote Request Form",
+          "description": "Dedicated form capturing user details, travel dates, number of travelers, and specific requirements for quote generation.",
+          "id": "1009caf2-ca1b-4ef6-8662-71cfd66704c3"
+        },
+        {
+          "name": "Related Tours",
+          "description": "Section suggesting similar or complementary tour packages to increase engagement and lead opportunities.",
+          "id": "638a04a2-c26d-45d8-9c91-fd034b189b4b"
+        }
+      ],
+      "id": "c1a12869-3bdf-47a1-b8a1-64543b1563c4"
+    },
+    {
+      "name": "Blog",
+      "description": "Blog listing page displaying travel guides, tips, and articles in a grid format with search and category filtering capabilities.",
+      "uri": "/blog",
+      "blocks": [
+        {
+          "name": "Blog Header",
+          "description": "Page title, introduction, and optional search bar and category filter controls.",
+          "id": "9e7ba4fe-5b32-442a-964e-027f9e91c9c1"
+        },
+        {
+          "name": "Blog Articles Grid",
+          "description": "Grid layout displaying blog post cards with featured images, titles, excerpts, publish dates, and 'Read More' links.",
+          "id": "51fd9470-369d-4caa-94db-4dc07148961f"
+        },
+        {
+          "name": "Newsletter Signup",
+          "description": "Sidebar or inline section encouraging users to subscribe for travel tips and updates with email input form.",
+          "id": "3af5c620-1477-4b9d-aa7f-04c2654b5ec4"
+        }
+      ],
+      "id": "432b983b-6120-4f21-9c03-a3f6111c0122"
+    },
+    {
+      "name": "Blog Article",
+      "description": "Individual blog post page with full article content, featured image, author information, and related tour packages to drive conversions.",
+      "uri": "/blog/:articleId",
+      "blocks": [
+        {
+          "name": "Article Header",
+          "description": "Article title, featured image, publish date, author name, and reading time estimate.",
+          "id": "617907a9-0117-4aeb-8d8d-1bd2745d0496"
+        },
+        {
+          "name": "Article Content",
+          "description": "Full formatted article text with embedded images, headings, and structured content.",
+          "id": "7f62087e-3382-4ba8-bc2a-c22b8e8ab07e"
+        },
+        {
+          "name": "Related Tours Section",
+          "description": "Sidebar or bottom section showcasing travel packages related to the article topic with quick quote buttons.",
+          "id": "6c57ffec-91fd-4f81-9d67-7697ea806f1c"
+        },
+        {
+          "name": "Related Articles",
+          "description": "Section suggesting other blog posts of similar interest to keep users engaged on the platform.",
+          "id": "947d70e2-1197-47b1-8f1c-bff9581a6953"
+        }
+      ],
+      "id": "a56e6657-c749-4cb4-a115-a78a1a9f0ece"
+    },
+    {
+      "name": "About Us",
+      "description": "Company information page detailing Travel Wings USA's history, mission, vision, team members, and commitment to customer service.",
+      "uri": "/about",
+      "blocks": [
+        {
+          "name": "About Header",
+          "description": "Page title and introductory section with company overview and key values.",
+          "id": "64f445e6-6e79-49b0-a04a-e8f0fe05f5c1"
+        },
+        {
+          "name": "Company Story",
+          "description": "Narrative section describing the company's history, founding, and journey in the travel industry.",
+          "id": "e50d0ecf-7ff5-444a-81ed-cea7b605d11b"
+        },
+        {
+          "name": "Mission and Vision",
+          "description": "Section clearly stating the company's mission statement and long-term vision for customer service.",
+          "id": "24fdd09f-975f-4fa6-9e6d-7930e31e9991"
+        },
+        {
+          "name": "Team Section",
+          "description": "Grid or carousel displaying team member profiles with photos, names, titles, and brief bios.",
+          "id": "40a0ceb2-4392-4ee0-b9da-ebc9bad11578"
+        },
+        {
+          "name": "Contact CTA",
+          "description": "Call-to-action section encouraging visitors to get in touch with the team for inquiries or partnerships.",
+          "id": "ef94c1fc-3a76-4cb2-9b06-17bfdb07cd4c"
+        }
+      ],
+      "id": "978fe82b-e9fa-4032-991e-7bcbc7266e9d"
+    },
+    {
+      "name": "Contact Us",
+      "description": "Contact page providing multiple communication channels including contact form, office location map, phone numbers, email, and social media links.",
+      "uri": "/contact",
+      "blocks": [
+        {
+          "name": "Contact Header",
+          "description": "Page title and brief introduction explaining available contact methods.",
+          "id": "680e3657-4013-4154-8dbf-1ad272fd05ff"
+        },
+        {
+          "name": "Contact Form",
+          "description": "Form collecting visitor name, email, phone, subject, and message for general inquiries with submission handling.",
+          "id": "e83a8b38-fefc-4f4f-9e50-bc3cdb449571"
+        },
+        {
+          "name": "Contact Information",
+          "description": "Display of office address, phone numbers, email addresses, business hours, and social media links.",
+          "id": "d90ea3a2-06bb-4859-b356-a7900b3b2be5"
+        },
+        {
+          "name": "Office Location Map",
+          "description": "Embedded map showing the company's office location with address and directions.",
+          "id": "1b1d13e0-18e1-43ef-ab6f-d78ed2298c05"
+        }
+      ],
+      "id": "3b846ba7-dd17-4caa-b1e1-98487c9299ec"
+    }
+  ],
+  "features": [
+    {
+      "name": "Lead Capture System",
+      "description": "Integrated quote request forms across tour detail pages and destination listings that capture user details, travel preferences, and specific requirements. Form submissions generate automated notifications to admin and thank-you emails to users.",
+      "id": "9e4e2199-c041-4d72-b852-ac80325c56f4"
+    },
+    {
+      "name": "Direct Communication Channels",
+      "description": "Prominent Call Now and WhatsApp buttons integrated throughout the platform including header, footer, and floating widget. Enables instant customer contact and lead capture through multiple communication channels.",
+      "id": "96b8f58d-c878-4bb9-9b26-6c3956b80d94"
+    },
+    {
+      "name": "Dynamic Tour Gallery",
+      "description": "High-quality image carousels and galleries on tour detail pages showcasing destinations with multiple photos, thumbnail navigation, and full-screen viewing capabilities.",
+      "id": "630e3c67-6d2b-4f15-bc52-fc9bd2fa3a2c"
+    },
+    {
+      "name": "Detailed Tour Information",
+      "description": "Comprehensive tour pages displaying day-by-day itineraries, inclusions/exclusions, pricing information, duration, destination highlights, and related package suggestions.",
+      "id": "635f122b-e738-4d16-975f-2c3ca299f0ac"
+    },
+    {
+      "name": "Blog Engine",
+      "description": "Content management system for publishing and managing travel guides, tips, and articles with SEO optimization. Blog posts are categorized, searchable, and linked to related tour packages for content-driven lead generation.",
+      "id": "63517eb7-faa3-4010-bfa4-730c7f6a7248"
+    },
+    {
+      "name": "Responsive Design",
+      "description": "Fully responsive layout that provides optimal viewing and interaction experience across mobile devices, tablets, and desktop screens with consistent functionality and performance.",
+      "id": "30d4446c-a390-470d-b8af-fc7fe9fa2070"
+    },
+    {
+      "name": "Customer Testimonials",
+      "description": "Dynamic testimonial carousel on homepage displaying customer reviews and ratings to build trust and credibility with potential leads.",
+      "id": "63993488-9e95-42dd-8489-5832b36e5433"
+    },
+    {
+      "name": "Search and Filtering",
+      "description": "Search functionality and filter controls on destinations and blog pages allowing users to find relevant content by keywords, categories, or other criteria.",
+      "id": "d8da2435-c8aa-43fc-9783-13dd7cdf8870"
+    }
+  ],
+  "stylingGuidelines": "Modern, clean design with high-quality travel imagery and intuitive navigation. Use a professional color palette with prominent call-to-action buttons. Ensure full responsiveness across mobile, tablet, and desktop devices with smooth interactions and fast loading times."
+}
