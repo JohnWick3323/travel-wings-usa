@@ -1,3 +1,4 @@
+
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -9,6 +10,14 @@ import "./styles/global.css";
 import "./styles/theme.css";
 import { useColorScheme } from "@dazl/color-scheme/react";
 import favicon from "/favicon.svg";
+
+import styles from "./root.module.css";
+
+import { TopInfoBar } from "./blocks/__global/top-info-bar";
+import { MainNavigationBar } from "./blocks/__global/main-navigation-bar";
+import { FloatingWhatsAppButton } from "./blocks/__global/floating-whats-app-button";
+import { FooterMainContent } from "./blocks/__global/footer-main-content";
+import { FooterBottomBar } from "./blocks/__global/footer-bottom-bar";
 
 export const links: Route.LinksFunction = () => [
   {
@@ -22,7 +31,10 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.gstatic.com",
     crossOrigin: "anonymous",
   },
-  /* Placeholder for Google Fonts link */
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap",
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -37,7 +49,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <header className={styles.siteHeader}>
+          <TopInfoBar />
+          <MainNavigationBar />
+        </header>
+        <FloatingWhatsAppButton />
         {children}
+        <footer>
+          <FooterMainContent />
+          <FooterBottomBar />
+        </footer>
+
         <ScrollRestoration />
         <Scripts />
       </body>

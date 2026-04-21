@@ -1,0 +1,13 @@
+.section { padding: var(--space-20) var(--space-6); background-color: var(--color-bg-subtle); }
+.inner { max-width: var(--container-max); margin: 0 auto; }
+.header { text-align: center; margin-bottom: var(--space-12); }
+.sectionLabel { display: block; font-size: var(--text-sm); font-weight: 600; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-2); }
+.title { font-size: clamp(28px, 4vw, 40px); font-weight: 800; color: var(--color-navy); margin: 0 0 var(--space-4); }
+.missionText { font-size: var(--text-lg); color: var(--color-text-muted); max-width: 700px; margin: 0 auto; line-height: 1.8; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); margin-top: var(--space-12); }
+.card { background-color: var(--color-white); border-radius: var(--radius-xl); padding: var(--space-8) var(--space-6); text-align: center; box-shadow: var(--shadow-sm); }
+.iconWrap { width: 64px; height: 64px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); }
+.cardTitle { font-size: var(--text-base); font-weight: 700; color: var(--color-navy); margin: 0 0 var(--space-2); }
+.cardDesc { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; line-height: 1.7; }
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }

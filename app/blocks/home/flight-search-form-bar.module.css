@@ -1,0 +1,134 @@
+.wrapper {
+  position: relative;
+  z-index: 10;
+  margin-top: -60px;
+  padding: 0 var(--space-6);
+}
+
+.card {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-8);
+}
+
+.tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 0;
+}
+
+.tab {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tab.activeTab {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.row {
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.row3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.row4 {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.row5 {
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: var(--color-bg-subtle);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  background-color: var(--color-white);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-2);
+}
+
+.submitBtn {
+  padding: var(--space-3) var(--space-10);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-base);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.submitBtn:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.successMsg {
+  text-align: center;
+  color: var(--color-success);
+  font-weight: 600;
+  padding: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .row3, .row4, .row5 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .row3, .row4, .row5 {
+    grid-template-columns: 1fr;
+  }
+  .card {
+    padding: var(--space-5);
+  }
+}

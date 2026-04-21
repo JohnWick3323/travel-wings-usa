@@ -1,0 +1,6 @@
+.page { min-height: 100vh; background-color: var(--color-bg-subtle); }
+.header { background-color: var(--color-navy); padding: var(--space-5) var(--space-6); display: flex; align-items: center; justify-content: space-between; }
+.headerTitle { font-size: var(--text-xl); font-weight: 700; color: var(--color-white); margin: 0; }
+.logoutBtn { padding: var(--space-2) var(--space-5); background-color: rgba(255,255,255,0.15); color: var(--color-white); border: none; border-radius: var(--radius-pill); font-size: var(--text-sm); font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+.logoutBtn:hover { background-color: rgba(255,255,255,0.25); }
+.content { max-width: 1400px; margin: 0 auto; padding: var(--space-8) var(--space-6); }

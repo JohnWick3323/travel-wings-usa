@@ -1,0 +1,82 @@
+:root {
+  /* Colors */
+  --color-primary: #015FC9;
+  --color-primary-dark: #0149a0;
+  --color-primary-light: #e8f0fb;
+  --color-accent: #FF9D3D;
+  --color-accent-dark: #e8881e;
+  --color-navy: #16243D;
+  --color-navy-light: #1e3255;
+  --color-white: #ffffff;
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f8f9fc;
+  --color-bg-muted: #f0f4fa;
+  --color-text: #16243D;
+  --color-text-muted: #6b7280;
+  --color-text-light: #9ca3af;
+  --color-border: #e5e7eb;
+  --color-border-light: #f3f4f6;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-new: #015FC9;
+  --color-contacted: #FF9D3D;
+  --color-closed: #10b981;
+
+  /* Fonts */
+  --family-body: 'Plus Jakarta Sans', sans-serif;
+  --family-display: 'Plus Jakarta Sans', sans-serif;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Font Sizes */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 36px;
+  --text-5xl: 48px;
+  --text-6xl: 60px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 30px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.18);
+
+  /* Layout */
+  --container-max: 1280px;
+  --nav-height: 80px;
+  --top-bar-height: 40px;
+}
+
+body {
+  font-family: var(--family-body);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  font-size: var(--text-base);
+  line-height: 1.6;
+}

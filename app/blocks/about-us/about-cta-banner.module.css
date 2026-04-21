@@ -1,0 +1,17 @@
+.section {
+  position: relative;
+  padding: var(--space-20) var(--space-6);
+  background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&q=70');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+.overlay { position: absolute; inset: 0; background-color: rgba(22,36,61,0.88); }
+.content { position: relative; max-width: 700px; margin: 0 auto; }
+.title { font-size: clamp(28px, 4vw, 46px); font-weight: 800; color: var(--color-white); margin: 0 0 var(--space-4); }
+.subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); margin: 0 0 var(--space-8); }
+.actions { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
+.btnBlue { padding: var(--space-4) var(--space-10); background-color: var(--color-primary); color: var(--color-white); border-radius: var(--radius-pill); font-size: var(--text-base); font-weight: 700; text-decoration: none; transition: background-color 0.2s, transform 0.2s; }
+.btnBlue:hover { background-color: var(--color-primary-dark); transform: translateY(-2px); }
+.btnOrange { padding: var(--space-4) var(--space-10); background-color: var(--color-accent); color: var(--color-white); border-radius: var(--radius-pill); font-size: var(--text-base); font-weight: 700; text-decoration: none; transition: background-color 0.2s, transform 0.2s; }
+.btnOrange:hover { background-color: var(--color-accent-dark); transform: translateY(-2px); }

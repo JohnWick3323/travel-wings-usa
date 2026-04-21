@@ -1,16 +1,36 @@
-import type { Route } from "./+types/home";
-import styles from "./home.module.css";
+import type { Route } from './+types/home';
+import { HeroSlider } from '~/blocks/home/hero-slider';
+import { FlightSearchFormBar } from '~/blocks/home/flight-search-form-bar';
+import { ServiceCategories } from '~/blocks/home/service-categories';
+import { AboutSnapshot } from '~/blocks/home/about-snapshot';
+import { PopularDestinationsCarousel } from '~/blocks/home/popular-destinations-carousel';
+import { FeaturedToursSlider } from '~/blocks/home/featured-tours-slider';
+import { WhyChooseUs } from '~/blocks/home/why-choose-us';
+import { CustomerTestimonials } from '~/blocks/home/customer-testimonials';
+import { LatestBlogPreview } from '~/blocks/home/latest-blog-preview';
+import { FinalCtaBanner } from '~/blocks/home/final-cta-banner';
+import styles from './home.module.css';
 
-export function meta({}: Route.MetaArgs) {
+export function meta(_: Route.MetaArgs) {
   return [
-    { title: "Empty Template" },
-    {
-      name: "description",
-      content: "A welcoming empty template ready for content generation",
-    },
+    { title: 'Travel Wings USA - Umrah, Hajj & International Travel Packages' },
+    { name: 'description', content: 'Travel Wings USA specializes in Umrah packages, Hajj packages, international flights, and vacation tours. Located in Gwynn Oak, MD. Call +1 410-298-4500.' },
   ];
 }
 
 export default function Home() {
-  return <main className={styles.home}>I'm an empty template.</main>;
+  return (
+    <main className={styles.page}>
+      <HeroSlider />
+      <FlightSearchFormBar />
+      <ServiceCategories />
+      <AboutSnapshot />
+      <PopularDestinationsCarousel />
+      <FeaturedToursSlider />
+      <WhyChooseUs />
+      <CustomerTestimonials />
+      <LatestBlogPreview />
+      <FinalCtaBanner />
+    </main>
+  );
 }

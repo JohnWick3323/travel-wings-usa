@@ -1,0 +1,17 @@
+.overlay { position: fixed; inset: 0; z-index: 5000; background-color: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: var(--space-6); }
+.modal { background-color: var(--color-white); border-radius: var(--radius-xl); max-width: 640px; width: 100%; max-height: 80vh; overflow-y: auto; box-shadow: var(--shadow-xl); }
+.header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--color-border); }
+.title { font-size: var(--text-xl); font-weight: 700; color: var(--color-navy); margin: 0; }
+.closeBtn { background: none; border: none; cursor: pointer; color: var(--color-text-muted); padding: var(--space-2); }
+.body { padding: var(--space-6); }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-5); }
+.field { }
+.fieldLabel { font-size: var(--text-xs); font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; margin-bottom: 4px; }
+.fieldValue { font-size: var(--text-sm); color: var(--color-text); }
+.divider { border: none; border-top: 1px solid var(--color-border); margin: var(--space-5) 0; }
+.label { font-size: var(--text-xs); font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; margin-bottom: var(--space-2); display: block; }
+.select { width: 100%; padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-sm); outline: none; margin-bottom: var(--space-4); }
+.textarea { width: 100%; padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-sm); outline: none; resize: vertical; min-height: 100px; font-family: inherit; margin-bottom: var(--space-4); }
+.saveBtn { padding: var(--space-2) var(--space-6); background-color: var(--color-primary); color: var(--color-white); border: none; border-radius: var(--radius-pill); font-size: var(--text-sm); font-weight: 700; cursor: pointer; transition: background-color 0.2s; }
+.saveBtn:hover { background-color: var(--color-primary-dark); }
+.saved { color: var(--color-success); font-size: var(--text-sm); margin-left: var(--space-3); }

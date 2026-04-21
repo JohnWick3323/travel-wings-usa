@@ -1,0 +1,138 @@
+.footer {
+  background-color: var(--color-navy);
+  color: rgba(255,255,255,0.8);
+  padding: var(--space-16) var(--space-6);
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: var(--space-10);
+}
+
+.col {}
+
+.logoText {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--color-white);
+  margin-bottom: var(--space-4);
+}
+
+.logoAccent {
+  color: var(--color-accent);
+}
+
+.description {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: var(--space-5);
+}
+
+.social {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background-color: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.socialLink:hover {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+}
+
+.colTitle {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: var(--space-5);
+  position: relative;
+  padding-bottom: var(--space-3);
+}
+
+.colTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 36px;
+  height: 2px;
+  background-color: var(--color-accent);
+  border-radius: 2px;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerLink {
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  transition: color 0.2s, padding-left 0.2s;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.footerLink:hover {
+  color: var(--color-accent);
+  padding-left: 4px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,0.65);
+}
+
+.contactIcon {
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.contactLink {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contactLink:hover {
+  color: var(--color-accent);
+}
+
+@media (max-width: 1024px) {
+  .inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+  }
+}
+
+@media (max-width: 640px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,8 @@
+.bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); margin-bottom: var(--space-8); }
+.card { background-color: var(--color-white); border-radius: var(--radius-xl); padding: var(--space-6); box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: var(--space-4); }
+.iconWrap { width: 52px; height: 52px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.info {}
+.label { font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 500; }
+.count { font-size: var(--text-3xl); font-weight: 800; color: var(--color-navy); line-height: 1; }
+@media (max-width: 900px) { .bar { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .bar { grid-template-columns: 1fr; } }

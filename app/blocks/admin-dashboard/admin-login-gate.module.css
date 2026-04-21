@@ -1,0 +1,12 @@
+.overlay { min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: var(--color-bg-subtle); padding: var(--space-6); }
+.card { background-color: var(--color-white); border-radius: var(--radius-xl); padding: var(--space-10) var(--space-8); box-shadow: var(--shadow-xl); width: 100%; max-width: 420px; text-align: center; }
+.logoText { font-size: var(--text-xl); font-weight: 800; color: var(--color-navy); margin-bottom: var(--space-2); }
+.logoAccent { color: var(--color-accent); }
+.heading { font-size: var(--text-2xl); font-weight: 700; color: var(--color-navy); margin: 0 0 var(--space-6); }
+.field { display: flex; flex-direction: column; gap: var(--space-2); text-align: left; margin-bottom: var(--space-4); }
+.label { font-size: var(--text-sm); font-weight: 600; color: var(--color-text-muted); }
+.input { padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); outline: none; transition: border-color 0.2s; }
+.input:focus { border-color: var(--color-primary); }
+.btn { width: 100%; padding: var(--space-3); background-color: var(--color-primary); color: var(--color-white); border: none; border-radius: var(--radius-pill); font-size: var(--text-base); font-weight: 700; cursor: pointer; transition: background-color 0.2s; margin-top: var(--space-2); }
+.btn:hover { background-color: var(--color-primary-dark); }
+.error { color: var(--color-error); font-size: var(--text-sm); margin-top: var(--space-3); }

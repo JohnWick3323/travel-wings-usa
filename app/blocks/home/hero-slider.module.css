@@ -1,0 +1,168 @@
+.slider {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation: kenBurns 8s ease-in-out infinite alternate;
+}
+
+.slide.active .bg {
+  animation: kenBurns 8s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurns {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(22,36,61,0.75) 0%, rgba(22,36,61,0.4) 100%);
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 var(--space-6);
+  padding-top: 80px;
+}
+
+.subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-accent);
+  font-style: italic;
+  margin-bottom: var(--space-4);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.title {
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 800;
+  color: var(--color-white);
+  line-height: 1.1;
+  margin-bottom: var(--space-6);
+  max-width: 800px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btnPrimary {
+  padding: var(--space-3) var(--space-8);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-base);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btnPrimary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+.btnOutline {
+  padding: var(--space-3) var(--space-8);
+  border: 2px solid var(--color-white);
+  color: var(--color-white);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-base);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.btnOutline:hover {
+  background-color: var(--color-white);
+  color: var(--color-navy);
+  transform: translateY(-2px);
+}
+
+.arrows {
+  position: absolute;
+  bottom: 50%;
+  transform: translateY(50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  pointer-events: none;
+}
+
+.arrow {
+  pointer-events: all;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background-color: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 20px;
+}
+
+.arrow:hover {
+  background-color: var(--color-primary);
+}
+
+.dots {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--space-2);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  border: none;
+  padding: 0;
+}
+
+.dot.activeDot {
+  background-color: var(--color-accent);
+  transform: scale(1.3);
+}

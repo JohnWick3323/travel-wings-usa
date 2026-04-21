@@ -1,0 +1,117 @@
+.section {
+  padding: var(--space-20) var(--space-6);
+  background-color: var(--color-bg-subtle);
+  overflow: hidden;
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--space-10);
+}
+
+.sectionLabel {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-2);
+}
+
+.title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  color: var(--color-navy);
+  margin: 0;
+}
+
+.viewAll {
+  padding: var(--space-2) var(--space-6);
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: var(--text-sm);
+  transition: background-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.viewAll:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.carousel {
+  display: flex;
+  gap: var(--space-5);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: var(--space-4);
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  flex-shrink: 0;
+  width: 260px;
+  scroll-snap-align: start;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+  height: 360px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.cardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(22,36,61,0.9) 0%, rgba(22,36,61,0.2) 50%, transparent 100%);
+}
+
+.cardContent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-5);
+}
+
+.destName {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0 0 var(--space-2);
+}
+
+.destCountry {
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}

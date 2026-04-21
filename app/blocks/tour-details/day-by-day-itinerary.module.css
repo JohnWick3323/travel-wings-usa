@@ -1,0 +1,94 @@
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  cursor: pointer;
+  background-color: var(--color-bg-subtle);
+  gap: var(--space-3);
+}
+
+.dayLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.dayBadge {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-radius: var(--radius-full);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.dayTitle {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-navy);
+  margin: 0;
+}
+
+.chevron {
+  color: var(--color-text-muted);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+.body {
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--color-border);
+  display: none;
+}
+
+.body.open {
+  display: block;
+}
+
+.activities {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.activity {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
