@@ -1,82 +1,112 @@
 {
-  "title": "Travel Wings USA - Travel Booking Platform",
-  "description": "Travel Wings USA is a modern, lead-generation travel booking platform designed to showcase premium travel packages and convert visitors into qualified leads. The platform enables users to browse destinations, view detailed tour itineraries, and submit inquiries through integrated quote request forms. With direct communication channels via phone and WhatsApp, the platform focuses on seamless customer engagement and high-converting user experiences.",
+  "title": "Travel Wings USA - Modern Lead-Gen Travel Platform",
+  "description": "Travel Wings USA is a fully redesigned, modern lead-generation travel platform for a USA-based travel agency located at 1724 Woodlawn Dr Suite 12, Gwynn Oak, MD 21207 (phone: +1 410-298-4500, email: info@travelwingsusa.com). The platform showcases Umrah packages, Hajj packages, air ticketing (flights to Pakistan, Saudi Arabia, UAE, India, Europe, UK), and curated vacation tour packages (Baghdad, Singapore, Paris, London, Malaysia, Turkey, Switzerland, UAE, and more). All conversion happens through inquiry forms, phone calls, and WhatsApp - no direct payments. Design is inspired by Tourm and Journea: full-screen hero sliders, coverflow destination carousels, modern card grids, and swiper-based tour sliders.",
   "globalHeaderBlocks": [
     {
-      "name": "Navigation Bar",
-      "description": "Top navigation bar with logo, main menu links (Home, Destinations, Blog, About, Contact), and prominent Call/WhatsApp action buttons for direct customer contact.",
+      "name": "Top Info Bar",
+      "description": "Slim top bar (dark navy background) showing address '1724 Woodlawn Dr Suite 12, Gwynn Oak, MD 21207', email 'info@travelwingsusa.com', and social media icons (Facebook, Instagram, Google). Hidden on mobile.",
       "id": "c33b0b12-8fd4-47ee-9196-5d406aa71f90"
     },
     {
-      "name": "Floating Contact Widget",
-      "description": "Sticky floating widget with quick-access phone and WhatsApp buttons visible across all pages for instant customer support and lead capture.",
+      "name": "Main Navigation Bar",
+      "description": "Sticky white navigation bar with Travel Wings USA logo on the left, centered menu links (Home, Umrah Services, Hajj Packages, Air Ticketing with dropdown for Pakistan/Saudi Arabia/UAE/India/Europe/UK flights, Destinations, Blog, About, Contact), and right-side CTA buttons: a prominent orange 'WhatsApp' button and a blue 'Call: +1 410-298-4500' button. Mobile hamburger menu with offcanvas drawer.",
       "id": "442fe060-e656-449b-b41f-c5571b65c625"
+    },
+    {
+      "name": "Floating WhatsApp Button",
+      "description": "Fixed circular WhatsApp icon button pinned to the bottom-right corner across all pages, opening WhatsApp chat with the agency. Appears on scroll and persists at all times on mobile and desktop.",
+      "id": "f1a3c901-22d4-4e88-a9f7-81234567890a"
     }
   ],
   "globalFooterBlocks": [
     {
-      "name": "Footer Links Section",
-      "description": "Multi-column footer with links to main pages, destinations, blog categories, and company information organized for easy navigation and SEO.",
+      "name": "Footer Main Content",
+      "description": "Four-column footer with: (1) Company column - logo, short brand description, social media icons (Facebook, Instagram, Google); (2) Quick Links column - Home, About Us, Destinations, Blog, Contact; (3) Services column - Umrah Services, Hajj Packages, Air Ticketing, Vacation Tours, Flight to Pakistan, Flight to UK; (4) Contact column - address '1724 Woodlawn Dr Suite 12, Gwynn Oak, MD 21207', phone '+1 410-298-4500', fax '410-298-5500', email 'info@travelwingsusa.com'.",
       "id": "e2e078f1-9c01-4872-b682-316aad2ea507"
     },
     {
-      "name": "Footer Contact Information",
-      "description": "Footer section displaying office address, phone numbers, email, and social media links for customer support and brand engagement.",
+      "name": "Footer Bottom Bar",
+      "description": "Slim copyright bar at the very bottom with '2025 Travel Wings USA. All Rights Reserved.' text on left and links to Privacy Policy and Terms of Service on the right.",
       "id": "07b808d7-6b34-4a3d-85d5-a9c6fbad948b"
     }
   ],
   "pages": [
     {
       "name": "Home",
-      "description": "The landing page featuring a stunning hero section with call-to-action, featured destinations carousel, customer testimonials, and prominent inquiry buttons to capture initial leads.",
+      "description": "The main landing page designed to inspire and convert. Features a full-screen hero slider with travel imagery, a quick flight inquiry form, service category icons, a popular destinations coverflow carousel, an about section, a featured tours slider, customer testimonials, a blog preview strip, and a final call-to-action banner. Inspired by Tourm and Journea homepage layouts.",
       "uri": "/",
       "blocks": [
         {
-          "name": "Hero Section",
-          "description": "Large banner with inspiring travel imagery, headline, subheading, and primary 'Get a Quote' call-to-action button.",
+          "name": "Hero Slider",
+          "description": "Full-screen auto-playing image slider with 3 slides showing inspiring travel photography. Each slide has an animated headline (e.g. 'The First Step of Your Travel Expedition', 'Your Umrah Journey Departing Worldwide', 'Discover, Dream, Travel'), a subtitle in a script/handwritten font in orange (#FF9D3D), and two CTA buttons: primary 'Explore Tours' (blue #015FC9) and secondary 'Get a Quote' (outline style). Arrows and dot pagination for navigation.",
           "id": "83765550-0cf5-41d9-9e25-a64779d3b7e5"
         },
         {
-          "name": "Featured Destinations",
-          "description": "Carousel or grid showcasing 4-6 popular travel destinations with images, brief descriptions, and 'Explore' links.",
+          "name": "Flight Search Form Bar",
+          "description": "A floating white card below the hero (overlapping it slightly) with tabs for 'One Way' and 'Round Trip'. Form fields: Name, Email, Phone (row 1); From city, To city, Departure date, Number of Passengers (row 2 - one way) or From, To, Departure, Return date, Passengers (round trip). A prominent blue 'Get Flight Enquiry' submit button. Sends lead notification to admin.",
           "id": "d731ef05-d882-434b-9226-cada22dc6b70"
         },
         {
-          "name": "How It Works",
-          "description": "Simple 3-step process section explaining the inquiry flow: Browse Packages, Request Quote, Get Contacted.",
+          "name": "Service Categories",
+          "description": "A section titled 'Choose Our Tour Types and Enjoy Now' with 5 icon-based category cards in a horizontal grid: (01) Umrah Services, (02) Hajj Packages, (03) Air Ticketing, (04) Cruise Tours, (05) Vacations. Each card has a numbered badge, an icon, title, and links to the relevant page.",
           "id": "784304b4-4e73-4818-912e-2c5df696ab34"
         },
         {
-          "name": "Customer Testimonials",
-          "description": "Carousel displaying customer reviews and ratings to build trust and credibility with potential leads.",
+          "name": "About Snapshot",
+          "description": "Two-column section: left side has a collage of 3 overlapping travel photos (staggered/rotated layout like Journea's about section); right side has a subtitle 'GET TO KNOW US', heading 'Experience the World with Our Company', description text about Travel Wings USA offering Umrah, Hajj, air ticketing, and vacations, and a 'Learn More' button linking to /about.",
           "id": "a9a97143-8d23-443f-8506-8fd1041af5c1"
         },
         {
-          "name": "Call-to-Action Banner",
-          "description": "Full-width banner with compelling message and prominent 'Request Your Quote' button to drive conversions.",
+          "name": "Popular Destinations Carousel",
+          "description": "Section titled 'Popular Destinations' with a coverflow/3D swiper carousel of destination cards. Each card shows a high-quality image, destination name (e.g. Baghdad, Singapore, Paris, London, Makkah, Dubai, Malaysia, Turkey, Switzerland), and a 'View All' button. Cards in the center appear larger, side cards are angled/scaled down for depth effect.",
           "id": "82aa851a-5c73-4c8c-bec6-e3e0d694827f"
+        },
+        {
+          "name": "Featured Tours Slider",
+          "description": "Section titled 'Most Popular Tours' on a textured background image. Horizontal swiper slider with tour cards: each card has a destination image, tour name (e.g. 'Baghdad City Package', 'Singapore City Escape', 'Paris Getaway Package', 'London Package 7 Nights', 'Umrah Package 2025'), duration badge (e.g. '4 Days 3 Nights'), star rating, and a 'Get Quote' button that anchors to the inquiry form. No pricing shown.",
+          "id": "5cd02156-47fd-472b-bc71-309f85f4ccaf"
+        },
+        {
+          "name": "Why Choose Us",
+          "description": "Section titled 'Why Choose Us?' with 6 icon-box cards in a 2x3 or 3x2 grid: Experienced Team, Umrah and Hajj Specialists, Air Ticketing Experts, 24/7 Customer Support, Personalized Service, Trusted by Thousands. Each card has a colored icon background, title, and short description.",
+          "id": "898775a3-82b9-4ccd-9a17-b8a6af85e5ea"
+        },
+        {
+          "name": "Customer Testimonials",
+          "description": "Section titled 'What Our Travelers Are Saying' with a swiper slider of testimonial cards. Each card shows star rating, quote text, customer name, and origin location. Cards have a white rounded shadow box design like Journea's testimonials.",
+          "id": "36c9423f-748f-41fa-be3f-19a24cf6235d"
+        },
+        {
+          "name": "Latest Blog Preview",
+          "description": "Section titled 'Latest Travel Tips and News' showing 3-4 blog post cards in a horizontal grid. Each card has a full-height background image with text overlaid at the bottom: date badge, article title, and short excerpt. On hover, a card scales slightly. Links to /blog.",
+          "id": "80239960-795a-493e-807c-5842414b7eb9"
+        },
+        {
+          "name": "Final CTA Banner",
+          "description": "Full-width banner section with a bold heading 'Ready to Plan Your Dream Trip?', supporting text 'Contact us today and let our experts create the perfect package for you.', and two side-by-side CTA buttons: blue 'Request a Quote' (links to /contact) and orange 'Call Now: +1 410-298-4500' (tel link). Background uses a travel-themed image with a dark overlay.",
+          "id": "beade339-547d-4a68-a7f8-db574817a3c9"
         }
       ],
       "id": "b587aace-3300-466c-b32c-a629eb7b3753"
     },
     {
       "name": "Destinations",
-      "description": "Comprehensive listing page displaying all available travel destinations and packages in an organized, filterable grid format with quick access to detailed tour information.",
+      "description": "All-tours listing page showing every available travel package in a searchable, filterable grid. Includes sidebar filters for destination region, duration, and category. Each tour card shows image, tour name, location, duration, and a 'View Details' button. Mirrors the structure of travelwingsusa.com/all-tours/ with a modern visual upgrade.",
       "uri": "/destinations",
       "blocks": [
         {
-          "name": "Page Header",
-          "description": "Section with page title, brief introduction, and optional filter/search controls for destinations.",
+          "name": "Page Hero Banner",
+          "description": "Full-width page banner with a background travel image, page title 'All Destinations and Packages', and breadcrumb navigation (Home > Destinations). Uses a Ken Burns zoom-in effect on the background image.",
           "id": "8be9ce8d-e098-4c0e-adcd-aee11c0572de"
         },
         {
-          "name": "Destinations Grid",
-          "description": "Grid layout displaying destination cards with images, location names, brief descriptions, and 'View Details' buttons.",
+          "name": "Filter and Search Bar",
+          "description": "Horizontal filter bar with: a text search input, a 'Category' dropdown (Umrah, Hajj, Air Ticketing, Vacation Tours, Cruise), a 'Destination' dropdown (Iraq, Malaysia, Paris, UK, UAE, Spiritual Journey, Singapore, Turkey, Switzerland), a 'Duration' dropdown (3-7 days), and a 'Sort By' selector. Results count displayed dynamically.",
           "id": "3d7986b0-9065-46a2-bc76-88a7df8e8457"
         },
         {
-          "name": "Quick Inquiry Section",
-          "description": "Sidebar or bottom section with quick quote form allowing users to request information without leaving the destinations page.",
+          "name": "Tours Grid",
+          "description": "Responsive grid of tour cards (3 columns desktop, 2 tablet, 1 mobile). Each card shows: destination image, category badge (e.g. 'Umrah', 'Vacation'), tour title, location with pin icon, duration with clock icon, and a 'View Details' CTA button. Sample tours: Baghdad City Package (4 Days 3 Nights, Iraq), Singapore City Escape (4 Days 3 Nights), Paris Getaway Package (4 Days 3 Nights), London Package 7 Nights, Umrah Package 2025, Hajj Package 2025, Malaysia Tour, Turkey Package, UAE Dubai Package, Switzerland Tour.",
           "id": "26667c28-3f70-4005-abc3-6779b72449cc"
         }
       ],
@@ -84,60 +114,65 @@
     },
     {
       "name": "Tour Details",
-      "description": "Detailed page for individual tour packages featuring complete itinerary, high-quality image gallery, pricing information, and dedicated quote request form.",
+      "description": "Individual tour package detail page with full itinerary, image gallery, package inclusions/exclusions, and a sticky quote request form. Covers all tour types: Umrah packages, Hajj packages, vacation tours, and air ticketing flights.",
       "uri": "/tour/:tourId",
       "blocks": [
         {
-          "name": "Tour Image Gallery",
-          "description": "Large image carousel showcasing multiple high-resolution photos of the destination with thumbnail navigation.",
+          "name": "Tour Page Hero",
+          "description": "Full-width banner with tour name as heading, breadcrumb (Home > Destinations > Tour Name), and a cinematic background image of the destination with dark overlay.",
           "id": "bfb05c6e-df3a-4555-acf6-c17454943b0f"
         },
         {
-          "name": "Tour Overview",
-          "description": "Section displaying tour title, duration, destination, highlights, and key information at a glance.",
+          "name": "Tour Image Gallery",
+          "description": "Main large image with 4-5 thumbnail images below in a grid. Clicking any thumbnail or the main image opens a lightbox fullscreen viewer. Shows multiple high-resolution photos of the destination.",
           "id": "f6f92a3d-db1a-4f35-8167-1c9b96aa0902"
         },
         {
-          "name": "Detailed Itinerary",
-          "description": "Day-by-day breakdown of the tour schedule with activities, accommodations, and meal information.",
+          "name": "Tour Overview and Highlights",
+          "description": "Left-side main content area showing: tour title, key info badges (duration, destination, group size, category), short description paragraph, and a bulleted Highlights list. Below that, tab-based sections for Overview, Itinerary, Inclusions/Exclusions, and FAQs.",
           "id": "8bcd1d4f-8f73-4759-b6e8-a80b2f6f23b3"
         },
         {
-          "name": "Inclusions and Exclusions",
-          "description": "Clear lists of what is included in the package (flights, hotels, meals, etc.) and what is not included.",
+          "name": "Day-by-Day Itinerary",
+          "description": "Accordion-style day-by-day itinerary inside the 'Itinerary' tab. Each accordion item shows 'Day X: Title' as the header and expands to show activities, sightseeing, meals, and hotel info for that day.",
           "id": "95eb6f56-3eee-414d-97de-b502a8a55719"
         },
         {
-          "name": "Quote Request Form",
-          "description": "Dedicated form capturing user details, travel dates, number of travelers, and specific requirements for quote generation.",
+          "name": "Inclusions and Exclusions",
+          "description": "Two-column checklist inside the 'Inclusions/Exclusions' tab: green checkmark list for what IS included (visa, hotel, transfers, meals, guide, etc.) and red X list for what is NOT included (personal expenses, optional tours, etc.).",
           "id": "1009caf2-ca1b-4ef6-8662-71cfd66704c3"
         },
         {
-          "name": "Related Tours",
-          "description": "Section suggesting similar or complementary tour packages to increase engagement and lead opportunities.",
+          "name": "Sticky Quote Request Form",
+          "description": "Right-side sticky sidebar form titled 'Request a Free Quote'. Fields: Full Name, Email Address, Phone Number, Travel Date (date picker), Number of Travelers, Special Requirements (textarea). Submit button: blue 'Send Inquiry'. On submission, admin receives email notification and user receives a 'Thank You' confirmation email. Also shows 'Or Call Us' with phone number and a WhatsApp button.",
           "id": "638a04a2-c26d-45d8-9c91-fd034b189b4b"
+        },
+        {
+          "name": "Related Tours",
+          "description": "Section at the bottom titled 'You May Also Like' with 3 related tour cards in a horizontal row, each linking to another tour detail page.",
+          "id": "e975a729-a645-4cb3-b92f-73a35e02724b"
         }
       ],
       "id": "c1a12869-3bdf-47a1-b8a1-64543b1563c4"
     },
     {
       "name": "Blog",
-      "description": "Blog listing page displaying travel guides, tips, and articles in a grid format with search and category filtering capabilities.",
+      "description": "Travel blog listing page with articles about travel tips, destination guides, Umrah preparation, and more. Designed to attract organic SEO traffic and funnel readers toward tour packages.",
       "uri": "/blog",
       "blocks": [
         {
-          "name": "Blog Header",
-          "description": "Page title, introduction, and optional search bar and category filter controls.",
+          "name": "Blog Page Hero",
+          "description": "Full-width hero banner with title 'Travel Blog and Tips', breadcrumb, and a travel-themed background image.",
           "id": "9e7ba4fe-5b32-442a-964e-027f9e91c9c1"
         },
         {
-          "name": "Blog Articles Grid",
-          "description": "Grid layout displaying blog post cards with featured images, titles, excerpts, publish dates, and 'Read More' links.",
+          "name": "Blog Grid",
+          "description": "3-column card grid of blog posts. Each card has: full-height featured image with a dark overlay, date badge (top-right), article title, short excerpt, category tag (e.g. 'Umrah Tips', 'Destination Guide', 'Travel Hacks'), and a 'Read More' link. Hover effect scales image slightly. Sample articles: 'How to Prepare for Umrah 2025', 'Top 5 Things to Do in Dubai', 'Complete Guide to Flights from USA to Pakistan', 'Paris on a Budget: Travel Tips'.",
           "id": "51fd9470-369d-4caa-94db-4dc07148961f"
         },
         {
-          "name": "Newsletter Signup",
-          "description": "Sidebar or inline section encouraging users to subscribe for travel tips and updates with email input form.",
+          "name": "Newsletter Signup Strip",
+          "description": "A full-width inline banner section below the grid with heading 'Get Travel Tips in Your Inbox', short description, and an email input + 'Subscribe' button (pill-shaped). Collects emails for travel news and deals.",
           "id": "3af5c620-1477-4b9d-aa7f-04c2654b5ec4"
         }
       ],
@@ -145,27 +180,22 @@
     },
     {
       "name": "Blog Article",
-      "description": "Individual blog post page with full article content, featured image, author information, and related tour packages to drive conversions.",
+      "description": "Individual blog post page with full article content, author info, social share buttons, and a sidebar with related tour packages to convert readers into leads.",
       "uri": "/blog/:articleId",
       "blocks": [
         {
           "name": "Article Header",
-          "description": "Article title, featured image, publish date, author name, and reading time estimate.",
+          "description": "Full-width featured image with article title, category tag, publish date, author name, and estimated reading time overlaid or displayed just below.",
           "id": "617907a9-0117-4aeb-8d8d-1bd2745d0496"
         },
         {
-          "name": "Article Content",
-          "description": "Full formatted article text with embedded images, headings, and structured content.",
+          "name": "Article Content and Sidebar",
+          "description": "Two-column layout: left/main column (70%) contains the full formatted article text with headings, paragraphs, and embedded images; right sidebar (30%) contains a 'Related Packages' widget showing 2-3 tour cards relevant to the article topic, each with a 'Get Quote' button, and a 'Need Help?' box with phone and WhatsApp links.",
           "id": "7f62087e-3382-4ba8-bc2a-c22b8e8ab07e"
         },
         {
-          "name": "Related Tours Section",
-          "description": "Sidebar or bottom section showcasing travel packages related to the article topic with quick quote buttons.",
-          "id": "6c57ffec-91fd-4f81-9d67-7697ea806f1c"
-        },
-        {
           "name": "Related Articles",
-          "description": "Section suggesting other blog posts of similar interest to keep users engaged on the platform.",
+          "description": "Section at the bottom of the article titled 'More Travel Reads' showing 3 related blog post cards in a grid.",
           "id": "947d70e2-1197-47b1-8f1c-bff9581a6953"
         }
       ],
@@ -173,32 +203,32 @@
     },
     {
       "name": "About Us",
-      "description": "Company information page detailing Travel Wings USA's history, mission, vision, team members, and commitment to customer service.",
+      "description": "Company profile page for Travel Wings USA, presenting the agency's story, values, credentials, team, and a strong CTA to contact or request a quote.",
       "uri": "/about",
       "blocks": [
         {
-          "name": "About Header",
-          "description": "Page title and introductory section with company overview and key values.",
+          "name": "About Page Hero",
+          "description": "Full-width banner with title 'About Travel Wings USA', breadcrumb navigation, and a travel-themed background.",
           "id": "64f445e6-6e79-49b0-a04a-e8f0fe05f5c1"
         },
         {
-          "name": "Company Story",
-          "description": "Narrative section describing the company's history, founding, and journey in the travel industry.",
+          "name": "Our Story Section",
+          "description": "Two-column section with a travel photo collage on the left (3 overlapping images in a staggered layout) and text on the right: 'GET TO KNOW US' subtitle, heading 'Experience the World with Travel Wings USA', description of the agency - a Maryland-based travel company specializing in Umrah/Hajj packages, international flights, and custom vacation tours, serving the community since its founding. Includes key stats: number of happy customers, destinations, years of experience.",
           "id": "e50d0ecf-7ff5-444a-81ed-cea7b605d11b"
         },
         {
-          "name": "Mission and Vision",
-          "description": "Section clearly stating the company's mission statement and long-term vision for customer service.",
+          "name": "Mission and Values",
+          "description": "Full-width or alternating section with heading 'Our Mission', a paragraph about providing seamless, personalized travel experiences especially for spiritual journeys (Umrah, Hajj), and 4 value cards: Customer First, Expert Guidance, Transparent Service, 24/7 Support.",
           "id": "24fdd09f-975f-4fa6-9e6d-7930e31e9991"
         },
         {
           "name": "Team Section",
-          "description": "Grid or carousel displaying team member profiles with photos, names, titles, and brief bios.",
+          "description": "Grid of team member cards (3-4 members) each with a professional photo, name, job title (e.g. 'Travel Consultant', 'Umrah Specialist'), and a brief bio. Clean white card design with subtle shadow.",
           "id": "40a0ceb2-4392-4ee0-b9da-ebc9bad11578"
         },
         {
-          "name": "Contact CTA",
-          "description": "Call-to-action section encouraging visitors to get in touch with the team for inquiries or partnerships.",
+          "name": "About CTA Banner",
+          "description": "Full-width CTA section at the bottom with heading 'Ready to Start Your Journey?', supporting text, and two buttons: 'Request a Quote' and 'Call +1 410-298-4500'. Dark background with travel image overlay.",
           "id": "ef94c1fc-3a76-4cb2-9b06-17bfdb07cd4c"
         }
       ],
@@ -206,27 +236,27 @@
     },
     {
       "name": "Contact Us",
-      "description": "Contact page providing multiple communication channels including contact form, office location map, phone numbers, email, and social media links.",
+      "description": "Contact page with multiple communication options including a detailed inquiry form, real contact details, an embedded map, and prominent phone/WhatsApp CTAs.",
       "uri": "/contact",
       "blocks": [
         {
-          "name": "Contact Header",
-          "description": "Page title and brief introduction explaining available contact methods.",
+          "name": "Contact Page Hero",
+          "description": "Full-width banner with title 'Contact Travel Wings USA', subtitle 'We are here to help you plan your perfect trip', and breadcrumb navigation.",
           "id": "680e3657-4013-4154-8dbf-1ad272fd05ff"
         },
         {
-          "name": "Contact Form",
-          "description": "Form collecting visitor name, email, phone, subject, and message for general inquiries with submission handling.",
+          "name": "Contact Details Cards",
+          "description": "Row of 3 info cards with icons: (1) Location - '1724 Woodlawn Dr Suite 12, Gwynn Oak, MD 21207'; (2) Phone - '+1 (410) 298-4500 / Fax: 410-298-5500'; (3) Email - 'info@travelwingsusa.com'. Each card has a blue icon background circle and a link.",
           "id": "e83a8b38-fefc-4f4f-9e50-bc3cdb449571"
         },
         {
-          "name": "Contact Information",
-          "description": "Display of office address, phone numbers, email addresses, business hours, and social media links.",
+          "name": "Contact Form and Map",
+          "description": "Two-column section: left side has a general inquiry form with fields Name, Email, Phone, Subject, Message, and a 'Send Message' button. Right side has an embedded Google Map centered on '1724 Woodlawn Dr, Gwynn Oak, MD 21207'. On form submission, admin is notified and user gets an auto-reply email.",
           "id": "d90ea3a2-06bb-4859-b356-a7900b3b2be5"
         },
         {
-          "name": "Office Location Map",
-          "description": "Embedded map showing the company's office location with address and directions.",
+          "name": "Direct Contact CTA Strip",
+          "description": "Full-width colored strip (blue or orange gradient) with heading 'Prefer to Talk Directly?' and two large buttons: 'Call Now: +1 410-298-4500' (with phone icon) and 'Chat on WhatsApp' (with WhatsApp icon). Designed for immediate lead conversion.",
           "id": "1b1d13e0-18e1-43ef-ab6f-d78ed2298c05"
         }
       ],
@@ -235,45 +265,46 @@
   ],
   "features": [
     {
-      "name": "Lead Capture System",
-      "description": "Integrated quote request forms across tour detail pages and destination listings that capture user details, travel preferences, and specific requirements. Form submissions generate automated notifications to admin and thank-you emails to users.",
+      "name": "Lead Capture Forms",
+      "description": "Multiple inquiry form types across the platform: (1) Flight Enquiry Form on homepage with One Way/Round Trip tabs capturing name, email, phone, from/to cities, departure/return date, passenger count; (2) Tour Quote Request Form on every tour detail page capturing name, email, phone, travel date, number of travelers, special requirements. All submissions trigger an automated admin notification email and a 'Thank You' confirmation email to the user.",
       "id": "9e4e2199-c041-4d72-b852-ac80325c56f4"
     },
     {
       "name": "Direct Communication Channels",
-      "description": "Prominent Call Now and WhatsApp buttons integrated throughout the platform including header, footer, and floating widget. Enables instant customer contact and lead capture through multiple communication channels.",
+      "description": "Call Now and WhatsApp buttons appear prominently in: the main navigation bar, every tour detail page sidebar form, the contact page, about page CTA, and as a persistent floating WhatsApp bubble on all pages. Phone number: +1 410-298-4500. Clicking WhatsApp opens a pre-filled chat.",
       "id": "96b8f58d-c878-4bb9-9b26-6c3956b80d94"
     },
     {
-      "name": "Dynamic Tour Gallery",
-      "description": "High-quality image carousels and galleries on tour detail pages showcasing destinations with multiple photos, thumbnail navigation, and full-screen viewing capabilities.",
+      "name": "Dynamic Tour Catalog",
+      "description": "A complete catalog of travel packages including: Umrah Services (2025 packages departing worldwide), Hajj Packages (seasonal), Air Ticketing (one-way and round-trip flights to Pakistan, Saudi Arabia, UAE, India, Europe/UK), and Vacation Tours (Baghdad City Package, Singapore City Escape, Paris Getaway, London 7-Night Package, Malaysia Tour, Turkey Package, UAE/Dubai, Switzerland). All displayed with image galleries, itineraries, and inquiry forms. No pricing shown - all inquiries go through forms.",
       "id": "630e3c67-6d2b-4f15-bc52-fc9bd2fa3a2c"
     },
     {
-      "name": "Detailed Tour Information",
-      "description": "Comprehensive tour pages displaying day-by-day itineraries, inclusions/exclusions, pricing information, duration, destination highlights, and related package suggestions.",
+      "name": "Detailed Tour Pages",
+      "description": "Each tour has a dedicated detail page with: cinematic hero banner, lightbox image gallery, key info badges (duration, destination, group size), tab-based sections (Overview, Day-by-Day Itinerary via accordion, Inclusions/Exclusions checklists, FAQs), a sticky sidebar quote form, and related tour suggestions at the bottom.",
       "id": "635f122b-e738-4d16-975f-2c3ca299f0ac"
     },
     {
-      "name": "Blog Engine",
-      "description": "Content management system for publishing and managing travel guides, tips, and articles with SEO optimization. Blog posts are categorized, searchable, and linked to related tour packages for content-driven lead generation.",
+      "name": "SEO Blog Engine",
+      "description": "A travel blog for publishing SEO-optimized articles on topics like Umrah preparation, travel tips for Pakistan, Dubai guides, UK travel, Hajj guides, etc. Blog posts are categorized (Umrah Tips, Destination Guides, Travel Hacks, Air Travel), searchable, and each post has a related packages sidebar to convert readers into leads.",
       "id": "63517eb7-faa3-4010-bfa4-730c7f6a7248"
     },
     {
-      "name": "Responsive Design",
-      "description": "Fully responsive layout that provides optimal viewing and interaction experience across mobile devices, tablets, and desktop screens with consistent functionality and performance.",
+      "name": "Mobile-First Responsive Design",
+      "description": "Fully responsive layout optimized for mobile, tablet, and desktop. Mobile navigation uses an offcanvas hamburger drawer. The floating WhatsApp button is always visible on mobile. Forms are touch-friendly with appropriately sized inputs. Images are lazy-loaded and optimized for fast performance.",
       "id": "30d4446c-a390-470d-b8af-fc7fe9fa2070"
     },
     {
-      "name": "Customer Testimonials",
-      "description": "Dynamic testimonial carousel on homepage displaying customer reviews and ratings to build trust and credibility with potential leads.",
+      "name": "Interactive Destination Sliders",
+      "description": "Swiper.js-powered interactive carousels: (1) Full-screen hero slider with crossfade transitions and animated text overlays; (2) Coverflow 3D destination carousel on the homepage with perspective depth effect; (3) Horizontal tour card slider for featured packages; (4) Testimonial swiper with card-based review display. All sliders are touch/swipe enabled on mobile.",
       "id": "63993488-9e95-42dd-8489-5832b36e5433"
     },
     {
-      "name": "Search and Filtering",
-      "description": "Search functionality and filter controls on destinations and blog pages allowing users to find relevant content by keywords, categories, or other criteria.",
+      "name": "Search and Filter System",
+      "description": "On the Destinations page: search by keyword, filter by category (Umrah, Hajj, Vacation, Air Ticketing, Cruise), filter by destination region (Iraq, Pakistan, Saudi Arabia, UAE, UK, Europe, Malaysia, Singapore, Turkey, Switzerland, France), filter by duration (3-7+ days), and sort options (Recently Added, Top Rated, Shortest Duration). Results update dynamically.",
       "id": "d8da2435-c8aa-43fc-9783-13dd7cdf8870"
     }
   ],
-  "stylingGuidelines": "Modern, clean design with high-quality travel imagery and intuitive navigation. Use a professional color palette with prominent call-to-action buttons. Ensure full responsiveness across mobile, tablet, and desktop devices with smooth interactions and fast loading times."
+  "stylingGuidelines": "Brand colors: primary blue #015FC9, accent orange #FF9D3D, dark navy #16243D, white background. Font: Plus Jakarta Sans for all text (headings and body). Rounded pill-shaped CTA buttons (30px border-radius). Modern clean design inspired by Tourm and Journea: large full-screen hero images, bold headings, subtle card shadows, smooth hover transitions, and generous white space. High-quality travel photography throughout.",
+  "technicalDetails": "No direct payment gateway or pricing display. All conversion is through inquiry/quote forms and phone/WhatsApp CTAs. Form submissions must send admin email notifications and auto-reply thank-you emails to users. Use Swiper.js for all carousels and sliders. Google Maps embed on contact page centered on Gwynn Oak MD. All images should be lazy-loaded. WhatsApp floating button should link to wa.me with pre-filled message."
 }
