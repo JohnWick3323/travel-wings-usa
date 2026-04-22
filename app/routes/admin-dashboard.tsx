@@ -4,11 +4,14 @@ import { AdminLoginGate } from '~/blocks/admin-dashboard/admin-login-gate';
 import { AdminStatsBar } from '~/blocks/admin-dashboard/admin-stats-bar';
 import { LeadsManagementTable, type LeadRow } from '~/blocks/admin-dashboard/leads-management-table';
 import { LeadDetailModal } from '~/blocks/admin-dashboard/lead-detail-modal';
+import { BlogManager } from '~/blocks/admin-dashboard/blog-manager';
 import styles from './admin-dashboard.module.css';
 
 export function meta(_: Route.MetaArgs) {
   return [{ title: 'Admin Dashboard - Travel Wings USA' }];
 }
+
+type Tab = 'leads' | 'blogs';
 
 export default function AdminDashboard() {
   const [token, setToken] = useState<string | null>(() => {
@@ -17,6 +20,7 @@ export default function AdminDashboard() {
   });
   const [leads, setLeads] = useState<LeadRow[]>([]);
   const [selectedLead, setSelectedLead] = useState<LeadRow | null>(null);
+  const [activeTab, setActiveTab] = useState<Tab>('leads');
 
   const fetchLeads = useCallback(async () => {
     if (!token) return;
@@ -46,13 +50,42 @@ export default function AdminDashboard() {
   return (
     <main className={styles.page}>
       <div className={styles.header}>
-        <h1 className={styles.headerTitle}>Leads Dashboard</h1>
+        <h1 className={styles.headerTitle}>Admin Dashboard</h1>
         <button className={styles.logoutBtn} onClick={handleLogout}>Logout</button>
       </div>
-      <div className={styles.content}>
-        <AdminStatsBar leads={leads} />
-        <LeadsManagementTable leads={leads} token={token} onRefresh={fetchLeads} onSelect={setSelectedLead} />
+
+      <div className={styles.tabs}>
+        <button
+          className={activeTab === 'leads' ? styles.tabActive : styles.tab}
+          onClick={() => setActiveTab('leads')}
+        >
+          Leads
+        </button>
+        <button
+          className={activeTab === 'blogs' ? styles.tabActive : styles.tab}
+          onClick={() => setActiveTab('blogs')}
+        >
+          Blog Manager
+        </button>
       </div>
+
+      <div className={styles.content}>
+        {activeTab === 'leads' && (
+          <>
+            <AdminStatsBar leads={leads} />
+            <LeadsManagementTable
+              leads={leads}
+              token={token}
+              onRefresh={fetchLeads}
+              onSelect={setSelectedLead}
+            />
+          </>
+        )}
+        {activeTab === 'blogs' && (
+          <BlogManager token={token} />
+        )}
+      </div>
+
       {selectedLead && (
         <LeadDetailModal
           lead={selectedLead}

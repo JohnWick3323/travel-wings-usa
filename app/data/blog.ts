@@ -10,6 +10,10 @@ export interface BlogPost {
   image: string;
   relatedTourIds: string[];
   tags: string[];
+  // optional extras populated by DB blogs
+  _dbId?: number;
+  _seoTitle?: string | null;
+  _status?: string;
 }
 
 export const blogPosts: BlogPost[] = [

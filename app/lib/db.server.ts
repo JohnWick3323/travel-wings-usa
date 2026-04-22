@@ -43,6 +43,21 @@ function initDb(db: Database.Database): void {
       email TEXT NOT NULL UNIQUE,
       createdAt TEXT NOT NULL DEFAULT (datetime('now'))
     );
+    CREATE TABLE IF NOT EXISTS blogs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      slug TEXT NOT NULL UNIQUE,
+      seoTitle TEXT,
+      excerpt TEXT,
+      content TEXT NOT NULL DEFAULT '',
+      featuredImage TEXT,
+      category TEXT NOT NULL DEFAULT 'General',
+      author TEXT NOT NULL DEFAULT 'Travel Wings Team',
+      tags TEXT NOT NULL DEFAULT '[]',
+      status TEXT NOT NULL DEFAULT 'draft',
+      createdAt TEXT NOT NULL DEFAULT (datetime('now')),
+      updatedAt TEXT NOT NULL DEFAULT (datetime('now'))
+    );
   `);
 }
 
@@ -65,4 +80,20 @@ export interface Lead {
   status: 'new' | 'contacted' | 'closed';
   notes: string | null;
   createdAt: string;
+}
+
+export interface Blog {
+  id: number;
+  title: string;
+  slug: string;
+  seoTitle: string | null;
+  excerpt: string | null;
+  content: string;
+  featuredImage: string | null;
+  category: string;
+  author: string;
+  tags: string; // JSON string array
+  status: 'draft' | 'published';
+  createdAt: string;
+  updatedAt: string;
 }

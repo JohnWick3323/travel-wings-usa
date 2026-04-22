@@ -14,4 +14,6 @@ export default [
   route("/api/leads", "routes/api.leads.ts"),
   route("/api/leads/:id", "routes/api.leads.$id.ts"),
   route("/api/admin/login", "routes/api.admin.login.ts"),
+  route("/api/blogs", "routes/api.blogs.ts"),
+  route("/api/blogs/:id", "routes/api.blogs.$id.ts"),
 ] satisfies RouteConfig;

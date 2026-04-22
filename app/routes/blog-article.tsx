@@ -1,18 +1,38 @@
 import type { Route } from './+types/blog-article';
-import { useParams } from 'react-router';
 import { ArticleHeader } from '~/blocks/blog-article/article-header';
 import { ArticleContentAndSidebar } from '~/blocks/blog-article/article-content-and-sidebar';
 import { RelatedArticles } from '~/blocks/blog-article/related-articles';
-import { getBlogPostById, getRelatedPosts } from '~/data/blog';
+import { blogPosts, getBlogPostById, getRelatedPosts } from '~/data/blog';
+import { getBlogBySlug, getAllPublishedBlogs } from '~/lib/blog.server';
 import styles from './blog-article.module.css';
 
-export function meta({ params }: Route.MetaArgs) {
-  return [{ title: 'Blog Article - Travel Wings USA' }];
+export async function loader({ params }: Route.LoaderArgs) {
+  const { articleId } = params;
+  // Try DB first, then static fallback
+  const dbPost = getBlogBySlug(articleId || '');
+  const post = dbPost || getBlogPostById(articleId || '') || null;
+
+  const dbPosts = getAllPublishedBlogs();
+  const staticIds = new Set(blogPosts.map(p => p.id));
+  const dbOnly = dbPosts.filter(p => !staticIds.has(p.id));
+  const allPosts = [...dbOnly, ...blogPosts];
+  const related = allPosts.filter(p => p.id !== (post?.id || '')).slice(0, 3);
+
+  return { post, related };
 }
 
-export default function BlogArticle() {
-  const { articleId } = useParams();
-  const post = getBlogPostById(articleId || '');
+export function meta({ data }: Route.MetaArgs) {
+  const post = data?.post;
+  if (!post) return [{ title: 'Article Not Found - Travel Wings USA' }];
+  const seoTitle = post._seoTitle || post.title;
+  return [
+    { title: `${seoTitle} - Travel Wings USA` },
+    { name: 'description', content: post.excerpt || '' },
+  ];
+}
+
+export default function BlogArticle({ loaderData }: Route.ComponentProps) {
+  const { post, related } = loaderData;
 
   if (!post) {
     return (
@@ -23,8 +43,6 @@ export default function BlogArticle() {
       </main>
     );
   }
-
-  const related = getRelatedPosts(post.id, 3);
 
   return (
     <main className={styles.page}>

@@ -10,20 +10,34 @@ interface Props {
   className?: string;
 }
 
+/** Check if content looks like HTML */
+function isHtml(content: string): boolean {
+  return /<[a-z][\s\S]*>/i.test(content);
+}
+
+/** Render plain-text markdown-lite as JSX */
+function renderPlainText(content: string) {
+  return content.split('\n').map((line, i) => {
+    if (line.startsWith('## ')) return <h2 key={i}>{line.slice(3)}</h2>;
+    if (line.startsWith('### ')) return <h3 key={i}>{line.slice(4)}</h3>;
+    if (line.startsWith('- ')) return <ul key={i}><li>{line.slice(2)}</li></ul>;
+    if (line.trim()) return <p key={i}>{line.replace(/\*\*(.*?)\*\*/g, '$1')}</p>;
+    return null;
+  });
+}
+
 export function ArticleContentAndSidebar({ post, className }: Props) {
   const relatedTours = post.relatedTourIds.map(id => getTourById(id)).filter(Boolean);
+  const htmlContent = isHtml(post.content);
 
   return (
     <div className={cn(styles.layout, className)}>
       <main className={styles.main}>
         <div className={styles.article}>
-          {post.content.split('\n').map((line, i) => {
-            if (line.startsWith('## ')) return <h2 key={i}>{line.slice(3)}</h2>;
-            if (line.startsWith('### ')) return <h3 key={i}>{line.slice(4)}</h3>;
-            if (line.startsWith('- ')) return <ul key={i}><li>{line.slice(2)}</li></ul>;
-            if (line.trim()) return <p key={i}>{line.replace(/\*\*(.*?)\*\*/g, '$1')}</p>;
-            return null;
-          })}
+          {htmlContent
+            ? <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            : renderPlainText(post.content)
+          }
         </div>
       </main>
 

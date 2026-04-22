@@ -3,6 +3,7 @@ import { BlogPageHero } from '~/blocks/blog/blog-page-hero';
 import { BlogGrid } from '~/blocks/blog/blog-grid';
 import { NewsletterSignupStrip } from '~/blocks/blog/newsletter-signup-strip';
 import { blogPosts } from '~/data/blog';
+import { getAllPublishedBlogs } from '~/lib/blog.server';
 import styles from './blog.module.css';
 
 export function meta(_: Route.MetaArgs) {
@@ -12,12 +13,21 @@ export function meta(_: Route.MetaArgs) {
   ];
 }
 
-export default function Blog() {
+export async function loader() {
+  const dbPosts = getAllPublishedBlogs();
+  // Merge: DB posts first (newest), then static posts
+  const staticIds = new Set(blogPosts.map(p => p.id));
+  const dbOnly = dbPosts.filter(p => !staticIds.has(p.id));
+  return { posts: [...dbOnly, ...blogPosts] };
+}
+
+export default function Blog({ loaderData }: Route.ComponentProps) {
+  const { posts } = loaderData;
   return (
     <main className={styles.page}>
       <BlogPageHero />
       <div className={styles.content}>
-        <BlogGrid posts={blogPosts} />
+        <BlogGrid posts={posts} />
       </div>
       <NewsletterSignupStrip />
     </main>
