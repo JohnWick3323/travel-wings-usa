@@ -5,10 +5,10 @@
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
 .field { display: flex; flex-direction: column; gap: var(--space-1); }
 .label { font-size: var(--text-xs); font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.input { padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-sm); outline: none; transition: border-color 0.2s; background-color: var(--color-bg-subtle); }
-.input:focus { border-color: var(--color-primary); }
-.textarea { padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-sm); outline: none; resize: vertical; min-height: 120px; transition: border-color 0.2s; font-family: inherit; background-color: var(--color-bg-subtle); }
-.textarea:focus { border-color: var(--color-primary); }
+.input { padding: var(--space-3) var(--space-4); border: 1.5px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-sm); outline: none; transition: border-color 0.2s, box-shadow 0.2s; background-color: #ffffff; color: #16243D; color-scheme: light; }
+.input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(1,95,201,0.1); }
+.textarea { padding: var(--space-3) var(--space-4); border: 1.5px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-sm); outline: none; resize: vertical; min-height: 120px; transition: border-color 0.2s; font-family: inherit; background-color: #ffffff; color: #16243D; color-scheme: light; }
+.textarea:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(1,95,201,0.1); }
 .submitBtn { padding: var(--space-3) var(--space-8); background-color: var(--color-primary); color: var(--color-white); border: none; border-radius: var(--radius-pill); font-size: var(--text-base); font-weight: 700; cursor: pointer; transition: background-color 0.2s; }
 .submitBtn:hover { background-color: var(--color-primary-dark); }
 .success { color: var(--color-success); font-weight: 600; padding: var(--space-4) 0; }

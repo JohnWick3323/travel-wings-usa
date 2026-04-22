@@ -36,6 +36,9 @@
   border: none;
   font-size: var(--text-sm);
   outline: none;
+  background-color: #ffffff;
+  color: #16243D;
+  color-scheme: light;
 }
 
 .btn {

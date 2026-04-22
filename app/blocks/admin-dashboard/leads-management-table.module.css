@@ -34,7 +34,9 @@
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   outline: none;
-  background-color: var(--color-bg-subtle);
+  background-color: #ffffff;
+  color: #16243D;
+  color-scheme: light;
 }
 
 .select {
@@ -43,7 +45,9 @@
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   outline: none;
-  background-color: var(--color-bg-subtle);
+  background-color: #ffffff;
+  color: #16243D;
+  color-scheme: light;
   cursor: pointer;
   min-width: 140px;
 }

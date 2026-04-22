@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Link } from 'react-router';
-import { Phone, MessageCircle, ChevronDown, X } from 'lucide-react';
+import { Phone, MessageCircle, ChevronDown, X, Plane } from 'lucide-react';
 import cn from 'classnames';
 import styles from './main-navigation-bar.module.css';
 
@@ -24,9 +24,15 @@ export function MainNavigationBar({ className }: Props) {
     <>
       <nav className={cn(styles.nav, className)}>
         <Link to="/" className={styles.logo}>
-          <span className={styles.logoText}>
-            Travel Wings <span className={styles.logoAccent}>USA</span>
-          </span>
+          <div className={styles.logoIcon}>
+            <Plane size={22} color="white" aria-hidden="true" />
+          </div>
+          <div className={styles.logoText}>
+            <span className={styles.logoName}>
+              Travel Wings <span className={styles.logoAccent}>USA</span>
+            </span>
+            <span className={styles.logoSub}>Your Trusted Travel Partner</span>
+          </div>
         </Link>
 
         <ul className={styles.menu}>
@@ -41,7 +47,7 @@ export function MainNavigationBar({ className }: Props) {
           </li>
           <li className={styles.menuItem}>
             <button className={styles.menuLink}>
-              Air Ticketing <ChevronDown size={14} />
+              Air Ticketing <ChevronDown size={14} aria-hidden="true" />
             </button>
             <div className={styles.dropdown}>
               {flightLinks.map(link => (
@@ -65,10 +71,10 @@ export function MainNavigationBar({ className }: Props) {
 
         <div className={styles.actions}>
           <a href="https://wa.me/14102984500?text=Hello%2C%20I%20am%20interested%20in%20a%20travel%20package.%20Please%20assist%20me." target="_blank" rel="noreferrer" className={styles.btnWhatsApp}>
-            <MessageCircle size={14} /> WhatsApp
+            <MessageCircle size={15} aria-hidden="true" /> WhatsApp
           </a>
           <a href="tel:+14102984500" className={styles.btnCall}>
-            <Phone size={14} /> Call: +1 410-298-4500
+            <Phone size={15} aria-hidden="true" /> Call: +1 410-298-4500
           </a>
         </div>
 
@@ -81,9 +87,9 @@ export function MainNavigationBar({ className }: Props) {
         <div className={styles.drawerOverlay} onClick={() => setDrawerOpen(false)} />
         <div className={styles.drawerPanel}>
           <div className={styles.drawerHeader}>
-            <span className={styles.logoText}>Travel Wings <span className={styles.logoAccent}>USA</span></span>
+            <span className={styles.drawerHeaderLogo}>Travel Wings <span className={styles.drawerHeaderAccent}>USA</span></span>
             <button className={styles.drawerClose} onClick={() => setDrawerOpen(false)} aria-label="Close menu">
-              <X size={20} />
+              <X size={20} aria-hidden="true" />
             </button>
           </div>
           <ul className={styles.drawerMenu}>
@@ -95,10 +101,10 @@ export function MainNavigationBar({ className }: Props) {
           </ul>
           <div className={styles.drawerActions}>
             <a href="https://wa.me/14102984500?text=Hello%2C%20I%20am%20interested%20in%20a%20travel%20package.%20Please%20assist%20me." target="_blank" rel="noreferrer" className={styles.btnWhatsApp}>
-              <MessageCircle size={16} /> WhatsApp
+              <MessageCircle size={16} aria-hidden="true" /> WhatsApp
             </a>
             <a href="tel:+14102984500" className={styles.btnCall}>
-              <Phone size={16} /> Call: +1 410-298-4500
+              <Phone size={16} aria-hidden="true" /> Call: +1 410-298-4500
             </a>
           </div>
         </div>

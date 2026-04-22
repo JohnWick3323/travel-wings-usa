@@ -69,8 +69,13 @@
 
   /* Layout */
   --container-max: 1280px;
-  --nav-height: 80px;
+  --nav-height: 88px;
   --top-bar-height: 40px;
+}
+
+/* Force light theme — always light regardless of OS preference */
+html {
+  color-scheme: light !important;
 }
 
 body {
@@ -79,4 +84,13 @@ body {
   background-color: var(--color-bg);
   font-size: var(--text-base);
   line-height: 1.6;
+}
+
+/* Ensure all form elements render light */
+input,
+select,
+textarea {
+  color-scheme: light;
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text);
 }

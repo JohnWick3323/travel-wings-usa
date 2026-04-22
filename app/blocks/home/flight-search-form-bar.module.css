@@ -1,17 +1,18 @@
 .wrapper {
   position: relative;
   z-index: 10;
-  margin-top: -60px;
+  margin-top: -70px;
   padding: 0 var(--space-6);
 }
 
 .card {
-  max-width: 1100px;
+  max-width: 1140px;
   margin: 0 auto;
   background: var(--color-white);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
   padding: var(--space-8);
+  border-top: 4px solid var(--color-primary);
 }
 
 .tabs {
@@ -66,49 +67,54 @@
 
 .label {
   font-size: var(--text-xs);
-  font-weight: 600;
-  color: var(--color-text-muted);
+  font-weight: 700;
+  color: var(--color-navy);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 .input {
   padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   color: var(--color-text);
   outline: none;
-  transition: border-color 0.2s;
-  background-color: var(--color-bg-subtle);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #ffffff;
+  color-scheme: light;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .input:focus {
   border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(1, 95, 201, 0.12);
   background-color: var(--color-white);
 }
 
 .actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: var(--space-2);
+  margin-top: var(--space-4);
 }
 
 .submitBtn {
-  padding: var(--space-3) var(--space-10);
-  background-color: var(--color-primary);
+  padding: 14px var(--space-10);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-navy));
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-pill);
   font-size: var(--text-base);
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 4px 14px rgba(1, 95, 201, 0.35);
 }
 
 .submitBtn:hover {
-  background-color: var(--color-primary-dark);
-  transform: translateY(-1px);
+  opacity: 0.9;
+  transform: translateY(-2px);
 }
 
 .successMsg {
@@ -118,8 +124,11 @@
   padding: var(--space-4);
 }
 
-@media (max-width: 768px) {
-  .row3, .row4, .row5 {
+@media (max-width: 900px) {
+  .row3 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .row4, .row5 {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -130,5 +139,8 @@
   }
   .card {
     padding: var(--space-5);
+  }
+  .wrapper {
+    margin-top: -30px;
   }
 }
