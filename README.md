@@ -100,6 +100,73 @@ Netlify dashboard > Site settings > Environment variables — same variables as 
 
 ---
 
+### Hostinger (Node.js Web Apps)
+
+Hostinger supports Node.js apps via **hPanel → Web Apps** with GitHub integration.
+
+#### Step 1 — Push code to GitHub
+
+Make sure your `travel-wings-usa` repo is pushed to GitHub.
+
+#### Step 2 — Open Hostinger hPanel
+
+1. Log in to [Hostinger hPanel](https://hpanel.hostinger.com)
+2. Go to **Websites** → **Add Website**
+3. Choose **Node.js App** as the website type
+
+#### Step 3 — Import from GitHub
+
+1. Select **Import Git Repository**
+2. Authorize Hostinger to access your GitHub account
+3. Select the `travel-wings-usa` repository
+4. Set **Branch** to `main`
+
+#### Step 4 — Configure Build Settings
+
+Hostinger will auto-detect the framework. If it shows **Other** (which it may since React Router v7 framework mode is not listed), configure manually:
+
+| Setting              | Value                                        |
+|----------------------|----------------------------------------------|
+| Framework Preset     | `Other` (or `React Router` if available)     |
+| Build Command        | `npm run build`                              |
+| Output Directory     | `build/client`                               |
+| Start Command        | `npm start`                                  |
+| Node Version         | `22.x`                                       |
+
+> **Why `npm start`?** It runs `react-router-serve ./build/server/index.js` — this serves the full SSR Node.js app, not just static files.
+
+#### Step 5 — Add Environment Variables
+
+During the deployment wizard, or after deployment via **hPanel → Web Apps → Your App → Environment Variables**:
+
+| Variable           | Value                          | Required |
+|--------------------|--------------------------------|----------|
+| `NODE_ENV`         | `production`                   | Yes      |
+| `ADMIN_PASSWORD`   | Your secure admin password     | Yes      |
+| `RESEND_API_KEY`   | Resend.com API key             | Optional |
+| `RESEND_TO_EMAIL`  | Email to receive notifications | Optional |
+
+You can paste a `.env` file content directly or add variables one by one.
+
+#### Step 6 — Deploy
+
+Click **Deploy**. Hostinger will:
+1. Pull code from GitHub
+2. Run `npm install`
+3. Run `npm run build`
+4. Start the server with `npm start`
+
+#### Step 7 — Connect Custom Domain
+
+1. In hPanel → **Domains** → point your domain to the Node.js app
+2. Enable **SSL/TLS** (free via Let's Encrypt in hPanel)
+
+#### Re-deploying after changes
+
+Every time you push to the `main` branch on GitHub, Hostinger can automatically redeploy. Check the **Auto-deploy** toggle in your app settings.
+
+---
+
 ### Self-Hosted / VPS (Node.js)
 
 ```bash
