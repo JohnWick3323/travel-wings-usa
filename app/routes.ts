@@ -16,4 +16,9 @@ export default [
   route("/api/admin/login", "routes/api.admin.login.ts"),
   route("/api/blogs", "routes/api.blogs.ts"),
   route("/api/blogs/:id", "routes/api.blogs.$id.ts"),
+  route("/api/categories", "routes/api.categories.ts"),
+  route("/api/categories/:id", "routes/api.categories.$id.ts"),
+  route("/api/media", "routes/api.media.ts"),
+  route("/api/media/:id", "routes/api.media.$id.ts"),
+  route("/api/settings", "routes/api.settings.ts"),
 ] satisfies RouteConfig;

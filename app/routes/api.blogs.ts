@@ -2,8 +2,9 @@ import type { Route } from './+types/api.blogs';
 import { getDb } from '~/lib/db.server';
 
 function checkAuth(request: Request): boolean {
-  const auth = request.headers.get('Authorization');
-  return auth === `Bearer ${process.env.ADMIN_SESSION_SECRET}`;
+  const auth = request.headers.get('Authorization') || '';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'TravelWings2025!';
+  return auth === `Bearer ${adminPassword}`;
 }
 
 /** GET /api/blogs — public (published only) OR admin (all with ?all=1) */
@@ -35,7 +36,7 @@ export async function action({ request }: Route.ActionArgs) {
   }
 
   const body = await request.json();
-  const { title, slug, seoTitle, excerpt, content, featuredImage, category, author, tags, status } = body;
+  const { title, slug, seoTitle, excerpt, content, featuredImage, category, author, tags, status, publishedAt } = body;
 
   if (!title || !slug) {
     return Response.json({ error: 'Title and slug are required' }, { status: 400 });
@@ -43,11 +44,12 @@ export async function action({ request }: Route.ActionArgs) {
 
   const db = getDb();
   const tagsJson = JSON.stringify(Array.isArray(tags) ? tags : []);
+  const resolvedPublishedAt = publishedAt || (status === 'published' ? new Date().toISOString().slice(0, 10) : null);
 
   try {
     const result = db.prepare(`
-      INSERT INTO blogs (title, slug, seoTitle, excerpt, content, featuredImage, category, author, tags, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO blogs (title, slug, seoTitle, excerpt, content, featuredImage, category, author, tags, status, publishedAt)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       title,
       slug,
@@ -59,6 +61,7 @@ export async function action({ request }: Route.ActionArgs) {
       author || 'Travel Wings Team',
       tagsJson,
       status || 'draft',
+      resolvedPublishedAt,
     );
     const blog = db.prepare('SELECT * FROM blogs WHERE id = ?').get(result.lastInsertRowid);
     return Response.json({ success: true, blog });

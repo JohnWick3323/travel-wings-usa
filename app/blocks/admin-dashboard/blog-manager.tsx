@@ -15,21 +15,16 @@ export interface BlogRow {
   author: string;
   tags: string; // JSON string
   status: 'draft' | 'published';
+  publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
 }
 
-const CATEGORIES = [
-  'General',
-  'Umrah Tips',
-  'Destination Guide',
-  'Air Travel',
-  'Travel Hacks',
-  'Hajj Guide',
-  'Pakistan Travel',
-  'Europe Travel',
-  'Middle East',
-];
+interface Category {
+  id: number;
+  name: string;
+  slug: string;
+}
 
 const EMPTY_FORM = {
   title: '',
@@ -42,6 +37,7 @@ const EMPTY_FORM = {
   author: 'Travel Wings Team',
   tags: '',
   status: 'draft' as 'draft' | 'published',
+  publishedAt: '',
 };
 
 function slugify(text: string): string {
@@ -59,6 +55,7 @@ interface Props {
 
 export function BlogManager({ token, className }: Props) {
   const [blogs, setBlogs] = useState<BlogRow[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [view, setView] = useState<'list' | 'form'>('list');
@@ -82,7 +79,22 @@ export function BlogManager({ token, className }: Props) {
     }
   }, [token]);
 
-  useEffect(() => { fetchBlogs(); }, [fetchBlogs]);
+  const fetchCategories = useCallback(async () => {
+    try {
+      const res = await fetch('/api/categories');
+      if (res.ok) {
+        const data = await res.json();
+        setCategories(data.categories || []);
+      }
+    } catch {
+      console.error('Failed to fetch categories');
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchBlogs();
+    fetchCategories();
+  }, [fetchBlogs, fetchCategories]);
 
   const openNew = () => {
     setEditing(null);
@@ -108,6 +120,7 @@ export function BlogManager({ token, className }: Props) {
       author: blog.author,
       tags: parsedTags,
       status: blog.status,
+      publishedAt: blog.publishedAt || '',
     });
     setSlugManual(true);
     setError('');
@@ -143,6 +156,7 @@ export function BlogManager({ token, className }: Props) {
       seoTitle: form.seoTitle || null,
       excerpt: form.excerpt || null,
       featuredImage: form.featuredImage || null,
+      publishedAt: form.publishedAt || null,
     };
 
     try {
@@ -293,6 +307,16 @@ export function BlogManager({ token, className }: Props) {
                     <option value="published">Published</option>
                   </select>
                 </div>
+                <div className={styles.fieldGroup}>
+                  <label className={styles.label}>Published Date</label>
+                  <input
+                    type="date"
+                    className={styles.input}
+                    value={form.publishedAt ? form.publishedAt.slice(0, 10) : ''}
+                    onChange={e => setForm(f => ({ ...f, publishedAt: e.target.value }))}
+                  />
+                  <span style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Leave blank to use today&apos;s date.</span>
+                </div>
                 <button type="submit" className={styles.publishBtn} disabled={saving}>
                   {saving ? 'Saving...' : editing ? 'Update Post' : 'Publish Post'}
                 </button>
@@ -328,7 +352,9 @@ export function BlogManager({ token, className }: Props) {
                     value={form.category}
                     onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
                   >
-                    {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    {(categories.length > 0 ? categories : [{ id: 0, name: 'General', slug: 'general' }]).map(c => (
+                      <option key={c.id || c.name} value={c.name}>{c.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className={styles.fieldGroup}>

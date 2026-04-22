@@ -43,6 +43,12 @@ function initDb(db: Database.Database): void {
       email TEXT NOT NULL UNIQUE,
       createdAt TEXT NOT NULL DEFAULT (datetime('now'))
     );
+    CREATE TABLE IF NOT EXISTS blog_categories (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL UNIQUE,
+      slug TEXT NOT NULL UNIQUE,
+      createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+    );
     CREATE TABLE IF NOT EXISTS blogs (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL,
@@ -55,10 +61,63 @@ function initDb(db: Database.Database): void {
       author TEXT NOT NULL DEFAULT 'Travel Wings Team',
       tags TEXT NOT NULL DEFAULT '[]',
       status TEXT NOT NULL DEFAULT 'draft',
+      publishedAt TEXT,
       createdAt TEXT NOT NULL DEFAULT (datetime('now')),
       updatedAt TEXT NOT NULL DEFAULT (datetime('now'))
     );
+    CREATE TABLE IF NOT EXISTS media (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      url TEXT NOT NULL,
+      folder TEXT NOT NULL DEFAULT 'General',
+      type TEXT NOT NULL DEFAULT 'image',
+      width INTEGER,
+      height INTEGER,
+      createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE TABLE IF NOT EXISTS site_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL DEFAULT '',
+      updatedAt TEXT NOT NULL DEFAULT (datetime('now'))
+    );
   `);
+
+  // Seed default blog categories if empty
+  const catCount = (db.prepare('SELECT COUNT(*) as c FROM blog_categories').get() as { c: number }).c;
+  if (catCount === 0) {
+    const insertCat = db.prepare('INSERT OR IGNORE INTO blog_categories (name, slug) VALUES (?, ?)');
+    const defaultCats = [
+      ['General', 'general'],
+      ['Umrah Tips', 'umrah-tips'],
+      ['Destination Guide', 'destination-guide'],
+      ['Air Travel', 'air-travel'],
+      ['Travel Hacks', 'travel-hacks'],
+      ['Hajj Guide', 'hajj-guide'],
+      ['Pakistan Travel', 'pakistan-travel'],
+      ['Europe Travel', 'europe-travel'],
+      ['Middle East', 'middle-east'],
+    ];
+    for (const [name, slug] of defaultCats) {
+      insertCat.run(name, slug);
+    }
+  }
+
+  // Seed default site settings keys if not exist
+  const insertSetting = db.prepare('INSERT OR IGNORE INTO site_settings (key, value) VALUES (?, ?)');
+  const defaultSettings = [
+    ['site_name', 'Travel Wings USA'],
+    ['site_tagline', 'Your Trusted Travel Partner'],
+    ['meta_description', 'Travel Wings USA offers affordable Umrah packages, Hajj tours, international flights, and travel packages from the USA.'],
+    ['og_image', ''],
+    ['gtm_id', ''],
+    ['ga4_id', ''],
+    ['custom_head_code', ''],
+    ['custom_body_code', ''],
+    ['footer_text', ''],
+  ];
+  for (const [key, value] of defaultSettings) {
+    insertSetting.run(key, value);
+  }
 }
 
 export interface Lead {
@@ -94,6 +153,42 @@ export interface Blog {
   author: string;
   tags: string; // JSON string array
   status: 'draft' | 'published';
+  publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface BlogCategory {
+  id: number;
+  name: string;
+  slug: string;
+  createdAt: string;
+}
+
+export interface MediaItem {
+  id: number;
+  name: string;
+  url: string;
+  folder: string;
+  type: string;
+  width: number | null;
+  height: number | null;
+  createdAt: string;
+}
+
+export interface SiteSetting {
+  key: string;
+  value: string;
+  updatedAt: string;
+}
+
+/** Get all site settings as a key-value map */
+export function getSiteSettings(): Record<string, string> {
+  try {
+    const db = getDb();
+    const rows = db.prepare('SELECT key, value FROM site_settings').all() as { key: string; value: string }[];
+    return Object.fromEntries(rows.map(r => [r.key, r.value]));
+  } catch {
+    return {};
+  }
 }

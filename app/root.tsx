@@ -1,8 +1,8 @@
-
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
 
 import type { Route } from "./+types/root";
 import { ErrorBoundary as ErrorBoundaryRoot } from "~/components/error-boundary/error-boundary";
+import { getSiteSettings } from "~/lib/db.server";
 
 import "./styles/reset.css";
 import "./styles/global.css";
@@ -35,7 +35,32 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export async function loader() {
+  const settings = getSiteSettings();
+  return {
+    gtmId: settings.gtm_id || '',
+    ga4Id: settings.ga4_id || '',
+    customHeadCode: settings.custom_head_code || '',
+    customBodyCode: settings.custom_body_code || '',
+  };
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  // useLoaderData returns undefined during SSR for the root layout when no data;
+  // we use a try/catch to safely get the data.
+  let loaderData: { gtmId: string; ga4Id: string; customHeadCode: string; customBodyCode: string } | null = null;
+  try {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    loaderData = useLoaderData<typeof loader>();
+  } catch {
+    loaderData = null;
+  }
+
+  const gtmId = loaderData?.gtmId || '';
+  const ga4Id = loaderData?.ga4Id || '';
+  const customHeadCode = loaderData?.customHeadCode || '';
+  const customBodyCode = loaderData?.customBodyCode || '';
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -43,8 +68,58 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+
+        {/* Google Tag Manager */}
+        {gtmId && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${gtmId}');`,
+            }}
+          />
+        )}
+
+        {/* Google Analytics 4 (direct — only if no GTM) */}
+        {ga4Id && !gtmId && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${ga4Id}');`,
+              }}
+            />
+          </>
+        )}
+
+        {/* Custom head code */}
+        {customHeadCode && (
+          <div dangerouslySetInnerHTML={{ __html: customHeadCode }} />
+        )}
       </head>
       <body>
+        {/* GTM noscript fallback */}
+        {gtmId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+        )}
+
+        {/* Custom body code */}
+        {customBodyCode && (
+          <div dangerouslySetInnerHTML={{ __html: customBodyCode }} />
+        )}
+
         <header className={styles.siteHeader}>
           <TopInfoBar />
           <MainNavigationBar />

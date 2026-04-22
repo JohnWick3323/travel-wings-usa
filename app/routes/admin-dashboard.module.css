@@ -1,20 +1,22 @@
 .page { min-height: 100vh; background-color: var(--color-bg-subtle); }
 
 .header {
-  background-color: var(--color-navy);
-  padding: var(--space-5) var(--space-6);
+  background: linear-gradient(135deg, var(--color-navy) 0%, #1a3a6b 100%);
+  padding: var(--space-4) var(--space-6);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+.headerLeft { display: flex; flex-direction: column; gap: 2px; }
 .headerTitle { font-size: var(--text-xl); font-weight: 700; color: var(--color-white); margin: 0; }
+.headerSub { font-size: var(--text-xs); color: rgba(255,255,255,0.65); font-weight: 400; }
 
 .logoutBtn {
   padding: var(--space-2) var(--space-5);
   background-color: rgba(255,255,255,0.15);
   color: var(--color-white);
-  border: none;
+  border: 1px solid rgba(255,255,255,0.25);
   border-radius: var(--radius-pill);
   font-size: var(--text-sm);
   font-weight: 600;
@@ -29,10 +31,14 @@
   padding: 0 var(--space-6);
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-border);
+  overflow-x: auto;
 }
 
 .tab {
-  padding: var(--space-4) var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
   background: none;
   border: none;
   border-bottom: 3px solid transparent;
@@ -41,11 +47,15 @@
   color: var(--color-text-muted);
   cursor: pointer;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 .tab:hover { color: var(--color-text); }
 
 .tabActive {
-  padding: var(--space-4) var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
   background: none;
   border: none;
   border-bottom: 3px solid var(--color-primary);
@@ -53,6 +63,9 @@
   font-weight: 700;
   color: var(--color-primary);
   cursor: pointer;
+  white-space: nowrap;
 }
+
+.tabEmoji { font-size: 14px; }
 
 .content { max-width: 1400px; margin: 0 auto; padding: var(--space-8) var(--space-6); }

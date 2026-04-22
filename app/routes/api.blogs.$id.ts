@@ -2,8 +2,9 @@ import type { Route } from './+types/api.blogs.$id';
 import { getDb } from '~/lib/db.server';
 
 function checkAuth(request: Request): boolean {
-  const auth = request.headers.get('Authorization');
-  return auth === `Bearer ${process.env.ADMIN_SESSION_SECRET}`;
+  const auth = request.headers.get('Authorization') || '';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'TravelWings2025!';
+  return auth === `Bearer ${adminPassword}`;
 }
 
 /** GET /api/blogs/:id */
@@ -30,8 +31,15 @@ export async function action({ request, params }: Route.ActionArgs) {
 
   if (request.method === 'PATCH') {
     const body = await request.json();
-    const { title, slug, seoTitle, excerpt, content, featuredImage, category, author, tags, status } = body;
+    const { title, slug, seoTitle, excerpt, content, featuredImage, category, author, tags, status, publishedAt } = body;
     const tagsJson = Array.isArray(tags) ? JSON.stringify(tags) : undefined;
+
+    // Auto-set publishedAt when publishing for the first time
+    const existing = db.prepare('SELECT publishedAt, status FROM blogs WHERE id = ?').get(id) as { publishedAt: string | null; status: string } | undefined;
+    let resolvedPublishedAt = publishedAt !== undefined ? (publishedAt || null) : (existing?.publishedAt || null);
+    if (status === 'published' && !resolvedPublishedAt) {
+      resolvedPublishedAt = new Date().toISOString().slice(0, 10);
+    }
 
     try {
       db.prepare(`
@@ -46,6 +54,7 @@ export async function action({ request, params }: Route.ActionArgs) {
           author = COALESCE(?, author),
           tags = COALESCE(?, tags),
           status = COALESCE(?, status),
+          publishedAt = ?,
           updatedAt = datetime('now')
         WHERE id = ?
       `).run(
@@ -59,6 +68,7 @@ export async function action({ request, params }: Route.ActionArgs) {
         author || null,
         tagsJson || null,
         status || null,
+        resolvedPublishedAt,
         id,
       );
       const blog = db.prepare('SELECT * FROM blogs WHERE id = ?').get(id);
