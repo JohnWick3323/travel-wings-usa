@@ -28,8 +28,8 @@ export async function action({ request, params }: Route.ActionArgs) {
     const item = db.prepare('SELECT * FROM media WHERE id = ?').get(id) as Record<string, unknown> | undefined;
     if (!item) return Response.json({ error: 'Not found' }, { status: 404 });
     db.prepare('UPDATE media SET name = ?, folder = ? WHERE id = ?').run(
-      body.name?.trim() || item.name,
-      body.folder?.trim() || item.folder,
+      body.name?.trim() || String(item.name),
+      body.folder?.trim() || String(item.folder),
       id,
     );
     return Response.json({ item: db.prepare('SELECT * FROM media WHERE id = ?').get(id) });

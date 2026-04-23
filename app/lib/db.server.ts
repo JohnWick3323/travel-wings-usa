@@ -1,22 +1,26 @@
-import Database from 'better-sqlite3';
+/**
+ * Database layer using Node.js 22+ built-in `node:sqlite`.
+ * No native binary compilation needed — works on any Node 22 host.
+ */
+import { DatabaseSync } from 'node:sqlite';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DB_PATH = path.join(__dirname, '../../data.db');
 
-let _db: Database.Database | null = null;
+let _db: DatabaseSync | null = null;
 
-export function getDb(): Database.Database {
+export function getDb(): DatabaseSync {
   if (!_db) {
-    _db = new Database(DB_PATH);
-    _db.pragma('journal_mode = WAL');
+    _db = new DatabaseSync(DB_PATH);
+    _db.exec('PRAGMA journal_mode = WAL;');
     initDb(_db);
   }
   return _db;
 }
 
-function initDb(db: Database.Database): void {
+function initDb(db: DatabaseSync): void {
   db.exec(`
     CREATE TABLE IF NOT EXISTS leads (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,8 +87,8 @@ function initDb(db: Database.Database): void {
   `);
 
   // Seed default blog categories if empty
-  const catCount = (db.prepare('SELECT COUNT(*) as c FROM blog_categories').get() as { c: number }).c;
-  if (catCount === 0) {
+  const catRow = db.prepare('SELECT COUNT(*) as c FROM blog_categories').get() as { c: number };
+  if (catRow.c === 0) {
     const insertCat = db.prepare('INSERT OR IGNORE INTO blog_categories (name, slug) VALUES (?, ?)');
     const defaultCats = [
       ['General', 'general'],
@@ -102,9 +106,9 @@ function initDb(db: Database.Database): void {
     }
   }
 
-  // Seed default site settings keys if not exist
+  // Seed default site settings if not exist
   const insertSetting = db.prepare('INSERT OR IGNORE INTO site_settings (key, value) VALUES (?, ?)');
-  const defaultSettings = [
+  const defaultSettings: [string, string][] = [
     ['site_name', 'Travel Wings USA'],
     ['site_tagline', 'Your Trusted Travel Partner'],
     ['meta_description', 'Travel Wings USA offers affordable Umrah packages, Hajj tours, international flights, and travel packages from the USA.'],

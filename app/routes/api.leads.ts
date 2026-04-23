@@ -24,14 +24,14 @@ export async function action({ request, params }: Route.ActionArgs) {
   const id = url.pathname.split('/').pop();
 
   if (request.method === 'DELETE') {
-    db.prepare('DELETE FROM leads WHERE id = ?').run(id);
+    db.prepare('DELETE FROM leads WHERE id = ?').run(id!);
     return Response.json({ success: true });
   }
 
   if (request.method === 'PATCH') {
     const body = await request.json();
     db.prepare('UPDATE leads SET status = COALESCE(?, status), notes = COALESCE(?, notes) WHERE id = ?')
-      .run(body.status || null, body.notes !== undefined ? body.notes : null, id);
+      .run(body.status ?? null, body.notes !== undefined ? String(body.notes) : null, id!);
     return Response.json({ success: true });
   }
 
