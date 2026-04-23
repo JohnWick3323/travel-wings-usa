@@ -1,5 +1,5 @@
 import type { Route } from './+types/api.media';
-import { getDb } from '~/lib/db.server';
+import { ensureDb } from '~/lib/db.server';
 
 const ADMIN_TOKEN_PREFIX = 'Bearer ';
 
@@ -19,14 +19,13 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!verifyToken(token)) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const db = getDb();
+  const db = await ensureDb();
   const url = new URL(request.url);
   const folder = url.searchParams.get('folder') || '';
-  const query = folder
-    ? 'SELECT * FROM media WHERE folder = ? ORDER BY createdAt DESC'
-    : 'SELECT * FROM media ORDER BY createdAt DESC';
-  const media = folder ? db.prepare(query).all(folder) : db.prepare(query).all();
-  return Response.json({ media });
+  const result = folder
+    ? await db.execute({ sql: 'SELECT * FROM media WHERE folder = ? ORDER BY createdAt DESC', args: [folder] })
+    : await db.execute('SELECT * FROM media ORDER BY createdAt DESC');
+  return Response.json({ media: result.rows });
 }
 
 export async function action({ request }: Route.ActionArgs) {
@@ -35,7 +34,7 @@ export async function action({ request }: Route.ActionArgs) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const db = getDb();
+  const db = await ensureDb();
 
   if (request.method === 'POST') {
     const body = await request.json() as {
@@ -49,18 +48,19 @@ export async function action({ request }: Route.ActionArgs) {
     if (!body.url?.trim()) {
       return Response.json({ error: 'URL is required' }, { status: 400 });
     }
-    const result = db.prepare(
-      'INSERT INTO media (name, url, folder, type, width, height) VALUES (?, ?, ?, ?, ?, ?)'
-    ).run(
-      body.name?.trim() || 'Untitled',
-      body.url.trim(),
-      body.folder?.trim() || 'General',
-      body.type || 'image',
-      body.width || null,
-      body.height || null,
-    );
-    const item = db.prepare('SELECT * FROM media WHERE id = ?').get(result.lastInsertRowid);
-    return Response.json({ item });
+    const result = await db.execute({
+      sql: 'INSERT INTO media (name, url, folder, type, width, height) VALUES (?, ?, ?, ?, ?, ?)',
+      args: [
+        body.name?.trim() || 'Untitled',
+        body.url.trim(),
+        body.folder?.trim() || 'General',
+        body.type || 'image',
+        body.width || null,
+        body.height || null,
+      ],
+    });
+    const item = await db.execute({ sql: 'SELECT * FROM media WHERE id = ?', args: [Number(result.lastInsertRowid)] });
+    return Response.json({ item: item.rows[0] });
   }
 
   return Response.json({ error: 'Method not allowed' }, { status: 405 });

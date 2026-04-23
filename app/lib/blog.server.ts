@@ -1,4 +1,4 @@
-import { getDb } from './db.server';
+import { ensureDb } from './db.server';
 import type { BlogPost } from '~/data/blog';
 
 /** Maps a DB blog row to the BlogPost shape used throughout the app */
@@ -35,23 +35,23 @@ function estimateReadTime(content: string): string {
 }
 
 /** Get all published blogs from DB */
-export function getAllPublishedBlogs(): BlogPost[] {
+export async function getAllPublishedBlogs(): Promise<BlogPost[]> {
   try {
-    const db = getDb();
-    const rows = db.prepare("SELECT * FROM blogs WHERE status = 'published' ORDER BY createdAt DESC").all() as Record<string, unknown>[];
-    return rows.map(dbBlogToPost);
+    const db = await ensureDb();
+    const result = await db.execute("SELECT * FROM blogs WHERE status = 'published' ORDER BY createdAt DESC");
+    return result.rows.map(r => dbBlogToPost(r as Record<string, unknown>));
   } catch {
     return [];
   }
 }
 
 /** Get a single blog by slug from DB */
-export function getBlogBySlug(slug: string): BlogPost | null {
+export async function getBlogBySlug(slug: string): Promise<BlogPost | null> {
   try {
-    const db = getDb();
-    const row = db.prepare('SELECT * FROM blogs WHERE slug = ?').get(slug) as Record<string, unknown> | undefined;
-    if (!row) return null;
-    return dbBlogToPost(row);
+    const db = await ensureDb();
+    const result = await db.execute({ sql: 'SELECT * FROM blogs WHERE slug = ?', args: [slug] });
+    if (!result.rows[0]) return null;
+    return dbBlogToPost(result.rows[0] as Record<string, unknown>);
   } catch {
     return null;
   }

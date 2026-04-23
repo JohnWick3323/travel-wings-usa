@@ -1,5 +1,5 @@
 import type { Route } from './+types/api.categories';
-import { getDb } from '~/lib/db.server';
+import { ensureDb } from '~/lib/db.server';
 
 const ADMIN_TOKEN_PREFIX = 'Bearer ';
 
@@ -15,9 +15,9 @@ function verifyToken(token: string | null): boolean {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const db = getDb();
-  const categories = db.prepare('SELECT * FROM blog_categories ORDER BY name ASC').all();
-  return Response.json({ categories });
+  const db = await ensureDb();
+  const result = await db.execute('SELECT * FROM blog_categories ORDER BY name ASC');
+  return Response.json({ categories: result.rows });
 }
 
 export async function action({ request }: Route.ActionArgs) {
@@ -26,7 +26,7 @@ export async function action({ request }: Route.ActionArgs) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const db = getDb();
+  const db = await ensureDb();
 
   if (request.method === 'POST') {
     const body = await request.json() as { name: string };
@@ -36,9 +36,9 @@ export async function action({ request }: Route.ActionArgs) {
     const name = body.name.trim();
     const slug = name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, '');
     try {
-      const result = db.prepare('INSERT INTO blog_categories (name, slug) VALUES (?, ?)').run(name, slug);
-      const cat = db.prepare('SELECT * FROM blog_categories WHERE id = ?').get(result.lastInsertRowid);
-      return Response.json({ category: cat });
+      const result = await db.execute({ sql: 'INSERT INTO blog_categories (name, slug) VALUES (?, ?)', args: [name, slug] });
+      const cat = await db.execute({ sql: 'SELECT * FROM blog_categories WHERE id = ?', args: [Number(result.lastInsertRowid)] });
+      return Response.json({ category: cat.rows[0] });
     } catch {
       return Response.json({ error: 'Category already exists' }, { status: 409 });
     }

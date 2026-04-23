@@ -1,5 +1,5 @@
 import type { Route } from './+types/api.leads';
-import { getDb } from '~/lib/db.server';
+import { ensureDb } from '~/lib/db.server';
 
 function checkAuth(request: Request): boolean {
   const auth = request.headers.get('Authorization');
@@ -10,28 +10,30 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!checkAuth(request)) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const db = getDb();
-  const leads = db.prepare('SELECT * FROM leads ORDER BY createdAt DESC').all();
-  return Response.json({ leads });
+  const db = await ensureDb();
+  const result = await db.execute('SELECT * FROM leads ORDER BY createdAt DESC');
+  return Response.json({ leads: result.rows });
 }
 
-export async function action({ request, params }: Route.ActionArgs) {
+export async function action({ request }: Route.ActionArgs) {
   if (!checkAuth(request)) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const db = getDb();
+  const db = await ensureDb();
   const url = new URL(request.url);
   const id = url.pathname.split('/').pop();
 
   if (request.method === 'DELETE') {
-    db.prepare('DELETE FROM leads WHERE id = ?').run(id!);
+    await db.execute({ sql: 'DELETE FROM leads WHERE id = ?', args: [id!] });
     return Response.json({ success: true });
   }
 
   if (request.method === 'PATCH') {
     const body = await request.json();
-    db.prepare('UPDATE leads SET status = COALESCE(?, status), notes = COALESCE(?, notes) WHERE id = ?')
-      .run(body.status ?? null, body.notes !== undefined ? String(body.notes) : null, id!);
+    await db.execute({
+      sql: 'UPDATE leads SET status = COALESCE(?, status), notes = COALESCE(?, notes) WHERE id = ?',
+      args: [body.status ?? null, body.notes !== undefined ? String(body.notes) : null, id!],
+    });
     return Response.json({ success: true });
   }
 

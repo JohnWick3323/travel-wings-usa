@@ -1,27 +1,41 @@
 /**
- * Database layer using Node.js 22+ built-in `node:sqlite`.
- * No native binary compilation needed — works on any Node 22 host.
+ * Database layer using @libsql/client (pure JS/WASM — no native compilation).
+ * Works on any Node.js host including Hostinger without SSH or build tools.
  */
-import { DatabaseSync } from 'node:sqlite';
+import { createClient, type Client, type ResultSet } from '@libsql/client';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_PATH = path.join(__dirname, '../../data.db');
 
-let _db: DatabaseSync | null = null;
-
-export function getDb(): DatabaseSync {
-  if (!_db) {
-    _db = new DatabaseSync(DB_PATH);
-    _db.exec('PRAGMA journal_mode = WAL;');
-    initDb(_db);
-  }
-  return _db;
+// In production (after build), __dirname is inside build/server/
+// We need to go up to find data.db at project root.
+function getDbPath(): string {
+  // Try multiple relative paths to handle both dev and prod environments
+  const candidates = [
+    path.join(__dirname, '../../data.db'),  // dev: app/lib/ -> root
+    path.join(__dirname, '../../../data.db'), // prod: build/server/ -> root (2 levels up)
+    path.join(process.cwd(), 'data.db'),     // always resolves to CWD
+  ];
+  // Use CWD-based path as the most reliable
+  return path.join(process.cwd(), 'data.db');
 }
 
-function initDb(db: DatabaseSync): void {
-  db.exec(`
+let _client: Client | null = null;
+
+export function getDb(): Client {
+  if (!_client) {
+    const dbPath = getDbPath();
+    _client = createClient({
+      url: `file:${dbPath}`,
+    });
+  }
+  return _client;
+}
+
+async function initDb(): Promise<void> {
+  const db = getDb();
+  await db.executeMultiple(`
     CREATE TABLE IF NOT EXISTS leads (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -87,9 +101,9 @@ function initDb(db: DatabaseSync): void {
   `);
 
   // Seed default blog categories if empty
-  const catRow = db.prepare('SELECT COUNT(*) as c FROM blog_categories').get() as { c: number };
-  if (catRow.c === 0) {
-    const insertCat = db.prepare('INSERT OR IGNORE INTO blog_categories (name, slug) VALUES (?, ?)');
+  const catResult = await db.execute('SELECT COUNT(*) as c FROM blog_categories');
+  const count = catResult.rows[0]?.c as number;
+  if (count === 0) {
     const defaultCats = [
       ['General', 'general'],
       ['Umrah Tips', 'umrah-tips'],
@@ -102,12 +116,14 @@ function initDb(db: DatabaseSync): void {
       ['Middle East', 'middle-east'],
     ];
     for (const [name, slug] of defaultCats) {
-      insertCat.run(name, slug);
+      await db.execute({
+        sql: 'INSERT OR IGNORE INTO blog_categories (name, slug) VALUES (?, ?)',
+        args: [name, slug],
+      });
     }
   }
 
-  // Seed default site settings if not exist
-  const insertSetting = db.prepare('INSERT OR IGNORE INTO site_settings (key, value) VALUES (?, ?)');
+  // Seed default site settings
   const defaultSettings: [string, string][] = [
     ['site_name', 'Travel Wings USA'],
     ['site_tagline', 'Your Trusted Travel Partner'],
@@ -120,9 +136,33 @@ function initDb(db: DatabaseSync): void {
     ['footer_text', ''],
   ];
   for (const [key, value] of defaultSettings) {
-    insertSetting.run(key, value);
+    await db.execute({
+      sql: 'INSERT OR IGNORE INTO site_settings (key, value) VALUES (?, ?)',
+      args: [key, value],
+    });
   }
 }
+
+// Initialize DB tables on module load (async, fire-and-forget with error handling)
+let _initialized = false;
+let _initPromise: Promise<void> | null = null;
+
+export async function ensureDb(): Promise<Client> {
+  if (!_initialized) {
+    if (!_initPromise) {
+      _initPromise = initDb().then(() => {
+        _initialized = true;
+      }).catch((err) => {
+        console.error('[DB] Init error:', err);
+        _initPromise = null;
+      });
+    }
+    await _initPromise;
+  }
+  return getDb();
+}
+
+export type { ResultSet };
 
 export interface Lead {
   id: number;
@@ -187,11 +227,11 @@ export interface SiteSetting {
 }
 
 /** Get all site settings as a key-value map */
-export function getSiteSettings(): Record<string, string> {
+export async function getSiteSettings(): Promise<Record<string, string>> {
   try {
-    const db = getDb();
-    const rows = db.prepare('SELECT key, value FROM site_settings').all() as { key: string; value: string }[];
-    return Object.fromEntries(rows.map(r => [r.key, r.value]));
+    const db = await ensureDb();
+    const result = await db.execute('SELECT key, value FROM site_settings');
+    return Object.fromEntries(result.rows.map(r => [r.key as string, r.value as string]));
   } catch {
     return {};
   }

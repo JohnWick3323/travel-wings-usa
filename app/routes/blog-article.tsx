@@ -9,10 +9,12 @@ import styles from './blog-article.module.css';
 export async function loader({ params }: Route.LoaderArgs) {
   const { articleId } = params;
   // Try DB first, then static fallback
-  const dbPost = getBlogBySlug(articleId || '');
+  const [dbPost, dbPosts] = await Promise.all([
+    getBlogBySlug(articleId || ''),
+    getAllPublishedBlogs(),
+  ]);
   const post = dbPost || getBlogPostById(articleId || '') || null;
 
-  const dbPosts = getAllPublishedBlogs();
   const staticIds = new Set(blogPosts.map(p => p.id));
   const dbOnly = dbPosts.filter(p => !staticIds.has(p.id));
   const allPosts = [...dbOnly, ...blogPosts];
