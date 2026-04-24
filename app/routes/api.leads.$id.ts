@@ -2,8 +2,9 @@ import type { Route } from './+types/api.leads.$id';
 import { ensureDb } from '~/lib/db.server';
 
 function checkAuth(request: Request): boolean {
-  const auth = request.headers.get('Authorization');
-  return auth === `Bearer ${process.env.ADMIN_SESSION_SECRET}`;
+  const auth = request.headers.get('Authorization') || '';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'TravelWings2025!';
+  return auth === `Bearer ${adminPassword}`;
 }
 
 export async function action({ request, params }: Route.ActionArgs) {
