@@ -17,6 +17,7 @@ export function getDb(): Client {
 /** Initialize database schema — call once at server startup */
 export async function initDb(): Promise<void> {
   if (_initialized) return;
+  console.log('Initializing database at:', DB_PATH);
   _initialized = true;
 
   const db = getDb();

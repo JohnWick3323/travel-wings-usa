@@ -36,6 +36,7 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export async function loader() {
+  console.log('Root loader executing...');
   await initDb();
   const settings = await getSiteSettings();
   return {
