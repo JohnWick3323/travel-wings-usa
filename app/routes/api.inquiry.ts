@@ -1,5 +1,5 @@
 import type { Route } from './+types/api.inquiry';
-import { getDb } from '~/lib/db.server';
+import { getDb, initDb } from '~/lib/db.server';
 
 export async function action({ request }: Route.ActionArgs) {
   if (request.method !== 'POST') {
@@ -8,29 +8,29 @@ export async function action({ request }: Route.ActionArgs) {
 
   try {
     const body = await request.json();
+    await initDb();
     const db = getDb();
 
-    const stmt = db.prepare(`
-      INSERT INTO leads (name, email, phone, inquiryType, tourName, fromCity, toCity, departureDate, returnDate, passengers, travelDate, numberOfTravelers, subject, message)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
-
-    const result = stmt.run(
-      body.name || '',
-      body.email || '',
-      body.phone || null,
-      body.inquiryType || 'contact_form',
-      body.tourName || null,
-      body.fromCity || null,
-      body.toCity || null,
-      body.departureDate || null,
-      body.returnDate || null,
-      body.passengers || null,
-      body.travelDate || null,
-      body.numberOfTravelers || null,
-      body.subject || null,
-      body.message || null
-    );
+    const result = await db.execute({
+      sql: `INSERT INTO leads (name, email, phone, inquiryType, tourName, fromCity, toCity, departureDate, returnDate, passengers, travelDate, numberOfTravelers, subject, message)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      args: [
+        body.name || '',
+        body.email || '',
+        body.phone || null,
+        body.inquiryType || 'contact_form',
+        body.tourName || null,
+        body.fromCity || null,
+        body.toCity || null,
+        body.departureDate || null,
+        body.returnDate || null,
+        body.passengers || null,
+        body.travelDate || null,
+        body.numberOfTravelers || null,
+        body.subject || null,
+        body.message || null,
+      ],
+    });
 
     // Send email notifications via Resend if configured
     const resendKey = process.env.RESEND_API_KEY;
@@ -38,11 +38,12 @@ export async function action({ request }: Route.ActionArgs) {
       try {
         const { Resend } = await import('resend');
         const resend = new Resend(resendKey);
+        const toEmail = process.env.RESEND_TO_EMAIL || 'info@travelwingsusa.com';
 
         await Promise.allSettled([
           resend.emails.send({
             from: 'Travel Wings USA <noreply@travelwingsusa.com>',
-            to: ['info@travelwingsusa.com'],
+            to: [toEmail],
             subject: `New Lead: ${body.inquiryType} from ${body.name}`,
             html: `<h2>New Inquiry from ${body.name}</h2><p><strong>Type:</strong> ${body.inquiryType}</p><p><strong>Email:</strong> ${body.email}</p><p><strong>Phone:</strong> ${body.phone}</p><p><strong>Message:</strong> ${body.message}</p>`,
           }),
@@ -54,7 +55,6 @@ export async function action({ request }: Route.ActionArgs) {
           }),
         ]);
       } catch (e) {
-        // Email failure should not block the response
         console.error('Email send failed:', e);
       }
     }

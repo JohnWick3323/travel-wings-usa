@@ -1,25 +1,18 @@
 import type { Route } from './+types/api.categories.$id';
-import { getDb } from '~/lib/db.server';
+import { getDb, initDb } from '~/lib/db.server';
 
-const ADMIN_TOKEN_PREFIX = 'Bearer ';
-
-function getToken(request: Request): string | null {
+function checkAuth(request: Request): boolean {
   const auth = request.headers.get('Authorization') || '';
-  if (!auth.startsWith(ADMIN_TOKEN_PREFIX)) return null;
-  return auth.slice(ADMIN_TOKEN_PREFIX.length);
-}
-
-function verifyToken(token: string | null): boolean {
   const adminPassword = process.env.ADMIN_PASSWORD || 'TravelWings2025!';
-  return token === adminPassword;
+  return auth === `Bearer ${adminPassword}`;
 }
 
 export async function action({ request, params }: Route.ActionArgs) {
-  const token = getToken(request);
-  if (!verifyToken(token)) {
+  if (!checkAuth(request)) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  await initDb();
   const db = getDb();
   const id = Number(params.id);
 
@@ -31,16 +24,16 @@ export async function action({ request, params }: Route.ActionArgs) {
     const name = body.name.trim();
     const slug = name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, '');
     try {
-      db.prepare('UPDATE blog_categories SET name = ?, slug = ? WHERE id = ?').run(name, slug, id);
-      const cat = db.prepare('SELECT * FROM blog_categories WHERE id = ?').get(id);
-      return Response.json({ category: cat });
+      await db.execute({ sql: 'UPDATE blog_categories SET name = ?, slug = ? WHERE id = ?', args: [name, slug, id] });
+      const catResult = await db.execute({ sql: 'SELECT * FROM blog_categories WHERE id = ?', args: [id] });
+      return Response.json({ category: catResult.rows[0] });
     } catch {
       return Response.json({ error: 'Category name already exists' }, { status: 409 });
     }
   }
 
   if (request.method === 'DELETE') {
-    db.prepare('DELETE FROM blog_categories WHERE id = ?').run(id);
+    await db.execute({ sql: 'DELETE FROM blog_categories WHERE id = ?', args: [id] });
     return Response.json({ success: true });
   }
 

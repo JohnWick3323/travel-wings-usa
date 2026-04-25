@@ -2,17 +2,19 @@ import type { Route } from './+types/blog-article';
 import { ArticleHeader } from '~/blocks/blog-article/article-header';
 import { ArticleContentAndSidebar } from '~/blocks/blog-article/article-content-and-sidebar';
 import { RelatedArticles } from '~/blocks/blog-article/related-articles';
-import { blogPosts, getBlogPostById, getRelatedPosts } from '~/data/blog';
+import { blogPosts, getBlogPostById } from '~/data/blog';
 import { getBlogBySlug, getAllPublishedBlogs } from '~/lib/blog.server';
 import styles from './blog-article.module.css';
 
 export async function loader({ params }: Route.LoaderArgs) {
   const { articleId } = params;
   // Try DB first, then static fallback
-  const dbPost = getBlogBySlug(articleId || '');
+  const [dbPost, dbPosts] = await Promise.all([
+    getBlogBySlug(articleId || ''),
+    getAllPublishedBlogs(),
+  ]);
   const post = dbPost || getBlogPostById(articleId || '') || null;
 
-  const dbPosts = getAllPublishedBlogs();
   const staticIds = new Set(blogPosts.map(p => p.id));
   const dbOnly = dbPosts.filter(p => !staticIds.has(p.id));
   const allPosts = [...dbOnly, ...blogPosts];

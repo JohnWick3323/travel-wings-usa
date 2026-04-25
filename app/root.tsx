@@ -2,7 +2,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "
 
 import type { Route } from "./+types/root";
 import { ErrorBoundary as ErrorBoundaryRoot } from "~/components/error-boundary/error-boundary";
-import { getSiteSettings } from "~/lib/db.server";
+import { getSiteSettings, initDb } from "~/lib/db.server";
 
 import "./styles/reset.css";
 import "./styles/global.css";
@@ -36,7 +36,8 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export async function loader() {
-  const settings = getSiteSettings();
+  await initDb();
+  const settings = await getSiteSettings();
   return {
     gtmId: settings.gtm_id || '',
     ga4Id: settings.ga4_id || '',
@@ -46,8 +47,6 @@ export async function loader() {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  // useLoaderData returns undefined during SSR for the root layout when no data;
-  // we use a try/catch to safely get the data.
   let loaderData: { gtmId: string; ga4Id: string; customHeadCode: string; customBodyCode: string } | null = null;
   try {
     // eslint-disable-next-line react-hooks/rules-of-hooks

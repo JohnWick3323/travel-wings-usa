@@ -1,30 +1,27 @@
-import Database from 'better-sqlite3';
+import { createClient, type Client } from '@libsql/client';
 import path from 'path';
 
-// Use process.cwd() so the path resolves correctly in both dev and production
-const DB_PATH = path.join(process.cwd(), 'data.db');
+// Use process.cwd() so path resolves correctly in both dev and production
+const DB_PATH = `file:${path.join(process.cwd(), 'data.db')}`;
 
-let _db: Database.Database | null = null;
-let _dbError: Error | null = null;
+let _client: Client | null = null;
+let _initialized = false;
 
-export function getDb(): Database.Database {
-  if (_dbError) throw _dbError;
-  if (!_db) {
-    try {
-      _db = new Database(DB_PATH);
-      _db.pragma('journal_mode = WAL');
-      initDb(_db);
-    } catch (err) {
-      _dbError = err instanceof Error ? err : new Error(String(err));
-      console.error('[DB] Failed to open database at', DB_PATH, _dbError.message);
-      throw _dbError;
-    }
+export function getDb(): Client {
+  if (!_client) {
+    _client = createClient({ url: DB_PATH });
   }
-  return _db;
+  return _client;
 }
 
-function initDb(db: Database.Database): void {
-  db.exec(`
+/** Initialize database schema — call once at server startup */
+export async function initDb(): Promise<void> {
+  if (_initialized) return;
+  _initialized = true;
+
+  const db = getDb();
+
+  await db.executeMultiple(`
     CREATE TABLE IF NOT EXISTS leads (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -90,9 +87,9 @@ function initDb(db: Database.Database): void {
   `);
 
   // Seed default blog categories if empty
-  const catCount = (db.prepare('SELECT COUNT(*) as c FROM blog_categories').get() as { c: number }).c;
+  const catResult = await db.execute('SELECT COUNT(*) as c FROM blog_categories');
+  const catCount = Number(catResult.rows[0]?.c ?? 0);
   if (catCount === 0) {
-    const insertCat = db.prepare('INSERT OR IGNORE INTO blog_categories (name, slug) VALUES (?, ?)');
     const defaultCats = [
       ['General', 'general'],
       ['Umrah Tips', 'umrah-tips'],
@@ -105,13 +102,15 @@ function initDb(db: Database.Database): void {
       ['Middle East', 'middle-east'],
     ];
     for (const [name, slug] of defaultCats) {
-      insertCat.run(name, slug);
+      await db.execute({
+        sql: 'INSERT OR IGNORE INTO blog_categories (name, slug) VALUES (?, ?)',
+        args: [name, slug],
+      });
     }
   }
 
   // Seed default site settings keys if not exist
-  const insertSetting = db.prepare('INSERT OR IGNORE INTO site_settings (key, value) VALUES (?, ?)');
-  const defaultSettings = [
+  const defaultSettings: [string, string][] = [
     ['site_name', 'Travel Wings USA'],
     ['site_tagline', 'Your Trusted Travel Partner'],
     ['meta_description', 'Travel Wings USA offers affordable Umrah packages, Hajj tours, international flights, and travel packages from the USA.'],
@@ -123,9 +122,26 @@ function initDb(db: Database.Database): void {
     ['footer_text', ''],
   ];
   for (const [key, value] of defaultSettings) {
-    insertSetting.run(key, value);
+    await db.execute({
+      sql: `INSERT OR IGNORE INTO site_settings (key, value) VALUES (?, ?)`,
+      args: [key, value],
+    });
   }
 }
+
+/** Get all site settings as a key-value map */
+export async function getSiteSettings(): Promise<Record<string, string>> {
+  try {
+    await initDb();
+    const db = getDb();
+    const result = await db.execute('SELECT key, value FROM site_settings');
+    return Object.fromEntries(result.rows.map(r => [String(r.key), String(r.value)]));
+  } catch {
+    return {};
+  }
+}
+
+// ─── Shared Types ─────────────────────────────────────────────────────────────
 
 export interface Lead {
   id: number;
@@ -187,15 +203,4 @@ export interface SiteSetting {
   key: string;
   value: string;
   updatedAt: string;
-}
-
-/** Get all site settings as a key-value map */
-export function getSiteSettings(): Record<string, string> {
-  try {
-    const db = getDb();
-    const rows = db.prepare('SELECT key, value FROM site_settings').all() as { key: string; value: string }[];
-    return Object.fromEntries(rows.map(r => [r.key, r.value]));
-  } catch {
-    return {};
-  }
 }

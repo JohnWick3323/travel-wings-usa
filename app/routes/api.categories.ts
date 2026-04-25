@@ -1,31 +1,25 @@
 import type { Route } from './+types/api.categories';
-import { getDb } from '~/lib/db.server';
+import { getDb, initDb } from '~/lib/db.server';
 
-const ADMIN_TOKEN_PREFIX = 'Bearer ';
-
-function getToken(request: Request): string | null {
+function checkAuth(request: Request): boolean {
   const auth = request.headers.get('Authorization') || '';
-  if (!auth.startsWith(ADMIN_TOKEN_PREFIX)) return null;
-  return auth.slice(ADMIN_TOKEN_PREFIX.length);
-}
-
-function verifyToken(token: string | null): boolean {
   const adminPassword = process.env.ADMIN_PASSWORD || 'TravelWings2025!';
-  return token === adminPassword;
+  return auth === `Bearer ${adminPassword}`;
 }
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader({ request: _request }: Route.LoaderArgs) {
+  await initDb();
   const db = getDb();
-  const categories = db.prepare('SELECT * FROM blog_categories ORDER BY name ASC').all();
-  return Response.json({ categories });
+  const result = await db.execute('SELECT * FROM blog_categories ORDER BY name ASC');
+  return Response.json({ categories: result.rows });
 }
 
 export async function action({ request }: Route.ActionArgs) {
-  const token = getToken(request);
-  if (!verifyToken(token)) {
+  if (!checkAuth(request)) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  await initDb();
   const db = getDb();
 
   if (request.method === 'POST') {
@@ -36,9 +30,9 @@ export async function action({ request }: Route.ActionArgs) {
     const name = body.name.trim();
     const slug = name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, '');
     try {
-      const result = db.prepare('INSERT INTO blog_categories (name, slug) VALUES (?, ?)').run(name, slug);
-      const cat = db.prepare('SELECT * FROM blog_categories WHERE id = ?').get(result.lastInsertRowid);
-      return Response.json({ category: cat });
+      const result = await db.execute({ sql: 'INSERT INTO blog_categories (name, slug) VALUES (?, ?)', args: [name, slug] });
+      const catResult = await db.execute({ sql: 'SELECT * FROM blog_categories WHERE id = ?', args: [String(result.lastInsertRowid)] });
+      return Response.json({ category: catResult.rows[0] });
     } catch {
       return Response.json({ error: 'Category already exists' }, { status: 409 });
     }

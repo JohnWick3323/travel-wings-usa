@@ -1,9 +1,9 @@
 import type { Route } from './+types/api.leads';
-import { getDb } from '~/lib/db.server';
+import { getDb, initDb } from '~/lib/db.server';
 
 function checkAuth(request: Request): boolean {
   const auth = request.headers.get('Authorization');
-  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'TravelWings2025!';
   return auth === `Bearer ${adminPassword}`;
 }
 
@@ -11,28 +11,32 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!checkAuth(request)) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  await initDb();
   const db = getDb();
-  const leads = db.prepare('SELECT * FROM leads ORDER BY createdAt DESC').all();
-  return Response.json({ leads });
+  const result = await db.execute('SELECT * FROM leads ORDER BY createdAt DESC');
+  return Response.json({ leads: result.rows });
 }
 
-export async function action({ request, params }: Route.ActionArgs) {
+export async function action({ request }: Route.ActionArgs) {
   if (!checkAuth(request)) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  await initDb();
   const db = getDb();
   const url = new URL(request.url);
   const id = url.pathname.split('/').pop();
 
   if (request.method === 'DELETE') {
-    db.prepare('DELETE FROM leads WHERE id = ?').run(id);
+    await db.execute({ sql: 'DELETE FROM leads WHERE id = ?', args: [id ?? ''] });
     return Response.json({ success: true });
   }
 
   if (request.method === 'PATCH') {
     const body = await request.json();
-    db.prepare('UPDATE leads SET status = COALESCE(?, status), notes = COALESCE(?, notes) WHERE id = ?')
-      .run(body.status || null, body.notes !== undefined ? body.notes : null, id);
+    await db.execute({
+      sql: 'UPDATE leads SET status = COALESCE(?, status), notes = COALESCE(?, notes) WHERE id = ?',
+      args: [body.status || null, body.notes !== undefined ? body.notes : null, id ?? ''],
+    });
     return Response.json({ success: true });
   }
 
