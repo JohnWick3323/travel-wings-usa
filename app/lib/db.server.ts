@@ -1,17 +1,24 @@
 import Database from 'better-sqlite3';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_PATH = path.join(__dirname, '../../data.db');
+// Use process.cwd() so the path resolves correctly in both dev and production
+const DB_PATH = path.join(process.cwd(), 'data.db');
 
 let _db: Database.Database | null = null;
+let _dbError: Error | null = null;
 
 export function getDb(): Database.Database {
+  if (_dbError) throw _dbError;
   if (!_db) {
-    _db = new Database(DB_PATH);
-    _db.pragma('journal_mode = WAL');
-    initDb(_db);
+    try {
+      _db = new Database(DB_PATH);
+      _db.pragma('journal_mode = WAL');
+      initDb(_db);
+    } catch (err) {
+      _dbError = err instanceof Error ? err : new Error(String(err));
+      console.error('[DB] Failed to open database at', DB_PATH, _dbError.message);
+      throw _dbError;
+    }
   }
   return _db;
 }
