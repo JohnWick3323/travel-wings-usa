@@ -1,5 +1,5 @@
 import type { Route } from './+types/api.newsletter';
-import { ensureDb } from '~/lib/db.server';
+import { getDb } from '~/lib/db.server';
 
 export async function action({ request }: Route.ActionArgs) {
   if (request.method !== 'POST') {
@@ -8,8 +8,10 @@ export async function action({ request }: Route.ActionArgs) {
 
   try {
     const body = await request.json();
-    const db = await ensureDb();
-    await db.execute({ sql: 'INSERT OR IGNORE INTO newsletter_subscribers (email) VALUES (?)', args: [body.email || ''] });
+    const db = getDb();
+
+    db.prepare('INSERT OR IGNORE INTO newsletter_subscribers (email) VALUES (?)').run(body.email || '');
+
     return Response.json({ success: true });
   } catch (error) {
     console.error('Newsletter error:', error);

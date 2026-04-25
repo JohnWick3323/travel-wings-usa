@@ -9,8 +9,8 @@ export async function action({ request }: Route.ActionArgs) {
   const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
 
   if (body.password === adminPassword) {
-    // Return the password itself as the bearer token — all protected routes verify against ADMIN_PASSWORD
-    return Response.json({ success: true, token: adminPassword });
+    const token = process.env.ADMIN_SESSION_SECRET || 'admin-secret-token';
+    return Response.json({ success: true, token });
   }
 
   return Response.json({ error: 'Invalid password' }, { status: 401 });

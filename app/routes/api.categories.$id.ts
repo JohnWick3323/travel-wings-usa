@@ -1,5 +1,5 @@
 import type { Route } from './+types/api.categories.$id';
-import { ensureDb } from '~/lib/db.server';
+import { getDb } from '~/lib/db.server';
 
 const ADMIN_TOKEN_PREFIX = 'Bearer ';
 
@@ -20,7 +20,7 @@ export async function action({ request, params }: Route.ActionArgs) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const db = await ensureDb();
+  const db = getDb();
   const id = Number(params.id);
 
   if (request.method === 'PATCH') {
@@ -31,16 +31,16 @@ export async function action({ request, params }: Route.ActionArgs) {
     const name = body.name.trim();
     const slug = name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, '');
     try {
-      await db.execute({ sql: 'UPDATE blog_categories SET name = ?, slug = ? WHERE id = ?', args: [name, slug, id] });
-      const cat = await db.execute({ sql: 'SELECT * FROM blog_categories WHERE id = ?', args: [id] });
-      return Response.json({ category: cat.rows[0] });
+      db.prepare('UPDATE blog_categories SET name = ?, slug = ? WHERE id = ?').run(name, slug, id);
+      const cat = db.prepare('SELECT * FROM blog_categories WHERE id = ?').get(id);
+      return Response.json({ category: cat });
     } catch {
       return Response.json({ error: 'Category name already exists' }, { status: 409 });
     }
   }
 
   if (request.method === 'DELETE') {
-    await db.execute({ sql: 'DELETE FROM blog_categories WHERE id = ?', args: [id] });
+    db.prepare('DELETE FROM blog_categories WHERE id = ?').run(id);
     return Response.json({ success: true });
   }
 

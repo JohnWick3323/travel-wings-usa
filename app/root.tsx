@@ -36,7 +36,7 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export async function loader() {
-  const settings = await getSiteSettings();
+  const settings = getSiteSettings();
   return {
     gtmId: settings.gtm_id || '',
     ga4Id: settings.ga4_id || '',

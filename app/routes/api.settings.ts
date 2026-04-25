@@ -1,5 +1,5 @@
 import type { Route } from './+types/api.settings';
-import { ensureDb } from '~/lib/db.server';
+import { getDb } from '~/lib/db.server';
 
 const ADMIN_TOKEN_PREFIX = 'Bearer ';
 
@@ -15,9 +15,10 @@ function verifyToken(token: string | null): boolean {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const db = await ensureDb();
-  const result = await db.execute('SELECT key, value FROM site_settings');
-  return Response.json({ settings: Object.fromEntries(result.rows.map(r => [r.key as string, r.value as string])) });
+  // Public read for certain safe keys (used by root.tsx SSR)
+  const db = getDb();
+  const rows = db.prepare('SELECT key, value FROM site_settings').all() as { key: string; value: string }[];
+  return Response.json({ settings: Object.fromEntries(rows.map(r => [r.key, r.value])) });
 }
 
 export async function action({ request }: Route.ActionArgs) {
@@ -28,16 +29,16 @@ export async function action({ request }: Route.ActionArgs) {
 
   if (request.method === 'PATCH') {
     const body = await request.json() as Record<string, string>;
-    const db = await ensureDb();
+    const db = getDb();
+    const update = db.prepare(
+      `INSERT INTO site_settings (key, value, updatedAt) VALUES (?, ?, datetime('now'))
+       ON CONFLICT(key) DO UPDATE SET value = excluded.value, updatedAt = excluded.updatedAt`
+    );
     for (const [key, value] of Object.entries(body)) {
-      await db.execute({
-        sql: `INSERT INTO site_settings (key, value, updatedAt) VALUES (?, ?, datetime('now'))
-              ON CONFLICT(key) DO UPDATE SET value = excluded.value, updatedAt = excluded.updatedAt`,
-        args: [key, String(value)],
-      });
+      update.run(key, String(value));
     }
-    const result = await db.execute('SELECT key, value FROM site_settings');
-    return Response.json({ settings: Object.fromEntries(result.rows.map(r => [r.key as string, r.value as string])) });
+    const rows = db.prepare('SELECT key, value FROM site_settings').all() as { key: string; value: string }[];
+    return Response.json({ settings: Object.fromEntries(rows.map(r => [r.key, r.value])) });
   }
 
   return Response.json({ error: 'Method not allowed' }, { status: 405 });

@@ -1,41 +1,23 @@
-/**
- * Database layer using @libsql/client (pure JS/WASM — no native compilation).
- * Works on any Node.js host including Hostinger without SSH or build tools.
- */
-import { createClient, type Client, type ResultSet } from '@libsql/client';
+import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const DB_PATH = path.join(__dirname, '../../data.db');
 
-// In production (after build), __dirname is inside build/server/
-// We need to go up to find data.db at project root.
-function getDbPath(): string {
-  // Try multiple relative paths to handle both dev and prod environments
-  const candidates = [
-    path.join(__dirname, '../../data.db'),  // dev: app/lib/ -> root
-    path.join(__dirname, '../../../data.db'), // prod: build/server/ -> root (2 levels up)
-    path.join(process.cwd(), 'data.db'),     // always resolves to CWD
-  ];
-  // Use CWD-based path as the most reliable
-  return path.join(process.cwd(), 'data.db');
-}
+let _db: Database.Database | null = null;
 
-let _client: Client | null = null;
-
-export function getDb(): Client {
-  if (!_client) {
-    const dbPath = getDbPath();
-    _client = createClient({
-      url: `file:${dbPath}`,
-    });
+export function getDb(): Database.Database {
+  if (!_db) {
+    _db = new Database(DB_PATH);
+    _db.pragma('journal_mode = WAL');
+    initDb(_db);
   }
-  return _client;
+  return _db;
 }
 
-async function initDb(): Promise<void> {
-  const db = getDb();
-  await db.executeMultiple(`
+function initDb(db: Database.Database): void {
+  db.exec(`
     CREATE TABLE IF NOT EXISTS leads (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -101,9 +83,9 @@ async function initDb(): Promise<void> {
   `);
 
   // Seed default blog categories if empty
-  const catResult = await db.execute('SELECT COUNT(*) as c FROM blog_categories');
-  const count = catResult.rows[0]?.c as number;
-  if (count === 0) {
+  const catCount = (db.prepare('SELECT COUNT(*) as c FROM blog_categories').get() as { c: number }).c;
+  if (catCount === 0) {
+    const insertCat = db.prepare('INSERT OR IGNORE INTO blog_categories (name, slug) VALUES (?, ?)');
     const defaultCats = [
       ['General', 'general'],
       ['Umrah Tips', 'umrah-tips'],
@@ -116,15 +98,13 @@ async function initDb(): Promise<void> {
       ['Middle East', 'middle-east'],
     ];
     for (const [name, slug] of defaultCats) {
-      await db.execute({
-        sql: 'INSERT OR IGNORE INTO blog_categories (name, slug) VALUES (?, ?)',
-        args: [name, slug],
-      });
+      insertCat.run(name, slug);
     }
   }
 
-  // Seed default site settings
-  const defaultSettings: [string, string][] = [
+  // Seed default site settings keys if not exist
+  const insertSetting = db.prepare('INSERT OR IGNORE INTO site_settings (key, value) VALUES (?, ?)');
+  const defaultSettings = [
     ['site_name', 'Travel Wings USA'],
     ['site_tagline', 'Your Trusted Travel Partner'],
     ['meta_description', 'Travel Wings USA offers affordable Umrah packages, Hajj tours, international flights, and travel packages from the USA.'],
@@ -136,33 +116,9 @@ async function initDb(): Promise<void> {
     ['footer_text', ''],
   ];
   for (const [key, value] of defaultSettings) {
-    await db.execute({
-      sql: 'INSERT OR IGNORE INTO site_settings (key, value) VALUES (?, ?)',
-      args: [key, value],
-    });
+    insertSetting.run(key, value);
   }
 }
-
-// Initialize DB tables on module load (async, fire-and-forget with error handling)
-let _initialized = false;
-let _initPromise: Promise<void> | null = null;
-
-export async function ensureDb(): Promise<Client> {
-  if (!_initialized) {
-    if (!_initPromise) {
-      _initPromise = initDb().then(() => {
-        _initialized = true;
-      }).catch((err) => {
-        console.error('[DB] Init error:', err);
-        _initPromise = null;
-      });
-    }
-    await _initPromise;
-  }
-  return getDb();
-}
-
-export type { ResultSet };
 
 export interface Lead {
   id: number;
@@ -227,11 +183,11 @@ export interface SiteSetting {
 }
 
 /** Get all site settings as a key-value map */
-export async function getSiteSettings(): Promise<Record<string, string>> {
+export function getSiteSettings(): Record<string, string> {
   try {
-    const db = await ensureDb();
-    const result = await db.execute('SELECT key, value FROM site_settings');
-    return Object.fromEntries(result.rows.map(r => [r.key as string, r.value as string]));
+    const db = getDb();
+    const rows = db.prepare('SELECT key, value FROM site_settings').all() as { key: string; value: string }[];
+    return Object.fromEntries(rows.map(r => [r.key, r.value]));
   } catch {
     return {};
   }

@@ -1,5 +1,5 @@
 import type { Route } from './+types/api.blogs';
-import { ensureDb } from '~/lib/db.server';
+import { getDb } from '~/lib/db.server';
 
 function checkAuth(request: Request): boolean {
   const auth = request.headers.get('Authorization') || '';
@@ -9,7 +9,7 @@ function checkAuth(request: Request): boolean {
 
 /** GET /api/blogs — public (published only) OR admin (all with ?all=1) */
 export async function loader({ request }: Route.LoaderArgs) {
-  const db = await ensureDb();
+  const db = getDb();
   const url = new URL(request.url);
   const all = url.searchParams.get('all') === '1';
 
@@ -17,12 +17,12 @@ export async function loader({ request }: Route.LoaderArgs) {
     if (!checkAuth(request)) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    const result = await db.execute('SELECT * FROM blogs ORDER BY createdAt DESC');
-    return Response.json({ blogs: result.rows });
+    const blogs = db.prepare('SELECT * FROM blogs ORDER BY createdAt DESC').all();
+    return Response.json({ blogs });
   }
 
-  const result = await db.execute("SELECT * FROM blogs WHERE status = 'published' ORDER BY createdAt DESC");
-  return Response.json({ blogs: result.rows });
+  const blogs = db.prepare("SELECT * FROM blogs WHERE status = 'published' ORDER BY createdAt DESC").all();
+  return Response.json({ blogs });
 }
 
 /** POST /api/blogs — create new blog */
@@ -42,30 +42,29 @@ export async function action({ request }: Route.ActionArgs) {
     return Response.json({ error: 'Title and slug are required' }, { status: 400 });
   }
 
-  const db = await ensureDb();
+  const db = getDb();
   const tagsJson = JSON.stringify(Array.isArray(tags) ? tags : []);
   const resolvedPublishedAt = publishedAt || (status === 'published' ? new Date().toISOString().slice(0, 10) : null);
 
   try {
-    const result = await db.execute({
-      sql: `INSERT INTO blogs (title, slug, seoTitle, excerpt, content, featuredImage, category, author, tags, status, publishedAt)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      args: [
-        title,
-        slug,
-        seoTitle || null,
-        excerpt || null,
-        content || '',
-        featuredImage || null,
-        category || 'General',
-        author || 'Travel Wings Team',
-        tagsJson,
-        status || 'draft',
-        resolvedPublishedAt,
-      ],
-    });
-    const blog = await db.execute({ sql: 'SELECT * FROM blogs WHERE id = ?', args: [Number(result.lastInsertRowid)] });
-    return Response.json({ success: true, blog: blog.rows[0] });
+    const result = db.prepare(`
+      INSERT INTO blogs (title, slug, seoTitle, excerpt, content, featuredImage, category, author, tags, status, publishedAt)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      title,
+      slug,
+      seoTitle || null,
+      excerpt || null,
+      content || '',
+      featuredImage || null,
+      category || 'General',
+      author || 'Travel Wings Team',
+      tagsJson,
+      status || 'draft',
+      resolvedPublishedAt,
+    );
+    const blog = db.prepare('SELECT * FROM blogs WHERE id = ?').get(result.lastInsertRowid);
+    return Response.json({ success: true, blog });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     if (message.includes('UNIQUE constraint failed')) {

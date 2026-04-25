@@ -1,40 +1,37 @@
 import type { Route } from './+types/api.leads';
-import { ensureDb } from '~/lib/db.server';
+import { getDb } from '~/lib/db.server';
 
 function checkAuth(request: Request): boolean {
-  const auth = request.headers.get('Authorization') || '';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'TravelWings2025!';
-  return auth === `Bearer ${adminPassword}`;
+  const auth = request.headers.get('Authorization');
+  return auth === `Bearer ${process.env.ADMIN_SESSION_SECRET}`;
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
   if (!checkAuth(request)) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const db = await ensureDb();
-  const result = await db.execute('SELECT * FROM leads ORDER BY createdAt DESC');
-  return Response.json({ leads: result.rows });
+  const db = getDb();
+  const leads = db.prepare('SELECT * FROM leads ORDER BY createdAt DESC').all();
+  return Response.json({ leads });
 }
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, params }: Route.ActionArgs) {
   if (!checkAuth(request)) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const db = await ensureDb();
+  const db = getDb();
   const url = new URL(request.url);
   const id = url.pathname.split('/').pop();
 
   if (request.method === 'DELETE') {
-    await db.execute({ sql: 'DELETE FROM leads WHERE id = ?', args: [id!] });
+    db.prepare('DELETE FROM leads WHERE id = ?').run(id);
     return Response.json({ success: true });
   }
 
   if (request.method === 'PATCH') {
     const body = await request.json();
-    await db.execute({
-      sql: 'UPDATE leads SET status = COALESCE(?, status), notes = COALESCE(?, notes) WHERE id = ?',
-      args: [body.status ?? null, body.notes !== undefined ? String(body.notes) : null, id!],
-    });
+    db.prepare('UPDATE leads SET status = COALESCE(?, status), notes = COALESCE(?, notes) WHERE id = ?')
+      .run(body.status || null, body.notes !== undefined ? body.notes : null, id);
     return Response.json({ success: true });
   }
 

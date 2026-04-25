@@ -14,7 +14,7 @@ export function meta(_: Route.MetaArgs) {
 }
 
 export async function loader() {
-  const dbPosts = await getAllPublishedBlogs();
+  const dbPosts = getAllPublishedBlogs();
   // Merge: DB posts first (newest), then static posts
   const staticIds = new Set(blogPosts.map(p => p.id));
   const dbOnly = dbPosts.filter(p => !staticIds.has(p.id));

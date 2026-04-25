@@ -1,5 +1,5 @@
 import type { Route } from './+types/api.media.$id';
-import { ensureDb } from '~/lib/db.server';
+import { getDb } from '~/lib/db.server';
 
 const ADMIN_TOKEN_PREFIX = 'Bearer ';
 
@@ -20,28 +20,23 @@ export async function action({ request, params }: Route.ActionArgs) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const db = await ensureDb();
+  const db = getDb();
   const id = Number(params.id);
 
   if (request.method === 'PATCH') {
     const body = await request.json() as { name?: string; folder?: string };
-    const existingResult = await db.execute({ sql: 'SELECT * FROM media WHERE id = ?', args: [id] });
-    const item = existingResult.rows[0];
+    const item = db.prepare('SELECT * FROM media WHERE id = ?').get(id) as Record<string, unknown> | undefined;
     if (!item) return Response.json({ error: 'Not found' }, { status: 404 });
-    await db.execute({
-      sql: 'UPDATE media SET name = ?, folder = ? WHERE id = ?',
-      args: [
-        body.name?.trim() || String(item.name),
-        body.folder?.trim() || String(item.folder),
-        id,
-      ],
-    });
-    const updated = await db.execute({ sql: 'SELECT * FROM media WHERE id = ?', args: [id] });
-    return Response.json({ item: updated.rows[0] });
+    db.prepare('UPDATE media SET name = ?, folder = ? WHERE id = ?').run(
+      body.name?.trim() || item.name,
+      body.folder?.trim() || item.folder,
+      id,
+    );
+    return Response.json({ item: db.prepare('SELECT * FROM media WHERE id = ?').get(id) });
   }
 
   if (request.method === 'DELETE') {
-    await db.execute({ sql: 'DELETE FROM media WHERE id = ?', args: [id] });
+    db.prepare('DELETE FROM media WHERE id = ?').run(id);
     return Response.json({ success: true });
   }
 
