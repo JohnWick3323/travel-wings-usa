@@ -3,7 +3,8 @@ import { getDb } from '~/lib/db.server';
 
 function checkAuth(request: Request): boolean {
   const auth = request.headers.get('Authorization');
-  return auth === `Bearer ${process.env.ADMIN_SESSION_SECRET}`;
+  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+  return auth === `Bearer ${adminPassword}`;
 }
 
 export async function action({ request, params }: Route.ActionArgs) {
