@@ -1,4 +1,4 @@
-import { createRequestHandler } from "@react-router/node";
+import { createRequestHandler } from "react-router";
 import { createServer } from "node:http";
 import { createReadableStreamFromReadable } from "@react-router/node";
 import * as build from "./build/server/index.js";
@@ -9,7 +9,6 @@ const port = process.env.PORT || 3000;
 
 const server = createServer(async (req, res) => {
   try {
-    // Convert Node request to Web Request
     const url = new URL(req.url, `http://${req.headers.host}`);
     const controller = new AbortController();
     res.on("close", () => controller.abort());
@@ -35,7 +34,6 @@ const server = createServer(async (req, res) => {
 
     const response = await requestHandler(request);
 
-    // Send Web Response back to Node res
     res.statusCode = response.status;
     for (const [key, value] of response.headers.entries()) {
       res.setHeader(key, value);
