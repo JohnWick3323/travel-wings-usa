@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router';
 import { Phone, MessageCircle, ChevronDown, X } from 'lucide-react';
 import cn from 'classnames';
 import styles from './main-navigation-bar.module.css';
-import logoHeader from '/logo-header.png';
+import logoHeader from '/logo-header.webp';
 
 interface Props {
   className?: string;
