@@ -2,6 +2,7 @@ import { MapPin, Phone, Mail, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
 import cn from 'classnames';
 import styles from './footer-main-content.module.css';
+import logoFooter from '/logo-footer.webp';
 
 interface Props {
   className?: string;
@@ -12,8 +13,8 @@ export function FooterMainContent({ className }: Props) {
     <footer className={cn(styles.footer, className)}>
       <div className={styles.inner}>
         <div className={styles.col}>
-          <div className={styles.logoText}>
-            Travel Wings <span className={styles.logoAccent}>USA</span>
+          <div className={styles.logoImgWrap}>
+            <img src={logoFooter} alt="Travel Wings USA" className={styles.logoImg} />
           </div>
           <p className={styles.description}>
             Your trusted travel partner for Umrah packages, Hajj packages, international air ticketing, and curated vacation tours. Serving the community from Gwynn Oak, Maryland.

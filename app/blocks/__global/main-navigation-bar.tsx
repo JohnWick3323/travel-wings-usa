@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { NavLink, Link } from 'react-router';
-import { Phone, MessageCircle, ChevronDown, X, Plane } from 'lucide-react';
+import { Phone, MessageCircle, ChevronDown, X } from 'lucide-react';
 import cn from 'classnames';
 import styles from './main-navigation-bar.module.css';
+import logoHeader from '/logo-header.webp';
 
 interface Props {
   className?: string;
@@ -24,15 +25,7 @@ export function MainNavigationBar({ className }: Props) {
     <>
       <nav className={cn(styles.nav, className)}>
         <Link to="/" className={styles.logo}>
-          <div className={styles.logoIcon}>
-            <Plane size={22} color="white" aria-hidden="true" />
-          </div>
-          <div className={styles.logoText}>
-            <span className={styles.logoName}>
-              Travel Wings <span className={styles.logoAccent}>USA</span>
-            </span>
-            <span className={styles.logoSub}>Your Trusted Travel Partner</span>
-          </div>
+          <img src={logoHeader} alt="Travel Wings USA" className={styles.logoImg} />
         </Link>
 
         <ul className={styles.menu}>
@@ -87,7 +80,7 @@ export function MainNavigationBar({ className }: Props) {
         <div className={styles.drawerOverlay} onClick={() => setDrawerOpen(false)} />
         <div className={styles.drawerPanel}>
           <div className={styles.drawerHeader}>
-            <span className={styles.drawerHeaderLogo}>Travel Wings <span className={styles.drawerHeaderAccent}>USA</span></span>
+            <img src={logoHeader} alt="Travel Wings USA" className={styles.drawerHeaderLogoImg} />
             <button className={styles.drawerClose} onClick={() => setDrawerOpen(false)} aria-label="Close menu">
               <X size={20} aria-hidden="true" />
             </button>

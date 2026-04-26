@@ -14,15 +14,15 @@
 
 .col {}
 
-.logoText {
-  font-size: var(--text-xl);
-  font-weight: 800;
-  color: var(--color-white);
+.logoImgWrap {
   margin-bottom: var(--space-4);
 }
 
-.logoAccent {
-  color: var(--color-accent);
+.logoImg {
+  height: 70px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .description {

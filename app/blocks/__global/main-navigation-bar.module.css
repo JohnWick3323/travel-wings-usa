@@ -15,45 +15,15 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
   text-decoration: none;
   flex-shrink: 0;
 }
 
-.logoIcon {
-  width: 46px;
-  height: 46px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-navy));
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.logoText {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.logoName {
-  font-weight: 800;
-  font-size: 20px;
-  color: var(--color-navy);
-  letter-spacing: -0.3px;
-}
-
-.logoSub {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-.logoAccent {
-  color: var(--color-accent);
+.logoImg {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .menu {
@@ -252,14 +222,12 @@
   background: linear-gradient(135deg, var(--color-navy), var(--color-primary));
 }
 
-.drawerHeaderLogo {
-  font-weight: 800;
-  font-size: var(--text-lg);
-  color: var(--color-white);
-}
-
-.drawerHeaderAccent {
-  color: var(--color-accent);
+.drawerHeaderLogoImg {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
 }
 
 .drawerClose {
