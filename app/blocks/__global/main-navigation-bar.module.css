@@ -24,6 +24,7 @@
   width: auto;
   object-fit: contain;
   display: block;
+  mix-blend-mode: multiply;
 }
 
 .menu {
