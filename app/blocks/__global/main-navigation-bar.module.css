@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: var(--color-navy);
+  background-color: var(--color-white);
   box-shadow: 0 2px 20px rgba(1, 95, 201, 0.12);
   height: var(--nav-height);
   display: flex;
@@ -24,7 +24,6 @@
   width: auto;
   object-fit: contain;
   display: block;
-  mix-blend-mode: screen;
 }
 
 .menu {
@@ -49,7 +48,7 @@
   padding: var(--space-2) var(--space-3);
   font-size: var(--text-sm);
   font-weight: 600;
-  color: var(--color-white);
+  color: var(--color-navy);
   text-decoration: none;
   border-radius: var(--radius-sm);
   transition: color 0.2s, background-color 0.2s;
@@ -62,8 +61,8 @@
 
 .menuLink:hover,
 .menuLink.active {
-  color: var(--color-white);
-  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
 }
 
 .dropdown {
@@ -168,7 +167,7 @@
   display: block;
   width: 24px;
   height: 2px;
-  background-color: var(--color-white);
+  background-color: var(--color-navy);
   border-radius: 2px;
   transition: all 0.3s;
 }
