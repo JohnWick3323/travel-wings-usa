@@ -2,7 +2,7 @@ import { MapPin, Phone, Mail, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
 import cn from 'classnames';
 import styles from './footer-main-content.module.css';
-import logoFooter from '/logo-footer.webp';
+import logoFooter from '/travelwing-header.png';
 
 interface Props {
   className?: string;
