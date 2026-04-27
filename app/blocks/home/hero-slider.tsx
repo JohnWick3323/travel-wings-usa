@@ -7,19 +7,19 @@ import styles from './hero-slider.module.css';
 const slides = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=85',
+    image: '/assets/images/extracted/hero-slider-1.jpg',
     subtitle: 'Begin Your Adventure',
     title: 'The First Step of Your Travel Expedition',
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=1920&q=85',
+    image: '/assets/images/extracted/hero-slider-2.jpg',
     subtitle: 'Spiritual Journeys',
     title: 'Your Umrah Journey Departing Worldwide',
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1920&q=85',
+    image: '/assets/images/extracted/hero-slider-3.jpg',
     subtitle: 'Explore the World',
     title: 'Discover, Dream, Travel',
   },

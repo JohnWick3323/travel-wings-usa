@@ -10,7 +10,7 @@ interface Props {
 export function PageHeroBanner({ className }: Props) {
   return (
     <div className={cn(styles.hero, className)}>
-      <div className={styles.bg} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&q=80)' }} />
+      <div className={styles.bg} style={{ backgroundImage: 'url(/assets/images/extracted/destinations-hero.jpg)' }} />
       <div className={styles.overlay} />
       <div className={styles.content}>
         <h1 className={styles.title}>All Destinations and Packages</h1>

@@ -2,10 +2,10 @@ import cn from 'classnames';
 import styles from './team-section.module.css';
 
 const team = [
-  { name: 'Ahmed Hassan', role: 'Founder & CEO', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', bio: 'Founder of Travel Wings USA with over 15 years in the travel industry, specializing in spiritual journeys.' },
-  { name: 'Fatima Malik', role: 'Umrah Specialist', photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80', bio: 'Expert in Umrah and Hajj packages, helping thousands of pilgrims complete their spiritual journeys.' },
-  { name: 'Khalid Rahman', role: 'Air Ticketing Expert', photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80', bio: 'Specializes in finding the best fares for international flights to Pakistan, UAE, UK, and beyond.' },
-  { name: 'Sara Johnson', role: 'Travel Consultant', photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80', bio: 'Curates exceptional vacation packages across Europe, Asia, and the Middle East.' },
+  { name: 'Ahmed Hassan', role: 'Founder & CEO', photo: '/assets/images/extracted/avatar-ahmed.jpg', bio: 'Founder of Travel Wings USA with over 15 years in the travel industry, specializing in spiritual journeys.' },
+  { name: 'Fatima Malik', role: 'Umrah Specialist', photo: '/assets/images/extracted/avatar-fatima.jpg', bio: 'Expert in Umrah and Hajj packages, helping thousands of pilgrims complete their spiritual journeys.' },
+  { name: 'Khalid Rahman', role: 'Air Ticketing Expert', photo: '/assets/images/extracted/avatar-khalid.jpg', bio: 'Specializes in finding the best fares for international flights to Pakistan, UAE, UK, and beyond.' },
+  { name: 'Sara Johnson', role: 'Travel Consultant', photo: '/assets/images/extracted/avatar-sara.jpg', bio: 'Curates exceptional vacation packages across Europe, Asia, and the Middle East.' },
 ];
 
 interface Props { className?: string; }

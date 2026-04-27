@@ -18,7 +18,7 @@ export function dbBlogToPost(row: Record<string, unknown>): BlogPost {
     }),
     author: row.author as string,
     readTime: estimateReadTime(row.content as string),
-    image: (row.featuredImage as string) || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80',
+    image: (row.featuredImage as string) || '/assets/images/extracted/hero-slider-1.jpg',
     relatedTourIds: [],
     tags,
     // DB-only extras (optional)

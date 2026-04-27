@@ -8,9 +8,9 @@ export function OurStorySection({ className }: Props) {
     <section className={cn(styles.section, className)}>
       <div className={styles.inner}>
         <div className={styles.imageCollage}>
-          <img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=600&q=80" alt="Umrah" className={styles.img1} loading="lazy" />
-          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500&q=80" alt="Dubai" className={styles.img2} loading="lazy" />
-          <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&q=80" alt="Paris" className={styles.img3} loading="lazy" />
+          <img src="/assets/images/extracted/hero-slider-2.jpg" alt="Umrah" className={styles.img1} loading="lazy" />
+          <img src="/assets/images/extracted/tour-dubai.jpg" alt="Dubai" className={styles.img2} loading="lazy" />
+          <img src="/assets/images/extracted/hero-slider-3.jpg" alt="Paris" className={styles.img3} loading="lazy" />
         </div>
         <div className={styles.content}>
           <span className={styles.sectionLabel}>Get to Know Us</span>

@@ -1,7 +1,7 @@
 .section {
   position: relative;
   padding: var(--space-20) var(--space-6);
-  background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&q=70');
+  background-image: url('/assets/images/extracted/destinations-hero.jpg');
   background-size: cover;
   background-position: center;
   text-align: center;

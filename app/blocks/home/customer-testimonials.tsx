@@ -3,12 +3,12 @@ import cn from 'classnames';
 import styles from './customer-testimonials.module.css';
 
 const testimonials = [
-  { name: 'Ahmad Hassan', location: 'Baltimore, MD', rating: 5, quote: 'Travel Wings USA made our Umrah journey absolutely seamless. Every detail was taken care of from visa to hotel near the Haram. Highly recommended!', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80' },
-  { name: 'Fatima Al-Rashid', location: 'Washington, DC', rating: 5, quote: 'We had an amazing Paris trip arranged by Travel Wings. The team was so helpful and responsive. Will definitely book again for our next adventure!', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80' },
-  { name: 'Mohammed Khan', location: 'New York, NY', rating: 5, quote: 'Best travel agency for flights to Pakistan. They got us great fares and the process was stress-free. Our whole family has used them multiple times.', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80' },
-  { name: 'Sarah Johnson', location: 'Chicago, IL', rating: 5, quote: 'The Dubai package was incredible! Everything from hotel to desert safari was perfectly arranged. Cannot wait to book another trip with Travel Wings USA.', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80' },
-  { name: 'Ibrahim Siddiqui', location: 'Houston, TX', rating: 5, quote: 'Hajj package 2024 was life-changing. The team provided excellent support throughout the entire pilgrimage. JazakAllah khair for making this possible.', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80' },
-  { name: 'Aisha Williams', location: 'Philadelphia, PA', rating: 4, quote: 'Very professional agency. Our Turkey trip was well-planned and the guide was knowledgeable. Cappadocia was breathtaking. Great value for money!', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80' },
+  { name: 'Ahmad Hassan', location: 'Baltimore, MD', rating: 5, quote: 'Travel Wings USA made our Umrah journey absolutely seamless. Every detail was taken care of from visa to hotel near the Haram. Highly recommended!', avatar: '/assets/images/extracted/avatar-ahmed.jpg' },
+  { name: 'Fatima Al-Rashid', location: 'Washington, DC', rating: 5, quote: 'We had an amazing Paris trip arranged by Travel Wings. The team was so helpful and responsive. Will definitely book again for our next adventure!', avatar: '/assets/images/extracted/avatar-fatima.jpg' },
+  { name: 'Mohammed Khan', location: 'New York, NY', rating: 5, quote: 'Best travel agency for flights to Pakistan. They got us great fares and the process was stress-free. Our whole family has used them multiple times.', avatar: '/assets/images/extracted/avatar-khalid.jpg' },
+  { name: 'Sarah Johnson', location: 'Chicago, IL', rating: 5, quote: 'The Dubai package was incredible! Everything from hotel to desert safari was perfectly arranged. Cannot wait to book another trip with Travel Wings USA.', avatar: '/assets/images/extracted/avatar-sara.jpg' },
+  { name: 'Ibrahim Siddiqui', location: 'Houston, TX', rating: 5, quote: 'Hajj package 2024 was life-changing. The team provided excellent support throughout the entire pilgrimage. JazakAllah khair for making this possible.', avatar: '/assets/images/extracted/avatar-ibrahim.jpg' },
+  { name: 'Aisha Williams', location: 'Philadelphia, PA', rating: 4, quote: 'Very professional agency. Our Turkey trip was well-planned and the guide was knowledgeable. Cappadocia was breathtaking. Great value for money!', avatar: '/assets/images/extracted/avatar-aisha.jpg' },
 ];
 
 interface Props {

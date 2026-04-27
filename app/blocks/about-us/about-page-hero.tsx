@@ -8,7 +8,7 @@ interface Props { className?: string; }
 export function AboutPageHero({ className }: Props) {
   return (
     <div className={cn(styles.hero, className)}>
-      <div className={styles.bg} style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=80)' }} />
+      <div className={styles.bg} style={{ backgroundImage: 'url(/assets/images/extracted/hero-slider-1.jpg)' }} />
       <div className={styles.overlay} />
       <div className={styles.content}>
         <h1 className={styles.title}>About Travel Wings USA</h1>
