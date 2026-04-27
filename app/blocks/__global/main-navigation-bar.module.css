@@ -24,7 +24,6 @@
   width: auto;
   object-fit: contain;
   display: block;
-  mix-blend-mode: multiply;
 }
 
 .menu {
@@ -228,7 +227,6 @@
   width: auto;
   object-fit: contain;
   display: block;
-  mix-blend-mode: screen;
 }
 
 .drawerClose {
