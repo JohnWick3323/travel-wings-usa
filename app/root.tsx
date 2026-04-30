@@ -3,7 +3,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "
 import type { Route } from "./+types/root";
 import { ErrorBoundary as ErrorBoundaryRoot } from "~/components/error-boundary/error-boundary";
 import { getSiteSettings, initDb } from "~/lib/db.server";
-import { sanitizeTrackingId, sanitizeHtml } from "~/lib/sanitize";
+import { sanitizeTrackingId } from "~/lib/sanitize";
 
 import "./styles/reset.css";
 import "./styles/global.css";
@@ -59,8 +59,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const gtmId = sanitizeTrackingId(loaderData?.gtmId || '');
   const ga4Id = sanitizeTrackingId(loaderData?.ga4Id || '');
-  const customHeadCode = sanitizeHtml(loaderData?.customHeadCode || '');
-  const customBodyCode = sanitizeHtml(loaderData?.customBodyCode || '');
+  // Custom head/body code is admin-only (behind checkAuth) — not user-generated content.
+  // Sanitizing would break intended script/pixel injection (Facebook Pixel, Hotjar, etc.)
+  const customHeadCode = loaderData?.customHeadCode || '';
+  const customBodyCode = loaderData?.customBodyCode || '';
 
   return (
     <html lang="en" suppressHydrationWarning>
