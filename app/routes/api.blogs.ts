@@ -1,11 +1,6 @@
 import type { Route } from './+types/api.blogs';
 import { getDb, initDb } from '~/lib/db.server';
-
-function checkAuth(request: Request): boolean {
-  const auth = request.headers.get('Authorization') || '';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'TravelWings2025!';
-  return auth === `Bearer ${adminPassword}`;
-}
+import { checkAuth } from '~/lib/auth.server';
 
 /** GET /api/blogs — public (published only) OR admin (all with ?all=1) */
 export async function loader({ request }: Route.LoaderArgs) {

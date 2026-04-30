@@ -11,8 +11,8 @@ export function FooterBottomBar({ className }: Props) {
       <div className={styles.inner}>
         <span>&copy; 2025 Travel Wings USA. All Rights Reserved.</span>
         <div className={styles.links}>
-          <a href="#" className={styles.link}>Privacy Policy</a>
-          <a href="#" className={styles.link}>Terms of Service</a>
+          <a href="/privacy-policy" className={styles.link}>Privacy Policy</a>
+          <a href="/terms-of-service" className={styles.link}>Terms of Service</a>
         </div>
       </div>
     </div>

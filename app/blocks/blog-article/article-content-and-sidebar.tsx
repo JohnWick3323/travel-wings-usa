@@ -3,6 +3,7 @@ import { Phone, MessageCircle } from 'lucide-react';
 import cn from 'classnames';
 import type { BlogPost } from '~/data/blog';
 import { getTourById } from '~/data/tours';
+import { sanitizeHtml } from '~/lib/sanitize';
 import styles from './article-content-and-sidebar.module.css';
 
 interface Props {
@@ -35,7 +36,7 @@ export function ArticleContentAndSidebar({ post, className }: Props) {
       <main className={styles.main}>
         <div className={styles.article}>
           {htmlContent
-            ? <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            ? <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
             : renderPlainText(post.content)
           }
         </div>

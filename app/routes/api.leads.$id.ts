@@ -1,11 +1,6 @@
 import type { Route } from './+types/api.leads.$id';
 import { getDb, initDb } from '~/lib/db.server';
-
-function checkAuth(request: Request): boolean {
-  const auth = request.headers.get('Authorization');
-  const adminPassword = process.env.ADMIN_PASSWORD || 'TravelWings2025!';
-  return auth === `Bearer ${adminPassword}`;
-}
+import { checkAuth } from '~/lib/auth.server';
 
 export async function action({ request, params }: Route.ActionArgs) {
   if (!checkAuth(request)) {

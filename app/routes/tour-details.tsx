@@ -12,7 +12,9 @@ import { RelatedTours } from '~/blocks/tour-details/related-tours';
 import styles from './tour-details.module.css';
 
 export function meta({ params }: Route.MetaArgs) {
-  return [{ title: 'Tour Details - Travel Wings USA' }];
+  const tour = getTourById(params.tourId || '');
+  const title = tour ? `${tour.title} - Travel Wings USA` : 'Tour Details - Travel Wings USA';
+  return [{ title }];
 }
 
 export default function TourDetails() {
