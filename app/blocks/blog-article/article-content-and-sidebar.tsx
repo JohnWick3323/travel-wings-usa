@@ -33,14 +33,14 @@ export function ArticleContentAndSidebar({ post, className }: Props) {
 
   return (
     <div className={cn(styles.layout, className)}>
-      <main className={styles.main}>
+      <article className={styles.main}>
         <div className={styles.article}>
           {htmlContent
             ? <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
             : renderPlainText(post.content)
           }
         </div>
-      </main>
+      </article>
 
       <aside className={styles.sidebar}>
         {relatedTours.length > 0 && (

@@ -1,11 +1,13 @@
 import type { Route } from './+types/terms-of-service';
+import { generateSeoMeta, SITE_URL } from '~/lib/seo';
 import styles from './legal-page.module.css';
 
 export function meta(_: Route.MetaArgs) {
-  return [
-    { title: 'Terms of Service - Travel Wings USA' },
-    { name: 'description', content: 'Terms of Service for Travel Wings USA. Read our terms and conditions for using our travel services.' },
-  ];
+  return generateSeoMeta({
+    title: 'Terms of Service - Travel Wings USA',
+    description: 'Terms of Service for Travel Wings USA. Read our terms and conditions for using our travel services.',
+    url: `${SITE_URL}/terms-of-service`,
+  });
 }
 
 export default function TermsOfService() {

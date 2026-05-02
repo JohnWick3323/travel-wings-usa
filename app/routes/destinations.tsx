@@ -5,13 +5,16 @@ import { PageHeroBanner } from '~/blocks/destinations/page-hero-banner';
 import { FilterAndSearchBar } from '~/blocks/destinations/filter-and-search-bar';
 import { ToursGrid } from '~/blocks/destinations/tours-grid';
 import { tours } from '~/data/tours';
+import { generateSeoMeta, SITE_URL } from '~/lib/seo';
 import styles from './destinations.module.css';
 
 export function meta(_: Route.MetaArgs) {
-  return [
-    { title: 'All Destinations & Packages - Travel Wings USA' },
-    { name: 'description', content: 'Browse all travel packages including Umrah, Hajj, vacation tours, and air ticketing from Travel Wings USA.' },
-  ];
+  return generateSeoMeta({
+    title: 'All Destinations & Packages - Travel Wings USA',
+    description: 'Browse all travel packages including Umrah, Hajj, vacation tours, and air ticketing from Travel Wings USA. Book affordable packages departing from the USA.',
+    url: `${SITE_URL}/destinations`,
+    image: `${SITE_URL}/assets/images/extracted/destinations-hero.jpg`,
+  });
 }
 
 export default function Destinations() {

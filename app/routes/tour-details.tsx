@@ -9,12 +9,21 @@ import { DayByDayItinerary } from '~/blocks/tour-details/day-by-day-itinerary';
 import { InclusionsAndExclusions } from '~/blocks/tour-details/inclusions-and-exclusions';
 import { StickyQuoteRequestForm } from '~/blocks/tour-details/sticky-quote-request-form';
 import { RelatedTours } from '~/blocks/tour-details/related-tours';
+import { generateSeoMeta, SITE_URL } from '~/lib/seo';
+import { tourSchema, breadcrumbSchema } from '~/lib/structured-data';
 import styles from './tour-details.module.css';
 
 export function meta({ params }: Route.MetaArgs) {
   const tour = getTourById(params.tourId || '');
-  const title = tour ? `${tour.title} - Travel Wings USA` : 'Tour Details - Travel Wings USA';
-  return [{ title }];
+  if (!tour) {
+    return [{ title: 'Tour Not Found - Travel Wings USA' }];
+  }
+  return generateSeoMeta({
+    title: `${tour.title} - ${tour.duration} | Travel Wings USA`,
+    description: tour.description.slice(0, 160),
+    url: `${SITE_URL}/tour/${tour.id}`,
+    image: `${SITE_URL}${tour.image}`,
+  });
 }
 
 export default function TourDetails() {
@@ -35,8 +44,26 @@ export default function TourDetails() {
 
   const related = getRelatedTours(tour.id);
 
+  const schemas = tourSchema(tour);
+  const breadcrumb = breadcrumbSchema([
+    { name: 'Home', url: SITE_URL },
+    { name: 'Destinations', url: `${SITE_URL}/destinations` },
+    { name: tour.title, url: `${SITE_URL}/tour/${tour.id}` },
+  ]);
+
   return (
     <main className={styles.page}>
+      {schemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <TourPageHero tour={tour} />
       <div className={styles.content}>
         <div className={styles.main}>

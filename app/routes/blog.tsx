@@ -4,13 +4,16 @@ import { BlogGrid } from '~/blocks/blog/blog-grid';
 import { NewsletterSignupStrip } from '~/blocks/blog/newsletter-signup-strip';
 import { blogPosts } from '~/data/blog';
 import { getAllPublishedBlogs } from '~/lib/blog.server';
+import { generateSeoMeta, SITE_URL } from '~/lib/seo';
 import styles from './blog.module.css';
 
 export function meta(_: Route.MetaArgs) {
-  return [
-    { title: 'Travel Blog & Tips - Travel Wings USA' },
-    { name: 'description', content: 'Travel tips, destination guides, Umrah preparation, and air travel advice from Travel Wings USA.' },
-  ];
+  return generateSeoMeta({
+    title: 'Travel Blog & Tips - Travel Wings USA',
+    description: 'Travel tips, destination guides, Umrah preparation, and air travel advice from Travel Wings USA. Expert insights for smart travelers.',
+    url: `${SITE_URL}/blog`,
+    image: `${SITE_URL}/assets/images/extracted/blog-hero.jpg`,
+  });
 }
 
 export async function loader() {
