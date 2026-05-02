@@ -3,6 +3,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "
 import type { Route } from "./+types/root";
 import { ErrorBoundary as ErrorBoundaryRoot } from "~/components/error-boundary/error-boundary";
 import { getSiteSettings, initDb } from "~/lib/db.server";
+import { sanitizeTrackingId } from "~/lib/sanitize";
 
 import "./styles/reset.css";
 import "./styles/global.css";
@@ -56,8 +57,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
     loaderData = null;
   }
 
-  const gtmId = loaderData?.gtmId || '';
-  const ga4Id = loaderData?.ga4Id || '';
+  const gtmId = sanitizeTrackingId(loaderData?.gtmId || '');
+  const ga4Id = sanitizeTrackingId(loaderData?.ga4Id || '');
+  // Custom head/body code is admin-only (behind checkAuth) — not user-generated content.
+  // Sanitizing would break intended script/pixel injection (Facebook Pixel, Hotjar, etc.)
   const customHeadCode = loaderData?.customHeadCode || '';
   const customBodyCode = loaderData?.customBodyCode || '';
 
