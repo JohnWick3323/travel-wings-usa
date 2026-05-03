@@ -1,3 +1,8 @@
+---
+name: testing-travel-wings
+description: Test the Travel Wings USA platform end-to-end. Use when verifying UI, SEO, admin, or API changes.
+---
+
 # Testing Travel Wings USA
 
 ## Overview
@@ -41,12 +46,62 @@ The dev server must be restarted after changing `.env` values.
 | `/` | Homepage with hero slider |
 | `/destinations` | All tour cards |
 | `/tour/:tourId` | Tour detail page (check dynamic title in tab) |
+| `/blog` | Blog listing page |
+| `/blog/:articleId` | Blog article page |
+| `/contact` | Contact page with form + map |
+| `/about` | About us page |
 | `/admin` | Admin login + dashboard |
 | `/privacy-policy` | Legal page |
 | `/terms-of-service` | Legal page |
+| `/robots.txt` | Search engine directives |
+| `/sitemap.xml` | Dynamic XML sitemap |
 | `/api/admin/login` | POST — login API |
 | `/api/inquiry` | POST — contact form |
 | `/api/newsletter` | POST — newsletter signup |
+
+## SEO Testing
+
+The site has comprehensive SEO implementation. When testing SEO changes:
+
+### Quick Verification Commands
+
+```bash
+# Check robots.txt
+curl -s http://localhost:5173/robots.txt
+
+# Count sitemap URLs (should be 21+)
+curl -s http://localhost:5173/sitemap.xml | grep -c '<url>'
+
+# Check OG tags on any page
+curl -s http://localhost:5173/ | grep -oP '<meta[^>]*(og:|twitter:|description|canonical)[^>]*>'
+
+# Check H1 count (should be 1 per page)
+curl -s http://localhost:5173/ | grep -c '<h1'
+
+# Check JSON-LD schema types on a page
+curl -s http://localhost:5173/tour/umrah-package-2025 | grep -oP '"@type"\s*:\s*"[^"]*"' | sort -u
+
+# Check canonical URL
+curl -s http://localhost:5173/ | grep -oP '<link[^>]*canonical[^>]*>'
+
+# Check for nested <main> (should only be 1 per page)
+curl -s http://localhost:5173/blog/how-to-prepare-for-umrah-2025 | grep -c '<main'
+```
+
+### Expected SEO Elements Per Page
+
+| Page | Expected JSON-LD Types | og:type |
+|---|---|---|
+| Homepage (`/`) | TravelAgency, WebSite | website |
+| Tour detail (`/tour/:id`) | TravelAgency, WebSite, TouristTrip, FAQPage, BreadcrumbList | website |
+| Blog article (`/blog/:id`) | TravelAgency, WebSite, BlogPosting, BreadcrumbList | article |
+| Contact (`/contact`) | TravelAgency, WebSite, TravelAgency (LocalBusiness), BreadcrumbList | website |
+
+### SEO Config Location
+- Centralized SEO: `app/lib/seo.ts` (SITE_URL, generateSeoMeta)
+- Structured data: `app/lib/structured-data.ts` (all JSON-LD generators)
+- Sitemap route: `app/routes/sitemap[.]xml.ts`
+- Static robots.txt: `public/robots.txt`
 
 ## Tour IDs for Image Testing
 
@@ -55,6 +110,13 @@ The dev server must be restarted after changing `.env` values.
 - `baghdad-city-package` — Should show Iraqi mosque/landmarks
 - `malaysia-tour` — Should show Petronas Towers
 - `singapore-city-escape` — Should show Singapore skyline
+
+## Blog Article IDs
+
+- `how-to-prepare-for-umrah-2025`
+- `top-5-things-to-do-in-dubai`
+- `flights-from-usa-to-pakistan`
+- `paris-on-a-budget`
 
 ## Admin Login Testing
 
@@ -96,8 +158,15 @@ Expect 401 for allowed requests and 429 when rate limited.
 - **Leads/Media/Categories/Settings**: SQLite database (`data.db`)
 - **Auth**: Centralized in `app/lib/auth.server.ts`
 
+## Deployment Notes
+
+- Vercel preview deployments might have deployment protection (returns 401). If this happens, test against the local dev server instead — the code is identical.
+- Build command: `npm run build`
+- TypeScript check: `npx tsc --noEmit`
+
 ## Common Issues
 
 - If login fails with correct password, check that `.env` values are properly quoted and the dev server was restarted after changes
 - Images are in `/public/assets/images/extracted/` — verify file integrity if images look wrong
 - The `data.db` file is committed to git; if testing leads/blogs, the DB may have test data from previous sessions
+- Sitemap route requires DB initialization (`initDb()`) — if sitemap fails, check that the DB can be read
