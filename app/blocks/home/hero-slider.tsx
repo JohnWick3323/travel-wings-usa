@@ -44,7 +44,7 @@ export function HeroSlider() {
           <div className={styles.overlay} />
           <div className={styles.content}>
             <p className={styles.subtitle}>{slide.subtitle}</p>
-            <h1 className={styles.title}>{slide.title}</h1>
+            <h2 className={styles.title}>{slide.title}</h2>
             <div className={styles.actions}>
               <Link to="/destinations" className={styles.btnPrimary}>Explore Tours</Link>
               <Link to="/contact" className={styles.btnOutline}>Get a Quote</Link>

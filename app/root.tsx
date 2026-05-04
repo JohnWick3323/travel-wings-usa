@@ -4,6 +4,7 @@ import type { Route } from "./+types/root";
 import { ErrorBoundary as ErrorBoundaryRoot } from "~/components/error-boundary/error-boundary";
 import { getSiteSettings, initDb } from "~/lib/db.server";
 import { sanitizeTrackingId } from "~/lib/sanitize";
+import { organizationSchema, websiteSchema } from "~/lib/structured-data";
 
 import "./styles/reset.css";
 import "./styles/global.css";
@@ -99,6 +100,16 @@ gtag('config', '${ga4Id}');`,
             />
           </>
         )}
+
+        {/* JSON-LD Structured Data — Organization + WebSite */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema()) }}
+        />
 
         {/* Custom head code */}
         {customHeadCode && (

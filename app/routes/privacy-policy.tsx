@@ -1,11 +1,13 @@
 import type { Route } from './+types/privacy-policy';
+import { generateSeoMeta, SITE_URL } from '~/lib/seo';
 import styles from './legal-page.module.css';
 
 export function meta(_: Route.MetaArgs) {
-  return [
-    { title: 'Privacy Policy - Travel Wings USA' },
-    { name: 'description', content: 'Privacy Policy for Travel Wings USA. Learn how we collect, use, and protect your personal information.' },
-  ];
+  return generateSeoMeta({
+    title: 'Privacy Policy - Travel Wings USA',
+    description: 'Privacy Policy for Travel Wings USA. Learn how we collect, use, and protect your personal information.',
+    url: `${SITE_URL}/privacy-policy`,
+  });
 }
 
 export default function PrivacyPolicy() {

@@ -4,6 +4,8 @@ import { ArticleContentAndSidebar } from '~/blocks/blog-article/article-content-
 import { RelatedArticles } from '~/blocks/blog-article/related-articles';
 import { blogPosts, getBlogPostById } from '~/data/blog';
 import { getBlogBySlug, getAllPublishedBlogs } from '~/lib/blog.server';
+import { generateSeoMeta, SITE_URL } from '~/lib/seo';
+import { blogPostingSchema, breadcrumbSchema } from '~/lib/structured-data';
 import styles from './blog-article.module.css';
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -27,10 +29,15 @@ export function meta({ data }: Route.MetaArgs) {
   const post = data?.post;
   if (!post) return [{ title: 'Article Not Found - Travel Wings USA' }];
   const seoTitle = post._seoTitle || post.title;
-  return [
-    { title: `${seoTitle} - Travel Wings USA` },
-    { name: 'description', content: post.excerpt || '' },
-  ];
+  return generateSeoMeta({
+    title: `${seoTitle} - Travel Wings USA`,
+    description: post.excerpt || `Read ${post.title} on Travel Wings USA blog.`,
+    url: `${SITE_URL}/blog/${post.id}`,
+    image: post.image ? `${SITE_URL}${post.image}` : undefined,
+    type: 'article',
+    publishedTime: post.date,
+    author: post.author,
+  });
 }
 
 export default function BlogArticle({ loaderData }: Route.ComponentProps) {
@@ -46,8 +53,23 @@ export default function BlogArticle({ loaderData }: Route.ComponentProps) {
     );
   }
 
+  const articleSchema = blogPostingSchema(post);
+  const breadcrumb = breadcrumbSchema([
+    { name: 'Home', url: SITE_URL },
+    { name: 'Blog', url: `${SITE_URL}/blog` },
+    { name: post.title, url: `${SITE_URL}/blog/${post.id}` },
+  ]);
+
   return (
     <main className={styles.page}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <ArticleHeader post={post} />
       <ArticleContentAndSidebar post={post} />
       <RelatedArticles posts={related} />
