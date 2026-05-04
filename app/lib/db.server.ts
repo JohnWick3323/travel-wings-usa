@@ -87,6 +87,22 @@ export async function initDb(): Promise<void> {
     );
   `);
 
+  // ─── Schema Migrations ────────────────────────────────────────────────────
+  // ADD missing columns that may not exist in older databases.
+  // SQLite ALTER TABLE ADD COLUMN is safe — it's a no-op if the column exists
+  // (we catch the "duplicate column" error and ignore it).
+  const migrations: string[] = [
+    'ALTER TABLE blogs ADD COLUMN publishedAt TEXT',
+  ];
+  for (const sql of migrations) {
+    try {
+      await db.execute(sql);
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : '';
+      if (!msg.includes('duplicate column')) throw e;
+    }
+  }
+
   // Seed default blog categories if empty
   const catResult = await db.execute('SELECT COUNT(*) as c FROM blog_categories');
   const catCount = Number(catResult.rows[0]?.c ?? 0);
