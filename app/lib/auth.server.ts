@@ -1,9 +1,11 @@
 import { createHash } from 'node:crypto';
 
-const FALLBACK_PASSWORD = 'TravelWings2025!';
-
 function getAdminPassword(): string {
-  return process.env.ADMIN_PASSWORD || FALLBACK_PASSWORD;
+  const password = process.env.ADMIN_PASSWORD;
+  if (!password) {
+    throw new Error('ADMIN_PASSWORD environment variable is required');
+  }
+  return password;
 }
 
 /** Generate a secure token from the password (not the raw password itself) */
@@ -26,8 +28,7 @@ export function checkAuth(request: Request): boolean {
   const auth = request.headers.get('Authorization') || '';
   const adminPassword = getAdminPassword();
   const expectedToken = generateToken(adminPassword);
-  // Support both new token format and legacy password-as-token for backwards compat
-  return auth === `Bearer ${expectedToken}` || auth === `Bearer ${adminPassword}`;
+  return auth === `Bearer ${expectedToken}`;
 }
 
 // ─── Rate Limiting ────────────────────────────────────────────────────────────

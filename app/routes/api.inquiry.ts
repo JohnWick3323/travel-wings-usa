@@ -2,6 +2,15 @@ import type { Route } from './+types/api.inquiry';
 import { getDb, initDb } from '~/lib/db.server';
 import { rateLimit, getClientIp } from '~/lib/auth.server';
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export async function action({ request }: Route.ActionArgs) {
   if (request.method !== 'POST') {
     return Response.json({ error: 'Method not allowed' }, { status: 405 });
@@ -51,13 +60,13 @@ export async function action({ request }: Route.ActionArgs) {
             from: 'Travel Wings USA <noreply@travelwingsusa.com>',
             to: [toEmail],
             subject: `New Lead: ${body.inquiryType} from ${body.name}`,
-            html: `<h2>New Inquiry from ${body.name}</h2><p><strong>Type:</strong> ${body.inquiryType}</p><p><strong>Email:</strong> ${body.email}</p><p><strong>Phone:</strong> ${body.phone}</p><p><strong>Message:</strong> ${body.message}</p>`,
+            html: `<h2>New Inquiry from ${escapeHtml(String(body.name || ''))}</h2><p><strong>Type:</strong> ${escapeHtml(String(body.inquiryType || ''))}</p><p><strong>Email:</strong> ${escapeHtml(String(body.email || ''))}</p><p><strong>Phone:</strong> ${escapeHtml(String(body.phone || ''))}</p><p><strong>Message:</strong> ${escapeHtml(String(body.message || ''))}</p>`,
           }),
           resend.emails.send({
             from: 'Travel Wings USA <noreply@travelwingsusa.com>',
             to: [body.email],
             subject: 'Thank You for Contacting Travel Wings USA',
-            html: `<h2>Thank you, ${body.name}!</h2><p>We have received your inquiry and will get back to you within 24 hours.</p><p>For urgent assistance, call us at <strong>+1 410-298-4500</strong> or WhatsApp us.</p><br><p>Best regards,<br>Travel Wings USA Team</p>`,
+            html: `<h2>Thank you, ${escapeHtml(String(body.name || ''))}!</h2><p>We have received your inquiry and will get back to you within 24 hours.</p><p>For urgent assistance, call us at <strong>+1 410-298-4500</strong> or WhatsApp us.</p><br><p>Best regards,<br>Travel Wings USA Team</p>`,
           }),
         ]);
       } catch (e) {
@@ -65,7 +74,7 @@ export async function action({ request }: Route.ActionArgs) {
       }
     }
 
-    return Response.json({ success: true, id: result.lastInsertRowid });
+    return Response.json({ success: true, id: Number(result.lastInsertRowid) });
   } catch (error) {
     console.error('Inquiry error:', error);
     return Response.json({ error: 'Failed to submit inquiry' }, { status: 500 });
