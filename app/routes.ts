@@ -23,4 +23,5 @@ export default [
   route("/api/media", "routes/api.media.ts"),
   route("/api/media/:id", "routes/api.media.$id.ts"),
   route("/api/settings", "routes/api.settings.ts"),
+  route("*", "routes/catch-all.tsx"),
 ] satisfies RouteConfig;
