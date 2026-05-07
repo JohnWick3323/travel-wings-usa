@@ -11,7 +11,10 @@ import { SeoSettings } from '~/blocks/admin-dashboard/seo-settings';
 import styles from './admin-dashboard.module.css';
 
 export function meta(_: Route.MetaArgs) {
-  return [{ title: 'Admin Dashboard - Travel Wings USA' }];
+  return [
+    { title: 'Admin Dashboard - Travel Wings USA' },
+    { name: 'robots', content: 'noindex, nofollow' }
+  ];
 }
 
 type Tab = 'leads' | 'blogs' | 'media' | 'categories' | 'seo';
