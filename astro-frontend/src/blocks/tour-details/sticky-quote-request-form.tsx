@@ -22,7 +22,14 @@ export function StickyQuoteRequestForm({ tour, className }: Props) {
       await fetch('/api/inquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, inquiryType: 'tour_quote', tourName: tour.title }),
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          subject: `Quote Request: ${tour.title}`,
+          message: `Tour: ${tour.title}\nTravel Date: ${form.travelDate}\nTravelers: ${form.numberOfTravelers}\n\n${form.message}`,
+          inquiry_type: 'tour_quote',
+        }),
       });
       setSubmitted(true);
     } catch (err) {

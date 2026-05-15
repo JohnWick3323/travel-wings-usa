@@ -171,7 +171,7 @@ function mapTour(node: Record<string, unknown>): Tour {
   const gallery = ((d.gallery as { nodes?: { sourceUrl: string }[] } | null)?.nodes) || [];
 
   return {
-    id: node.slug as string,
+    id: (node.slug as string) || '',
     wpId: node.databaseId as number,
     title: decodeHtml(node.title as string),
     excerpt: stripHtml(node.excerpt as string || ''),
@@ -278,7 +278,7 @@ function mapPost(node: Record<string, unknown>): BlogPost {
   const featImg = (node.featuredImage as { node?: { sourceUrl?: string } } | null)?.node;
 
   return {
-    id: node.slug as string,
+    id: (node.slug as string) || '',
     wpId: node.databaseId as number,
     title: decodeHtml(node.title as string),
     excerpt: stripHtml((node.excerpt as string) || ''),
