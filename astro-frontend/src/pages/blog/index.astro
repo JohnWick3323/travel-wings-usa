@@ -1,0 +1,25 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { BlogPageHero } from '~/blocks/blog/blog-page-hero';
+import { BlogGrid } from '~/blocks/blog/blog-grid';
+import { NewsletterSignupStrip } from '~/blocks/blog/newsletter-signup-strip';
+import { getBlogPosts } from '~/lib/wordpress';
+import styles from '~/styles/pages/blog.module.css';
+
+const posts = await getBlogPosts();
+---
+
+<Layout
+  title="Travel Blog & Tips - Travel Wings USA"
+  description="Travel tips, destination guides, Umrah preparation, and air travel advice from Travel Wings USA."
+  ogImage="/assets/images/extracted/blog-hero.jpg"
+  canonical="https://travelwingsusa.com/blog"
+>
+  <main class={styles.page}>
+    <BlogPageHero client:load />
+    <div class={styles.content}>
+      <BlogGrid posts={posts} client:load />
+    </div>
+    <NewsletterSignupStrip client:load />
+  </main>
+</Layout>

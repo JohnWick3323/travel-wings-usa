@@ -1,0 +1,31 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { ContactPageHero } from '~/blocks/contact-us/contact-page-hero';
+import { ContactDetailsCards } from '~/blocks/contact-us/contact-details-cards';
+import { ContactFormAndMap } from '~/blocks/contact-us/contact-form-and-map';
+import { DirectContactCtaStrip } from '~/blocks/contact-us/direct-contact-cta-strip';
+import { localBusinessSchema, breadcrumbSchema } from '~/lib/structured-data';
+import styles from '~/styles/pages/contact-us.module.css';
+
+const schemas = [
+  localBusinessSchema(),
+  breadcrumbSchema([
+    { name: 'Home', url: 'https://travelwingsusa.com' },
+    { name: 'Contact Us', url: 'https://travelwingsusa.com/contact' },
+  ]),
+];
+---
+
+<Layout
+  title="Contact Us - Travel Wings USA"
+  description="Contact Travel Wings USA for Umrah packages, Hajj packages, international flights, and vacation tours. Call +1 410-298-4500."
+  canonical="https://travelwingsusa.com/contact"
+  extraSchemas={schemas}
+>
+  <main class={styles.page}>
+    <ContactPageHero client:load />
+    <ContactDetailsCards client:load />
+    <ContactFormAndMap client:load />
+    <DirectContactCtaStrip client:load />
+  </main>
+</Layout>
