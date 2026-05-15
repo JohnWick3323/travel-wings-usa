@@ -15,7 +15,8 @@
     "react-dom": "^19.0.0",
     "lucide-react": "^0.511.0",
     "classnames": "^2.5.1",
-    "swiper": "^11.2.6"
+    "swiper": "^11.2.6",
+    "resend": "^4.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

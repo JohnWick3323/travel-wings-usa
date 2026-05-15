@@ -2,7 +2,7 @@
 import Layout from '~/layouts/Layout.astro';
 import { TourPageHero } from '~/blocks/tour-details/tour-page-hero';
 import { TourImageGallery } from '~/blocks/tour-details/tour-image-gallery';
-import { TourOverviewAndHighlights } from '~/blocks/tour-details/tour-overview-and-highlights';
+import { TourDetailsTabs } from '~/blocks/tour-details/tour-details-tabs';
 import { StickyQuoteRequestForm } from '~/blocks/tour-details/sticky-quote-request-form';
 import { RelatedTours } from '~/blocks/tour-details/related-tours';
 import { getTours, getTourBySlug, getRelatedTours } from '~/lib/wordpress';
@@ -44,8 +44,7 @@ const breadcrumb = breadcrumbSchema([
     <div class={styles.content}>
       <div class={styles.main}>
         <TourImageGallery tour={tour} client:load />
-        <!-- TourOverviewAndHighlights has tabs — needs client state -->
-        <TourOverviewAndHighlights tour={tour} client:load />
+        <TourDetailsTabs tour={tour} client:load />
         <RelatedTours tours={related} client:load />
       </div>
       <StickyQuoteRequestForm tour={tour} client:load />

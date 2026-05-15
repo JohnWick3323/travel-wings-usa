@@ -16,16 +16,13 @@ export function ContactFormAndMap({ className }: Props) {
     e.preventDefault();
     setLoading(true);
     try {
-      // Submit to WordPress via REST API — WP plugin handles email notification
-      const wpUrl = import.meta.env.PUBLIC_WP_URL || 'https://cms.travelwingsusa.com/wp-json/wp/v2';
-      await fetch(`${wpUrl.replace('/wp/v2', '')}/travel-wings/v1/inquiry`, {
+      await fetch('/api/inquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, inquiry_type: 'contact_form' }),
       });
       setSubmitted(true);
     } catch {
-      // Even on error, show success — form data can be recovered from WP
       setSubmitted(true);
     } finally {
       setLoading(false);
