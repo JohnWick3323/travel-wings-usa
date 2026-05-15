@@ -1,0 +1,18 @@
+.hero {
+  position: relative;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+.bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.overlay { position: absolute; inset: 0; background-color: rgba(22,36,61,0.78); }
+.content { position: relative; padding: 0 var(--space-6); }
+.title { font-size: clamp(32px, 5vw, 56px); font-weight: 800; color: var(--color-white); margin: 0 0 var(--space-4); }
+.breadcrumb { display: flex; align-items: center; justify-content: center; gap: var(--space-2); font-size: var(--text-sm); color: rgba(255,255,255,0.7); }
+.bLink { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; }
+.bLink:hover { color: var(--color-accent); }
+.bSep { color: rgba(255,255,255,0.4); }
+.bCurrent { color: var(--color-accent); font-weight: 600; }

@@ -1,0 +1,96 @@
+---
+import { MainNavigationBar } from '~/blocks/__global/main-navigation-bar';
+import { TopInfoBar } from '~/blocks/__global/top-info-bar';
+import { FloatingWhatsAppButton } from '~/blocks/__global/floating-whats-app-button';
+import { FooterMainContent } from '~/blocks/__global/footer-main-content';
+import { FooterBottomBar } from '~/blocks/__global/footer-bottom-bar';
+import { organizationSchema, websiteSchema } from '~/lib/structured-data';
+import rootStyles from '~/styles/root.module.css';
+
+import '~/styles/reset.css';
+import '~/styles/theme.css';
+import '~/styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  canonical?: string;
+  noindex?: boolean;
+  extraSchemas?: object[];
+}
+
+const {
+  title,
+  description = 'Travel Wings USA specializes in Umrah packages, Hajj packages, international flights, and vacation tours.',
+  ogImage = '/assets/images/extracted/hero-slider-1.jpg',
+  ogType = 'website',
+  canonical = Astro.url.href,
+  noindex = false,
+  extraSchemas = [],
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const siteUrl = 'https://travelwingsusa.com';
+const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Travel Wings USA" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema())} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema())} />
+    {extraSchemas.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body>
+    <header class={rootStyles.siteHeader}>
+      <TopInfoBar client:load />
+      <MainNavigationBar currentPath={currentPath} client:load />
+    </header>
+
+    <FloatingWhatsAppButton client:load />
+
+    <slot />
+
+    <footer>
+      <FooterMainContent client:load />
+      <FooterBottomBar />
+    </footer>
+  </body>
+</html>

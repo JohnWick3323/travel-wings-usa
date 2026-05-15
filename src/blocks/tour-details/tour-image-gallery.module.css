@@ -1,0 +1,79 @@
+.gallery {
+  margin-bottom: var(--space-8);
+}
+
+.mainImg {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  margin-bottom: var(--space-3);
+  transition: opacity 0.3s;
+}
+
+.thumbnails {
+  display: flex;
+  gap: var(--space-3);
+  overflow-x: auto;
+}
+
+.thumb {
+  flex-shrink: 0;
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s, opacity 0.2s;
+  opacity: 0.7;
+}
+
+.thumb.active {
+  border-color: var(--color-primary);
+  opacity: 1;
+}
+
+.thumb:hover {
+  opacity: 1;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(0,0,0,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightboxImg {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  transition: background-color 0.2s;
+}
+
+.lightboxClose:hover {
+  background-color: rgba(255,255,255,0.3);
+}

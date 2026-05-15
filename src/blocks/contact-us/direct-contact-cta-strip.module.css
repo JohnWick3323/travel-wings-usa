@@ -1,0 +1,8 @@
+.strip { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-navy) 100%); padding: var(--space-16) var(--space-6); text-align: center; }
+.inner { max-width: 700px; margin: 0 auto; }
+.title { font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: var(--color-white); margin: 0 0 var(--space-8); }
+.actions { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
+.btnCall { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-10); background-color: var(--color-white); color: var(--color-primary); border-radius: var(--radius-pill); font-size: var(--text-base); font-weight: 700; text-decoration: none; transition: background-color 0.2s, color 0.2s, transform 0.2s; }
+.btnCall:hover { background-color: var(--color-primary-light); transform: translateY(-2px); }
+.btnWa { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-10); background-color: #25d366; color: var(--color-white); border-radius: var(--radius-pill); font-size: var(--text-base); font-weight: 700; text-decoration: none; transition: background-color 0.2s, transform 0.2s; }
+.btnWa:hover { background-color: #1ebe59; transform: translateY(-2px); }

@@ -1,16 +1,22 @@
-/.dazl/
+# Build output
+dist/
+.astro/
 
-.DS_Store
-/node_modules/
+# Dependencies
+node_modules/
 
-# React Router
-/.react-router/
-/build/
+# Environment variables
 .env
+.env.production
 
-# Database
-data.db
-data.db-shm
-data.db-wal
+# Logs
+npm-debug.log*
+yarn-debug.log*
 
-.netlify
+# OS
+.DS_Store
+
+# Old React Router stuff (kept for reference)
+astro-frontend/node_modules/
+astro-frontend/dist/
+astro-frontend/.astro/

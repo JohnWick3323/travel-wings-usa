@@ -1,0 +1,23 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { PageHeroBanner } from '~/blocks/destinations/page-hero-banner';
+import { DestinationsApp } from '~/blocks/destinations/destinations-app';
+import { getTours } from '~/lib/wordpress';
+import styles from '~/styles/pages/destinations.module.css';
+
+const tours = await getTours();
+const initialCategory = Astro.url.searchParams.get('category') || '';
+---
+
+<Layout
+  title="All Destinations & Packages - Travel Wings USA"
+  description="Browse all travel packages including Umrah, Hajj, vacation tours, and air ticketing from Travel Wings USA."
+  canonical="https://travelwingsusa.com/destinations"
+>
+  <main class={styles.page}>
+    <PageHeroBanner client:load />
+    <div class={styles.content}>
+      <DestinationsApp tours={tours} initialCategory={initialCategory} client:load />
+    </div>
+  </main>
+</Layout>

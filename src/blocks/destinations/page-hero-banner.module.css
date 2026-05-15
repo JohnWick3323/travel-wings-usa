@@ -1,0 +1,68 @@
+.hero {
+  position: relative;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation: kenBurns 10s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurns {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(22,36,61,0.75);
+}
+
+.content {
+  position: relative;
+}
+
+.title {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 800;
+  color: var(--color-white);
+  margin: 0 0 var(--space-4);
+  line-height: 1.15;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,0.7);
+}
+
+.breadcrumbLink {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumbLink:hover {
+  color: var(--color-accent);
+}
+
+.breadcrumbSep {
+  color: rgba(255,255,255,0.4);
+}
+
+.breadcrumbCurrent {
+  color: var(--color-accent);
+  font-weight: 600;
+}

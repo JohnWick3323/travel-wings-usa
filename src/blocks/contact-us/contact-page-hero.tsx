@@ -1,0 +1,23 @@
+import { ChevronRight } from 'lucide-react';
+import cn from 'classnames';
+import styles from './contact-page-hero.module.css';
+
+interface Props { className?: string; }
+
+export function ContactPageHero({ className }: Props) {
+  return (
+    <div className={cn(styles.hero, className)}>
+      <div className={styles.bg} style={{ backgroundImage: 'url(/assets/images/extracted/contact-hero.jpg)' }} />
+      <div className={styles.overlay} />
+      <div className={styles.content}>
+        <h1 className={styles.title}>Contact Travel Wings USA</h1>
+        <p className={styles.subtitle}>We are here to help you plan your perfect trip</p>
+        <nav className={styles.breadcrumb}>
+          <a href="/" className={styles.bLink}>Home</a>
+          <ChevronRight size={14} className={styles.bSep} />
+          <span className={styles.bCurrent}>Contact</span>
+        </nav>
+      </div>
+    </div>
+  );
+}
