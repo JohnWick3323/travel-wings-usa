@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 export const prerender = false;
 
 const RESEND_API_KEY = import.meta.env.RESEND_API_KEY || 're_ahDMVbzh_3YLEfNrG4cpIDtnnAx9kigx';
-const TO_EMAIL = 'info@travelwingsusa.com';
+const TO_EMAILS = ['info@travelwingsusa.com', 'travelwings@gmail.com'];
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ request }) => {
       },
       body: JSON.stringify({
         from: 'Travel Wings USA <onboarding@resend.dev>',
-        to: [TO_EMAIL],
+        to: TO_EMAILS,
         reply_to: email ? `${name} <${email}>` : undefined,
         subject: `New Inquiry: ${emailSubject}`,
         html,

@@ -344,47 +344,6 @@ add_action( 'template_redirect', function () {
     exit;
 } );
 
-// ─── 7. Contact Form — REST endpoint ──────────────────────────────────────────
-
-add_action( 'rest_api_init', function () {
-    register_rest_route( 'travel-wings/v1', '/inquiry', array(
-        'methods'             => 'POST',
-        'callback'            => 'tw_handle_inquiry',
-        'permission_callback' => '__return_true',
-        'args'                => array(
-            'name'         => array( 'required' => true, 'sanitize_callback' => 'sanitize_text_field' ),
-            'email'        => array( 'required' => true, 'sanitize_callback' => 'sanitize_email' ),
-            'phone'        => array( 'sanitize_callback' => 'sanitize_text_field' ),
-            'subject'      => array( 'sanitize_callback' => 'sanitize_text_field' ),
-            'message'      => array( 'required' => true, 'sanitize_callback' => 'sanitize_textarea_field' ),
-            'inquiry_type' => array( 'sanitize_callback' => 'sanitize_text_field' ),
-        ),
-    ) );
-} );
-
-function tw_handle_inquiry( WP_REST_Request $request ): WP_REST_Response {
-    $name    = $request->get_param( 'name' );
-    $email   = $request->get_param( 'email' );
-    $phone   = $request->get_param( 'phone' ) ?: 'N/A';
-    $subject = $request->get_param( 'subject' ) ?: 'Contact Form Inquiry';
-    $message = $request->get_param( 'message' );
-
-    $to      = get_option( 'admin_email' );
-    $headers = array(
-        'Content-Type: text/html; charset=UTF-8',
-        "Reply-To: {$name} <{$email}>",
-    );
-
-    $body = "
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> {$name}</p>
-        <p><strong>Email:</strong> {$email}</p>
-        <p><strong>Phone:</strong> {$phone}</p>
-        <p><strong>Subject:</strong> {$subject}</p>
-        <p><strong>Message:</strong><br>{$message}</p>
-    ";
-
-    wp_mail( $to, "New Inquiry: {$subject}", $body, $headers );
-
-    return new WP_REST_Response( array( 'success' => true ), 200 );
-}
+// ─── 7. Contact Form — REST endpoint (DISABLED — using Astro/Resend instead) ──
+// Inquiry handling is now done via Astro API route + Resend
+// WordPress wp_mail is unreliable and goes to wrong email
