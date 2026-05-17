@@ -36,7 +36,14 @@ add_action( 'init', function () {
     ) );
 } );
 
-// ─── 2. Flush rewrite rules on activation ─────────────────────────────────────
+// ─── 2. Force Classic Editor for Tours CPT ────────────────────────────────────
+
+add_filter( 'use_block_editor_for_post_type', function( $use_block_editor, $post_type ) {
+    if ( $post_type === 'tours' ) return false;
+    return $use_block_editor;
+}, 10, 2 );
+
+// ─── 3. Flush rewrite rules on activation ─────────────────────────────────────
 
 register_activation_hook( __FILE__, function () {
     // Register CPT first so rewrite rules are available
