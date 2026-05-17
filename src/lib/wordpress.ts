@@ -74,6 +74,7 @@ const TOURS_QUERY = `
         slug
         title
         excerpt
+        content
         featuredImage {
           node { sourceUrl altText }
         }
@@ -123,6 +124,7 @@ const TOUR_BY_SLUG_QUERY = `
       slug
       title
       excerpt
+      content
       featuredImage {
         node { sourceUrl altText }
       }
@@ -183,7 +185,7 @@ function mapTour(node: Record<string, unknown>): Tour {
     rating: Number(d.rating) || 5,
     image: heroImg?.sourceUrl || featImg?.sourceUrl || '',
     images: gallery.map((g) => g.sourceUrl),
-    description: stripHtml(node.excerpt as string || ''),
+    description: stripHtml((node.content as string) || (node.excerpt as string) || ''),
     highlights: ((d.highlights as { item: string }[]) || []).map((h) => h.item).filter(Boolean),
     itinerary: ((d.itinerary as { day: number; title: string; activities: string | string[] }[]) || []).map((row) => ({
       day: Number(row.day),
