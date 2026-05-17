@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import cn from 'classnames';
+import { sendInquiryEmail } from '~/lib/email';
 import styles from './contact-form-and-map.module.css';
 
 interface Props { className?: string; }
@@ -16,11 +17,7 @@ export function ContactFormAndMap({ className }: Props) {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch('/api/inquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, inquiry_type: 'contact_form' }),
-      });
+      await sendInquiryEmail({ ...form, inquiry_type: 'contact_form' });
       setSubmitted(true);
     } catch {
       setSubmitted(true);

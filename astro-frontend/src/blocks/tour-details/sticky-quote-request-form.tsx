@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Phone, MessageCircle } from 'lucide-react';
 import cn from 'classnames';
 import type { Tour } from '~/lib/wordpress';
+import { sendInquiryEmail } from '~/lib/email';
 import styles from './sticky-quote-request-form.module.css';
 
 interface Props {
@@ -19,17 +20,13 @@ export function StickyQuoteRequestForm({ tour, className }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await fetch('/api/inquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          subject: `Quote Request: ${tour.title}`,
-          message: `Tour: ${tour.title}\nTravel Date: ${form.travelDate}\nTravelers: ${form.numberOfTravelers}\n\n${form.message}`,
-          inquiry_type: 'tour_quote',
-        }),
+      await sendInquiryEmail({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        subject: `Quote Request: ${tour.title}`,
+        message: `Tour: ${tour.title}\nTravel Date: ${form.travelDate}\nTravelers: ${form.numberOfTravelers}\n\n${form.message}`,
+        inquiry_type: 'tour_quote',
       });
       setSubmitted(true);
     } catch (err) {

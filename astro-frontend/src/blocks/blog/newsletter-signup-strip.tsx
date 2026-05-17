@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import cn from 'classnames';
+import { sendInquiryEmail } from '~/lib/email';
 import styles from './newsletter-signup-strip.module.css';
 
 interface Props { className?: string; }
@@ -11,16 +12,12 @@ export function NewsletterSignupStrip({ className }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await fetch('/api/inquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: 'Newsletter Subscriber',
-          email,
-          subject: 'Newsletter Signup',
-          message: `New newsletter subscription from: ${email}`,
-          inquiry_type: 'newsletter',
-        }),
+      await sendInquiryEmail({
+        name: 'Newsletter Subscriber',
+        email,
+        subject: 'Newsletter Signup',
+        message: `New newsletter subscription from: ${email}`,
+        inquiry_type: 'newsletter',
       });
       setSubmitted(true);
     } catch {

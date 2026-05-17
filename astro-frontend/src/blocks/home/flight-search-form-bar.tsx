@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import cn from 'classnames';
+import { sendInquiryEmail } from '~/lib/email';
 import styles from './flight-search-form-bar.module.css';
 
 type TripType = 'one-way' | 'round-trip';
@@ -15,15 +16,13 @@ export function FlightSearchFormBar() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await fetch('/api/inquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          inquiryType: 'flight_enquiry',
-          tripType,
-          message: `Flight enquiry: ${formData.fromCity} to ${formData.toCity}`,
-        }),
+      await sendInquiryEmail({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        subject: `Flight Enquiry: ${formData.fromCity} → ${formData.toCity}`,
+        message: `Trip Type: ${tripType}\nFrom: ${formData.fromCity}\nTo: ${formData.toCity}\nDeparture: ${formData.departureDate}\nReturn: ${formData.returnDate || 'N/A'}\nPassengers: ${formData.passengers}`,
+        inquiry_type: 'flight_enquiry',
       });
       setSubmitted(true);
     } catch (e) {
