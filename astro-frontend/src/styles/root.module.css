@@ -1,7 +1,0 @@
-.siteHeader {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--color-white);
-  box-shadow: var(--shadow-sm);
-}

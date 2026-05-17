@@ -16,7 +16,5 @@ yarn-debug.log*
 # OS
 .DS_Store
 
-# Old React Router stuff (kept for reference)
-astro-frontend/node_modules/
-astro-frontend/dist/
-astro-frontend/.astro/
+# Old folders (cleaned up)
+astro-frontend/
