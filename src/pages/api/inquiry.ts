@@ -110,7 +110,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Travel Wings USA <onboarding@resend.dev>',
+        from: 'Travel Wings USA <noreply@travelwingsusa.com>',
         to: TO_EMAILS,
         reply_to: safeEmail ? `${safeName} <${safeEmail}>` : undefined,
         subject: `New Inquiry: ${emailSubject}`,
