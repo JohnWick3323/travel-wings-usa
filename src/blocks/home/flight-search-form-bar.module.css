@@ -24,21 +24,23 @@
 }
 
 .tab {
-  padding: var(--space-2) var(--space-5);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-base);
+  font-weight: 700;
   color: var(--color-text-muted);
   background: none;
   border: none;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
+  border-bottom: 3px solid transparent;
   margin-bottom: -2px;
   transition: color 0.2s, border-color 0.2s;
+  letter-spacing: 0.01em;
 }
 
 .tab.activeTab {
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
+  font-weight: 800;
 }
 
 .row {
