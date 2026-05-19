@@ -21,5 +21,9 @@ Thumbs.db
 # AI prompt files (internal use only)
 dazl-prompts/
 
+# Upload scripts (contain credentials — run locally only)
+scripts/upload-images-to-wp.mjs
+scripts/set-featured-images.mjs
+
 # Old folders (cleaned up)
 astro-frontend/
