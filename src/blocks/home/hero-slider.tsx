@@ -6,7 +6,7 @@ import styles from './hero-slider.module.css';
 const slides = [
   {
     id: 1,
-    image: '/assets/images/extracted/hero-slider-1.jpg',
+    image: '/assets/images/extracted/hero-airplane.jpg',
     subtitle: 'Begin Your Adventure',
     title: 'The First Step of Your Travel Expedition',
   },
