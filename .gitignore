@@ -8,6 +8,7 @@ node_modules/
 # Environment variables
 .env
 .env.production
+.env.local
 
 # Logs
 npm-debug.log*
@@ -15,6 +16,10 @@ yarn-debug.log*
 
 # OS
 .DS_Store
+Thumbs.db
+
+# AI prompt files (internal use only)
+dazl-prompts/
 
 # Old folders (cleaned up)
 astro-frontend/

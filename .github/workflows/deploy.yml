@@ -1,12 +1,16 @@
-name: Deploy to Hostinger
+name: Build Check
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:
+  pull_request:
+    branches: [main]
+
+# Hostinger deploys automatically from the main branch via its Git integration.
+# This workflow only validates that the build succeeds before Hostinger picks it up.
 
 jobs:
-  build:
+  build-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,11 +18,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
+          cache: 'npm'
 
-      - name: Install & Build
-        run: |
-          npm ci
-          npm run build
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
         env:
           PUBLIC_WP_URL: ${{ secrets.PUBLIC_WP_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}

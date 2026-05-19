@@ -15,11 +15,11 @@ const posts = await getBlogPosts();
   ogImage="/assets/images/extracted/blog-hero.jpg"
   canonical="https://travelwingsusa.com/blog"
 >
-  <main class={styles.page}>
+  <main class={styles.page} id="main-content">
     <BlogPageHero client:load />
     <div class={styles.content}>
       <BlogGrid posts={posts} client:load />
     </div>
-    <NewsletterSignupStrip client:load />
+    <NewsletterSignupStrip client:visible />
   </main>
 </Layout>

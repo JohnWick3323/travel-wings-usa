@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Phone, MessageCircle, ChevronDown, X } from 'lucide-react';
 import cn from 'classnames';
 import styles from './main-navigation-bar.module.css';
@@ -29,50 +29,83 @@ const navLinks = [
 
 export function MainNavigationBar({ currentPath = '' }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLLIElement>(null);
 
   const isActive = (href: string) => {
     if (href === '/') return currentPath === '/';
     return currentPath.startsWith(href.split('?')[0]);
   };
 
+  const handleDropdownKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setDropdownOpen(false);
+      (dropdownRef.current?.querySelector('button') as HTMLElement)?.focus();
+    }
+  };
+
   return (
     <>
-      <nav className={styles.nav}>
+      {/* Skip to main content for accessibility */}
+      <a href="#main-content" className={styles.skipLink}>Skip to main content</a>
+
+      <nav className={styles.nav} aria-label="Main navigation">
         <a href="/" className={styles.logo}>
           <img src="/travelwing-header.png" alt="Travel Wings USA" className={styles.logoImg} />
         </a>
 
-        <ul className={styles.menu}>
-          <li className={styles.menuItem}>
-            <a href="/" className={cn(styles.menuLink, { [styles.active]: isActive('/') })}>Home</a>
+        <ul className={styles.menu} role="menubar">
+          <li className={styles.menuItem} role="none">
+            <a href="/" className={cn(styles.menuLink, { [styles.active]: isActive('/') })} role="menuitem">Home</a>
           </li>
-          <li className={styles.menuItem}>
-            <a href="/destinations?category=umrah" className={cn(styles.menuLink, { [styles.active]: currentPath.includes('umrah') })}>Umrah Services</a>
+          <li className={styles.menuItem} role="none">
+            <a href="/destinations?category=umrah" className={cn(styles.menuLink, { [styles.active]: currentPath.includes('umrah') })} role="menuitem">Umrah Services</a>
           </li>
-          <li className={styles.menuItem}>
-            <a href="/destinations?category=hajj" className={cn(styles.menuLink, { [styles.active]: currentPath.includes('hajj') })}>Hajj Packages</a>
+          <li className={styles.menuItem} role="none">
+            <a href="/destinations?category=hajj" className={cn(styles.menuLink, { [styles.active]: currentPath.includes('hajj') })} role="menuitem">Hajj Packages</a>
           </li>
-          <li className={styles.menuItem}>
-            <button className={styles.menuLink}>
+          <li
+            className={cn(styles.menuItem, styles.hasDropdown)}
+            ref={dropdownRef}
+            role="none"
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
+            onKeyDown={handleDropdownKeyDown}
+          >
+            <button
+              className={styles.menuLink}
+              aria-haspopup="true"
+              aria-expanded={dropdownOpen}
+              onClick={() => setDropdownOpen(prev => !prev)}
+              role="menuitem"
+            >
               Air Ticketing <ChevronDown size={14} aria-hidden="true" />
             </button>
-            <div className={styles.dropdown}>
+            <div className={cn(styles.dropdown, { [styles.dropdownVisible]: dropdownOpen })} role="menu">
               {flightLinks.map(link => (
-                <a key={link.href} href={link.href} className={styles.dropdownLink}>{link.label}</a>
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={styles.dropdownLink}
+                  role="menuitem"
+                  onClick={() => setDropdownOpen(false)}
+                >
+                  {link.label}
+                </a>
               ))}
             </div>
           </li>
-          <li className={styles.menuItem}>
-            <a href="/destinations" className={cn(styles.menuLink, { [styles.active]: currentPath === '/destinations' })}>Destinations</a>
+          <li className={styles.menuItem} role="none">
+            <a href="/destinations" className={cn(styles.menuLink, { [styles.active]: currentPath === '/destinations' })} role="menuitem">Destinations</a>
           </li>
-          <li className={styles.menuItem}>
-            <a href="/blog" className={cn(styles.menuLink, { [styles.active]: isActive('/blog') })}>Blog</a>
+          <li className={styles.menuItem} role="none">
+            <a href="/blog" className={cn(styles.menuLink, { [styles.active]: isActive('/blog') })} role="menuitem">Blog</a>
           </li>
-          <li className={styles.menuItem}>
-            <a href="/about" className={cn(styles.menuLink, { [styles.active]: isActive('/about') })}>About</a>
+          <li className={styles.menuItem} role="none">
+            <a href="/about" className={cn(styles.menuLink, { [styles.active]: isActive('/about') })} role="menuitem">About</a>
           </li>
-          <li className={styles.menuItem}>
-            <a href="/contact" className={cn(styles.menuLink, { [styles.active]: isActive('/contact') })}>Contact</a>
+          <li className={styles.menuItem} role="none">
+            <a href="/contact" className={cn(styles.menuLink, { [styles.active]: isActive('/contact') })} role="menuitem">Contact</a>
           </li>
         </ul>
 
@@ -85,14 +118,14 @@ export function MainNavigationBar({ currentPath = '' }: Props) {
           </a>
         </div>
 
-        <button className={styles.hamburger} onClick={() => setDrawerOpen(true)} aria-label="Open menu">
+        <button className={styles.hamburger} onClick={() => setDrawerOpen(true)} aria-label="Open menu" aria-expanded={drawerOpen}>
           <span /><span /><span />
         </button>
       </nav>
 
-      <div className={cn(styles.drawer, { [styles.open]: drawerOpen })}>
+      <div className={cn(styles.drawer, { [styles.open]: drawerOpen })} aria-hidden={!drawerOpen}>
         <div className={styles.drawerOverlay} onClick={() => setDrawerOpen(false)} />
-        <div className={styles.drawerPanel}>
+        <div className={styles.drawerPanel} role="dialog" aria-modal="true" aria-label="Navigation menu">
           <div className={styles.drawerHeader}>
             <img src="/travelwing-header.png" alt="Travel Wings USA" className={styles.drawerHeaderLogoImg} />
             <button className={styles.drawerClose} onClick={() => setDrawerOpen(false)} aria-label="Close menu">

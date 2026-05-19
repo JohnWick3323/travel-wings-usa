@@ -33,8 +33,9 @@ export function NewsletterSignupStrip({ className }: Props) {
         {submitted ? (
           <p className={styles.success}>Thank you for subscribing! Stay tuned for travel updates.</p>
         ) : (
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <input type="email" className={styles.input} placeholder="Enter your email address" required value={email} onChange={e => setEmail(e.target.value)} />
+          <form className={styles.form} onSubmit={handleSubmit} aria-label="Newsletter signup">
+            <label htmlFor="nl-email" className="sr-only">Email address</label>
+            <input id="nl-email" type="email" className={styles.input} placeholder="Enter your email address" required value={email} onChange={e => setEmail(e.target.value)} />
             <button type="submit" className={styles.btn}>Subscribe</button>
           </form>
         )}

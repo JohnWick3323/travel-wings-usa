@@ -38,27 +38,27 @@ export function ContactFormAndMap({ className }: Props) {
               <div className={styles.fields}>
                 <div className={styles.row}>
                   <div className={styles.field}>
-                    <label className={styles.label}>Full Name</label>
-                    <input className={styles.input} placeholder="Your name" required value={form.name} onChange={set('name')} />
+                    <label htmlFor="cf-name" className={styles.label}>Full Name</label>
+                    <input id="cf-name" className={styles.input} placeholder="Your name" required value={form.name} onChange={set('name')} />
                   </div>
                   <div className={styles.field}>
-                    <label className={styles.label}>Email</label>
-                    <input type="email" className={styles.input} placeholder="your@email.com" required value={form.email} onChange={set('email')} />
+                    <label htmlFor="cf-email" className={styles.label}>Email</label>
+                    <input id="cf-email" type="email" className={styles.input} placeholder="your@email.com" required value={form.email} onChange={set('email')} />
                   </div>
                 </div>
                 <div className={styles.row}>
                   <div className={styles.field}>
-                    <label className={styles.label}>Phone</label>
-                    <input className={styles.input} placeholder="+1 (xxx) xxx-xxxx" value={form.phone} onChange={set('phone')} />
+                    <label htmlFor="cf-phone" className={styles.label}>Phone</label>
+                    <input id="cf-phone" className={styles.input} placeholder="+1 (xxx) xxx-xxxx" value={form.phone} onChange={set('phone')} />
                   </div>
                   <div className={styles.field}>
-                    <label className={styles.label}>Subject</label>
-                    <input className={styles.input} placeholder="How can we help?" value={form.subject} onChange={set('subject')} />
+                    <label htmlFor="cf-subject" className={styles.label}>Subject</label>
+                    <input id="cf-subject" className={styles.input} placeholder="How can we help?" value={form.subject} onChange={set('subject')} />
                   </div>
                 </div>
                 <div className={styles.field}>
-                  <label className={styles.label}>Message</label>
-                  <textarea className={styles.textarea} placeholder="Tell us about your travel plans..." required value={form.message} onChange={set('message')} />
+                  <label htmlFor="cf-message" className={styles.label}>Message</label>
+                  <textarea id="cf-message" className={styles.textarea} placeholder="Tell us about your travel plans..." required value={form.message} onChange={set('message')} />
                 </div>
               </div>
               <button type="submit" className={styles.submitBtn} disabled={loading}>

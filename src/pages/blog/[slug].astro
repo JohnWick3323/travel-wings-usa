@@ -38,9 +38,9 @@ const breadcrumb = breadcrumbSchema([
   canonical={`https://travelwingsusa.com/blog/${post.id}`}
   extraSchemas={[articleSchema, breadcrumb]}
 >
-  <main class={styles.page}>
+  <main class={styles.page} id="main-content">
     <ArticleHeader post={post} client:load />
     <ArticleContentAndSidebar post={post} client:load />
-    <RelatedArticles posts={related} client:load />
+    <RelatedArticles posts={related} client:visible />
   </main>
 </Layout>

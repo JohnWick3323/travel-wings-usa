@@ -7,14 +7,14 @@ export function organizationSchema() {
     '@type': 'TravelAgency',
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/assets/images/extracted/logo.png`,
+    logo: `${SITE_URL}/logo-footer.webp`,
     description: 'Travel Wings USA specializes in Umrah packages, Hajj packages, international flights, and vacation tours departing from the USA.',
     telephone: '+1-410-298-4500',
     email: 'info@travelwingsusa.com',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '3500 Gwynn Oak Ave',
-      addressLocality: 'Baltimore',
+      streetAddress: '1724 Woodlawn Dr Suite 12',
+      addressLocality: 'Gwynn Oak',
       addressRegion: 'MD',
       postalCode: '21207',
       addressCountry: 'US',
@@ -42,8 +42,8 @@ export function localBusinessSchema() {
     email: 'info@travelwingsusa.com',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '3500 Gwynn Oak Ave',
-      addressLocality: 'Baltimore',
+      streetAddress: '1724 Woodlawn Dr Suite 12',
+      addressLocality: 'Gwynn Oak',
       addressRegion: 'MD',
       postalCode: '21207',
       addressCountry: 'US',
@@ -181,7 +181,7 @@ export function blogPostingSchema(post: {
       url: SITE_URL,
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/assets/images/extracted/logo.png`,
+        url: `${SITE_URL}/logo-footer.webp`,
       },
     },
     mainEntityOfPage: {

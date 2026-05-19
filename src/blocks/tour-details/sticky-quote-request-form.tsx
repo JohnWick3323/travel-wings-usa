@@ -44,30 +44,30 @@ export function StickyQuoteRequestForm({ tour, className }: Props) {
           <form onSubmit={handleSubmit}>
             <div className={styles.fields}>
               <div className={styles.field}>
-                <label className={styles.label}>Full Name</label>
-                <input className={styles.input} placeholder="Your name" required value={form.name} onChange={set('name')} />
+                <label htmlFor="qf-name" className={styles.label}>Full Name</label>
+                <input id="qf-name" className={styles.input} placeholder="Your name" required value={form.name} onChange={set('name')} />
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Email</label>
-                <input type="email" className={styles.input} placeholder="your@email.com" required value={form.email} onChange={set('email')} />
+                <label htmlFor="qf-email" className={styles.label}>Email</label>
+                <input id="qf-email" type="email" className={styles.input} placeholder="your@email.com" required value={form.email} onChange={set('email')} />
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Phone</label>
-                <input className={styles.input} placeholder="+1 (xxx) xxx-xxxx" value={form.phone} onChange={set('phone')} />
+                <label htmlFor="qf-phone" className={styles.label}>Phone</label>
+                <input id="qf-phone" className={styles.input} placeholder="+1 (xxx) xxx-xxxx" value={form.phone} onChange={set('phone')} />
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Travel Date</label>
-                <input type="date" className={styles.input} value={form.travelDate} onChange={set('travelDate')} />
+                <label htmlFor="qf-date" className={styles.label}>Travel Date</label>
+                <input id="qf-date" type="date" className={styles.input} value={form.travelDate} onChange={set('travelDate')} />
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Travelers</label>
-                <select className={styles.input} value={form.numberOfTravelers} onChange={set('numberOfTravelers')}>
+                <label htmlFor="qf-travelers" className={styles.label}>Travelers</label>
+                <select id="qf-travelers" className={styles.input} value={form.numberOfTravelers} onChange={set('numberOfTravelers')}>
                   {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} Traveler{n > 1 ? 's' : ''}</option>)}
                 </select>
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Special Requirements</label>
-                <textarea className={styles.textarea} placeholder="Any special requirements..." value={form.message} onChange={set('message')} />
+                <label htmlFor="qf-message" className={styles.label}>Special Requirements</label>
+                <textarea id="qf-message" className={styles.textarea} placeholder="Any special requirements..." value={form.message} onChange={set('message')} />
               </div>
             </div>
             <button type="submit" className={styles.submitBtn}>Send Inquiry</button>

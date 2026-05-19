@@ -22,10 +22,10 @@ const schemas = [
   canonical="https://travelwingsusa.com/contact"
   extraSchemas={schemas}
 >
-  <main class={styles.page}>
+  <main class={styles.page} id="main-content">
     <ContactPageHero client:load />
-    <ContactDetailsCards client:load />
+    <ContactDetailsCards client:visible />
     <ContactFormAndMap client:load />
-    <DirectContactCtaStrip client:load />
+    <DirectContactCtaStrip client:visible />
   </main>
 </Layout>

@@ -49,41 +49,41 @@ export function FlightSearchFormBar() {
 
             <div className={cn(styles.row, styles.row3)}>
               <div className={styles.field}>
-                <label className={styles.label}>Full Name</label>
-                <input className={styles.input} placeholder="Your name" required value={formData.name} onChange={set('name')} />
+                <label htmlFor="fs-name" className={styles.label}>Full Name</label>
+                <input id="fs-name" className={styles.input} placeholder="Your name" required value={formData.name} onChange={set('name')} />
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Email</label>
-                <input type="email" className={styles.input} placeholder="your@email.com" required value={formData.email} onChange={set('email')} />
+                <label htmlFor="fs-email" className={styles.label}>Email</label>
+                <input id="fs-email" type="email" className={styles.input} placeholder="your@email.com" required value={formData.email} onChange={set('email')} />
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Phone</label>
-                <input className={styles.input} placeholder="+1 (xxx) xxx-xxxx" value={formData.phone} onChange={set('phone')} />
+                <label htmlFor="fs-phone" className={styles.label}>Phone</label>
+                <input id="fs-phone" className={styles.input} placeholder="+1 (xxx) xxx-xxxx" value={formData.phone} onChange={set('phone')} />
               </div>
             </div>
 
             <div className={cn(styles.row, tripType === 'round-trip' ? styles.row5 : styles.row4)}>
               <div className={styles.field}>
-                <label className={styles.label}>From</label>
-                <input className={styles.input} placeholder="Departure city" required value={formData.fromCity} onChange={set('fromCity')} />
+                <label htmlFor="fs-from" className={styles.label}>From</label>
+                <input id="fs-from" className={styles.input} placeholder="Departure city" required value={formData.fromCity} onChange={set('fromCity')} />
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>To</label>
-                <input className={styles.input} placeholder="Destination city" required value={formData.toCity} onChange={set('toCity')} />
+                <label htmlFor="fs-to" className={styles.label}>To</label>
+                <input id="fs-to" className={styles.input} placeholder="Destination city" required value={formData.toCity} onChange={set('toCity')} />
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Departure Date</label>
-                <input type="date" className={styles.input} required value={formData.departureDate} onChange={set('departureDate')} />
+                <label htmlFor="fs-departure" className={styles.label}>Departure Date</label>
+                <input id="fs-departure" type="date" className={styles.input} required value={formData.departureDate} onChange={set('departureDate')} />
               </div>
               {tripType === 'round-trip' && (
                 <div className={styles.field}>
-                  <label className={styles.label}>Return Date</label>
-                  <input type="date" className={styles.input} value={formData.returnDate} onChange={set('returnDate')} />
+                  <label htmlFor="fs-return" className={styles.label}>Return Date</label>
+                  <input id="fs-return" type="date" className={styles.input} value={formData.returnDate} onChange={set('returnDate')} />
                 </div>
               )}
               <div className={styles.field}>
-                <label className={styles.label}>Passengers</label>
-                <select className={styles.input} value={formData.passengers} onChange={set('passengers')}>
+                <label htmlFor="fs-passengers" className={styles.label}>Passengers</label>
+                <select id="fs-passengers" className={styles.input} value={formData.passengers} onChange={set('passengers')}>
                   {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n} Passenger{n > 1 ? 's' : ''}</option>)}
                 </select>
               </div>

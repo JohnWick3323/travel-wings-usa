@@ -22,17 +22,17 @@ const blogPosts = await getBlogPosts();
   title="Travel Wings USA - Umrah, Hajj & International Travel Packages"
   description="Travel Wings USA specializes in Umrah packages, Hajj packages, international flights, and vacation tours. Located in Gwynn Oak, MD. Call +1 410-298-4500."
 >
-  <main class={styles.page}>
+  <main class={styles.page} id="main-content">
     <h1 class="sr-only">Travel Wings USA — Umrah, Hajj & International Travel Packages from USA</h1>
     <HeroSlider client:load />
     <FlightSearchFormBar client:load />
-    <ServiceCategories client:load />
-    <AboutSnapshot client:load />
-    <PopularDestinationsCarousel tours={tours} client:load />
-    <FeaturedToursSlider tours={tours} client:load />
-    <WhyChooseUs client:load />
-    <CustomerTestimonials client:load />
-    <LatestBlogPreview posts={blogPosts} client:load />
-    <FinalCtaBanner client:load />
+    <ServiceCategories client:visible />
+    <AboutSnapshot client:visible />
+    <PopularDestinationsCarousel tours={tours} client:visible />
+    <FeaturedToursSlider tours={tours} client:visible />
+    <WhyChooseUs client:visible />
+    <CustomerTestimonials client:visible />
+    <LatestBlogPreview posts={blogPosts} client:visible />
+    <FinalCtaBanner client:visible />
   </main>
 </Layout>

@@ -14,7 +14,7 @@ const initialCategory = Astro.url.searchParams.get('category') || '';
   description="Browse all travel packages including Umrah, Hajj, vacation tours, and air ticketing from Travel Wings USA."
   canonical="https://travelwingsusa.com/destinations"
 >
-  <main class={styles.page}>
+  <main class={styles.page} id="main-content">
     <PageHeroBanner client:load />
     <div class={styles.content}>
       <DestinationsApp tours={tours} initialCategory={initialCategory} client:load />

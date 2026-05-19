@@ -12,6 +12,25 @@
   border-bottom: 3px solid var(--color-primary);
 }
 
+.skipLink {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+
+.skipLink:focus {
+  top: var(--space-2);
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -83,7 +102,8 @@
   z-index: 100;
 }
 
-.menuItem:hover .dropdown {
+.menuItem:hover .dropdown,
+.dropdown.dropdownVisible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
