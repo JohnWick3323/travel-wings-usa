@@ -121,6 +121,12 @@ export function MainNavigationBar({ currentPath = '' }: Props) {
         <button className={styles.hamburger} onClick={() => setDrawerOpen(true)} aria-label="Open menu" aria-expanded={drawerOpen}>
           <span /><span /><span />
         </button>
+
+        {/* Mobile call button — visible only on mobile between logo and hamburger */}
+        <a href="tel:+14102984500" className={styles.mobileCallBtn} aria-label="Call us">
+          <Phone size={16} aria-hidden="true" />
+          <span>Call Us</span>
+        </a>
       </nav>
 
       <div className={cn(styles.drawer, { [styles.open]: drawerOpen })} aria-hidden={!drawerOpen}>
