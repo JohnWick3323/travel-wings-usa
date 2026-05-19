@@ -166,16 +166,73 @@ const TOUR_BY_SLUG_QUERY = `
   }
 `;
 
+// ─── Local image fallback map ─────────────────────────────────────────────────
+// Used when WordPress has no image set for a tour
+
+const LOCAL_TOUR_IMAGES: Record<string, string> = {
+  // Main tour images
+  'singapore':    '/assets/images/extracted/tour-singapore.jpg',
+  'dubai':        '/assets/images/extracted/tour-dubai.jpg',
+  'istanbul':     '/assets/images/extracted/tour-istanbul.jpg',
+  'london':       '/assets/images/extracted/tour-london.jpg',
+  'malaysia':     '/assets/images/extracted/tour-malaysia.jpg',
+  'baghdad':      '/assets/images/extracted/tour-baghdad.jpg',
+  'umrah':        '/assets/images/extracted/umrah-gallery-1.jpg',
+  'hajj':         '/assets/images/extracted/tour-hajj.jpg',
+  'paris':        '/assets/images/extracted/paris-gallery-1.jpg',
+  'switzerland':  '/assets/images/extracted/switzerland-main.jpg',
+};
+
+const LOCAL_TOUR_GALLERIES: Record<string, string[]> = {
+  'singapore':   ['/assets/images/extracted/singapore-gallery-1.jpg', '/assets/images/extracted/singapore-gallery-2.jpg'],
+  'dubai':       ['/assets/images/extracted/dubai-gallery-1.jpg',     '/assets/images/extracted/dubai-gallery-2.jpg'],
+  'istanbul':    ['/assets/images/extracted/istanbul-gallery-1.jpg',  '/assets/images/extracted/istanbul-gallery-2.jpg'],
+  'london':      ['/assets/images/extracted/london-gallery-1.jpg',    '/assets/images/extracted/london-gallery-2.jpg'],
+  'malaysia':    ['/assets/images/extracted/malaysia-gallery-1.jpg',  '/assets/images/extracted/malaysia-gallery-2.jpg'],
+  'baghdad':     ['/assets/images/extracted/baghdad-gallery-1.jpg',   '/assets/images/extracted/baghdad-gallery-2.jpg'],
+  'umrah':       ['/assets/images/extracted/umrah-gallery-1.jpg',     '/assets/images/extracted/umrah-gallery-2.jpg'],
+  'paris':       ['/assets/images/extracted/paris-gallery-1.jpg',     '/assets/images/extracted/paris-gallery-2.jpg'],
+  'switzerland': ['/assets/images/extracted/switzerland-gallery-1.jpg', '/assets/images/extracted/switzerland-main.jpg'],
+};
+
+const DEFAULT_TOUR_IMAGE = '/assets/images/extracted/hero-slider-1.jpg';
+
+/** Find best local fallback image based on tour slug or title keywords */
+function getLocalFallbackImage(slug: string, title: string): string {
+  const key = `${slug} ${title}`.toLowerCase();
+  for (const [keyword, path] of Object.entries(LOCAL_TOUR_IMAGES)) {
+    if (key.includes(keyword)) return path;
+  }
+  return DEFAULT_TOUR_IMAGE;
+}
+
+function getLocalFallbackGallery(slug: string, title: string): string[] {
+  const key = `${slug} ${title}`.toLowerCase();
+  for (const [keyword, paths] of Object.entries(LOCAL_TOUR_GALLERIES)) {
+    if (key.includes(keyword)) return paths;
+  }
+  return [DEFAULT_TOUR_IMAGE];
+}
+
 function mapTour(node: Record<string, unknown>): Tour {
   const d = (node.tourDetails || {}) as Record<string, unknown>;
   const heroImg = (d.heroImage as { node?: { sourceUrl?: string } } | null)?.node;
   const featImg = (node.featuredImage as { node?: { sourceUrl?: string } } | null)?.node;
   const gallery = ((d.gallery as { nodes?: { sourceUrl: string }[] } | null)?.nodes) || [];
 
+  const slug = (node.slug as string) || '';
+  const title = (node.title as string) || '';
+
+  const wpImage = heroImg?.sourceUrl || featImg?.sourceUrl || '';
+  const wpGallery = gallery.map((g) => g.sourceUrl).filter(Boolean);
+
+  const resolvedImage = wpImage || getLocalFallbackImage(slug, title);
+  const resolvedGallery = wpGallery.length > 0 ? wpGallery : getLocalFallbackGallery(slug, title);
+
   return {
-    id: (node.slug as string) || '',
+    id: slug,
     wpId: node.databaseId as number,
-    title: decodeHtml(node.title as string),
+    title: decodeHtml(title),
     excerpt: stripHtml(node.excerpt as string || ''),
     destination: (d.destination as string) || '',
     region: (d.region as string) || '',
@@ -183,8 +240,8 @@ function mapTour(node: Record<string, unknown>): Tour {
     duration: (d.duration as string) || '',
     durationDays: Number(d.durationDays) || 0,
     rating: Number(d.rating) || 5,
-    image: heroImg?.sourceUrl || featImg?.sourceUrl || '',
-    images: gallery.map((g) => g.sourceUrl),
+    image: resolvedImage,
+    images: resolvedGallery,
     description: stripHtml((node.content as string) || (node.excerpt as string) || ''),
     highlights: ((d.highlights as { item: string }[]) || []).map((h) => h.item).filter(Boolean),
     itinerary: ((d.itinerary as { day: number; title: string; activities: string | string[] }[]) || []).map((row) => ({
