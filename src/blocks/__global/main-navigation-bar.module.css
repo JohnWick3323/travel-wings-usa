@@ -326,6 +326,11 @@
     margin-left: auto;
     margin-right: var(--space-3);
   }
+
+  /* Hamburger stays at the end */
+  .hamburger {
+    margin-left: 0;
+  }
 }
 
 @media (max-width: 480px) {
