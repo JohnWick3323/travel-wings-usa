@@ -9,25 +9,53 @@ interface Props {
   tour: Tour;
 }
 
+const TABS = ['Overview', 'Itinerary', 'Inclusions', 'FAQs'];
+
 export function TourDetailsTabs({ tour }: Props) {
   const [activeTab, setActiveTab] = useState('Overview');
 
   return (
-    <>
-      <TourOverviewAndHighlights tour={tour} activeTab={activeTab} onTabChange={setActiveTab} />
-      {activeTab === 'Itinerary' && <DayByDayItinerary tour={tour} />}
-      {activeTab === 'Inclusions' && <InclusionsAndExclusions tour={tour} />}
-      {activeTab === 'FAQs' && tour.faqs.length > 0 && (
+    <div>
+      {/* Tab navigation bar */}
+      <div className={styles.tabBar}>
+        {TABS.map(tab => (
+          <button
+            key={tab}
+            className={`${styles.tab} ${activeTab === tab ? styles.tabActive : ''}`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab content */}
+      {activeTab === 'Overview' && (
+        <TourOverviewAndHighlights tour={tour} />
+      )}
+      {activeTab === 'Itinerary' && (
+        <DayByDayItinerary tour={tour} />
+      )}
+      {activeTab === 'Inclusions' && (
+        <InclusionsAndExclusions tour={tour} />
+      )}
+      {activeTab === 'FAQs' && (
         <div className={styles.faqSection}>
-          <h3 className={styles.faqTitle}>Frequently Asked Questions</h3>
-          {tour.faqs.map(faq => (
-            <div key={faq.question} className={styles.faqItem}>
-              <p className={styles.faqQ}>{faq.question}</p>
-              <p className={styles.faqA}>{faq.answer}</p>
-            </div>
-          ))}
+          {tour.faqs.length > 0 ? (
+            <>
+              <h3 className={styles.faqTitle}>Frequently Asked Questions</h3>
+              {tour.faqs.map(faq => (
+                <div key={faq.question} className={styles.faqItem}>
+                  <p className={styles.faqQ}>{faq.question}</p>
+                  <p className={styles.faqA}>{faq.answer}</p>
+                </div>
+              ))}
+            </>
+          ) : (
+            <p className={styles.faqEmpty}>No FAQs available for this tour.</p>
+          )}
         </div>
       )}
-    </>
+    </div>
   );
 }
